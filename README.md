@@ -1,5 +1,14 @@
 # Agent_REF
-1 - In your project create REF/CONTEXT folder and "001_PROJECT_CONTEXT.md" file and fill it with your project general description and business rules. 
-2 - Just copy text in "agentrules.md" inside your agent and it should perform automatically.
 
-You agent should red the project context to understand you idea and perform based on the rules and the skills.
+A lightweight context framework designed to ground AI coding agents in your project's specific domain logic, business rules, and technical requirements.
+
+---
+
+## 🚀 Quick Start
+
+### Step 1: Set Up Project Context
+Create a `REF/CONTEXT` directory at the root of your repository and add a primary context file named `001_PROJECT_CONTEXT.md`:
+
+```bash
+mkdir -p REF/CONTEXT
+touch REF/CONTEXT/001_PROJECT_CONTEXT.md
