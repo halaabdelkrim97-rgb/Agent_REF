@@ -1,2 +1,2 @@
 # Agent_REF
-A referance folder for our agent
+Just copy the rules file text inside your agent and it should perform automatically 
