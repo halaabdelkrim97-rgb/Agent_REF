@@ -8,6 +8,8 @@ A lightweight context framework designed to ground AI coding agents in your proj
 
 1. In your project, create the `REF/CONTEXT` folder and the `001_PROJECT_CONTEXT.md` file, then fill it with your project's general description and business rules.
 2. Copy the text in `agentrules.md` inside your agent instructions, and it will perform automatically.
+   
+<img width="880" height="345" alt="image" src="https://github.com/user-attachments/assets/c0f1d273-d486-4c49-80ee-bdd6c26e6509" />
 
 ---
 
