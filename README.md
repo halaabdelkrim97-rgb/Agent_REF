@@ -6,9 +6,29 @@ A lightweight context framework designed to ground AI coding agents in your proj
 
 ## 🚀 Quick Start
 
-### Step 1: Set Up Project Context
-Create a `REF/CONTEXT` directory at the root of your repository and add a primary context file named `001_PROJECT_CONTEXT.md`:
+1. In your project, create the `REF/CONTEXT` folder and the `001_PROJECT_CONTEXT.md` file, then fill it with your project's general description and business rules.
+2. Copy the text in `agentrules.md` inside your agent instructions, and it will perform automatically.
 
-```bash
-mkdir -p REF/CONTEXT
-touch REF/CONTEXT/001_PROJECT_CONTEXT.md
+---
+
+## ⚙️ How It Works
+
+```
+┌──────────────────────────────┐
+│  001_PROJECT_CONTEXT.md      │ ──► Reads domain logic & technical constraints
+└──────────────┬───────────────┘
+               │
+               ▼
+┌──────────────────────────────┐
+│        agentrules.md         │ ──► Enforces execution rules & operational guidelines
+└──────────────┬───────────────┘
+               │
+               ▼
+┌──────────────────────────────┐
+│ Context-Aware Code & Output  │ ──► Generates tailored, production-ready code
+└──────────────────────────────┘
+```
+
+1. **Context Reading:** The agent reads `001_PROJECT_CONTEXT.md` to understand your project's background and logic.
+2. **Rule Enforcement:** The agent follows the rules defined in `agentrules.md`.
+3. **Execution:** Code and tasks are executed automatically aligned with your setup.
