@@ -17,14 +17,19 @@ The authoritative REF Skills repository is:
 
 The REF Skills repository is a mandatory dependency of this agent.
 
-### 2.1 Load Skills on EVERY Prompt
+### 2.1 Load Skills on EVERY Prompt (README-First)
+The REF Skills are discovered through the repository `README.md`, which contains the skills index (the "Skills" section: each skill's name, folder link, and description). The README is the single entry point for choosing skills.
+README location: `https://github.com/halaabdelkrim97-rgb/Agent_REF/blob/main/README.md` (or the local `README.md` at the root of the REF repository copy).
+
 For every prompt you receive, before performing the user's requested task:
-1. Access the REF Skills repository.
-2. Inspect the available skills.
-3. Determine which skills are relevant to the current request.
-4. Load/read the relevant skill instructions.
+1. Read the README (skills index) only. Do NOT open or read every skill folder one by one to understand what each skill does.
+2. From the README descriptions, determine which skills are relevant to the current request.
+3. Navigate directly to each relevant skill folder (`REF/SKILLS/<skill-folder>/`) and read its `SKILL.md`.
+4. Read additional files inside that skill folder (for example `references/` or `data/`) only when the `SKILL.md` directs you to them or the task needs them.
 5. Apply those skills while completing the task.
 6. At the end of your response, explicitly state which REF skills were used.
+
+Never read skills that the README does not show to be relevant. Reading all skills to discover what they do wastes time and tokens and is not allowed.
 
 This requirement applies to every prompt, including:
 - coding requests
@@ -40,12 +45,12 @@ This requirement applies to every prompt, including:
 - explanations
 - seemingly trivial requests
 
-Never assume that a previous prompt's loaded skills are sufficient. Every new prompt requires a fresh skills-access/check step.
+Never assume that a previous prompt's loaded skills are sufficient. Every new prompt requires a fresh README check and selection of the relevant skills.
 
 ---
 
 ## 3. Skills Access Is Mandatory
-You **MUST NOT** perform the requested task if you cannot access the REF Skills repository or otherwise obtain the required REF Skills.
+You **MUST NOT** perform the requested task if you cannot access the REF README and the REF Skills repository (or otherwise obtain the required REF Skills).
 
 If the skills repository cannot be accessed:
 1. Stop the requested task.
@@ -72,7 +77,7 @@ If preferred, the skills may also be downloaded/copied into the current project 
 However:
 - The local copy must originate from the authoritative GitHub REF Skills repository.
 - The local copy must remain recognizable as REF Skills.
-- If a local `REF/SKILLS` directory exists, inspect it.
+- If a local `REF/SKILLS` directory exists, use it together with the README skills index (do not scan every skill folder).
 - Do not assume it is current without checking against the authoritative repository when repository access is available.
 - If the local skills appear outdated, incomplete, corrupted, or inconsistent with the authoritative source, resolve the discrepancy before proceeding.
 - Never invent missing skills.
@@ -91,7 +96,7 @@ REF Skills Used:
 - <skill name>
 ```
 
-If no specialized skill was relevant after inspecting the available skills, explicitly say:
+If no specialized skill was relevant after reviewing the README skills index, explicitly say:
 ```
 REF Skills Used:
 - None applicable after reviewing the available REF Skills.
@@ -312,12 +317,12 @@ When repository access is available, use the repository as the canonical source.
 ---
 
 ## 19. Skill Selection
-You are required to inspect the available skills on every prompt, but you do not need to apply every skill to every task.
+You are required to read the README skills index on every prompt, but you do not need to apply every skill to every task, and you must not read every skill.
 
 For each prompt:
-1. Inspect available skills.
-2. Identify relevant skills.
-3. Load the relevant skill instructions.
+1. Read the README skills index.
+2. Identify relevant skills from their README descriptions.
+3. Navigate to each relevant skill folder and read its `SKILL.md` (plus referenced files only when needed).
 4. Follow them.
 5. Report the skills used.
 
@@ -429,7 +434,7 @@ If the task could not be performed because the mandatory skills could not be acc
 
 ## 27. Non-Negotiable Rules
 The following rules are mandatory:
-1. Load/check REF Skills on every prompt.
+1. Read the README skills index on every prompt, then load only the relevant skills by navigating to their folders.
 2. Use the authoritative GitHub REF Skills repository.
 3. Do not perform the task when mandatory REF Skills cannot be accessed.
 4. Explicitly report the REF Skills used in every completed response.
@@ -448,7 +453,7 @@ These rules are mandatory and must be applied consistently.
 
 ## 28. Final Pre-Response Checklist
 Before sending every response, verify:
-- [ ] Did I access/check the REF Skills?
+- [ ] Did I read the README skills index and open only the relevant skill folders?
 - [ ] If not, did I stop instead of performing the task?
 - [ ] Did I identify the relevant skills?
 - [ ] Did I actually apply the skills I report?
