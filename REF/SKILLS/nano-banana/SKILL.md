@@ -11,23 +11,24 @@ metadata:
 # Nano Banana (Gemini image models)
 
 ## Models (verify current names in Google's docs before use)
-- `gemini-2.5-flash-image`: "Nano Banana", fast and cheap, good default.
-- `gemini-3-pro-image-preview`: "Nano Banana Pro", higher quality, text in images, larger sizes. Preview names change.
+- `gemini-2.5-flash-image`: Nano Banana v1, the script's default.
+- `gemini-3.1-flash-image-preview`: Nano Banana 2, newer.
+- `gemini-3-pro-image-preview`: Nano Banana Pro, higher quality and text in images.
+Preview names change. Pick with `--model` or the `NANOBANANA_MODEL` variable.
 
 ## Cost and key
 - Get a key from Google AI Studio. Whether image generation is free, and the limits, change over time: check Google's pricing page and tell the user. Do not promise "free".
-- Read the key from the `GEMINI_API_KEY` environment variable. Never paste it into a file, commit or log. If the user pastes a key in chat, tell them to revoke and replace it.
+- The CLI reads the key from the `GEMINI_API_KEY` environment variable (`NANOBANANA_API_KEY` also works). Never paste it into a file, commit or log. If the user pastes a key in chat, tell them to revoke and replace it.
 
 ## Procedure
 1. Confirm purpose, size or aspect ratio, style, where the file goes, and that the image may be sent to Google.
 2. Write a specific prompt: subject, setting, style, lighting, composition, colors from the project's visual identity (context file section 10), and what to avoid. One image per call at first.
-3. Call the API (no SDK needed):
+3. Run the bundled CLI (Python standard library, nothing to install; path is relative to this skill folder):
 ```
-curl -s -X POST "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent" \
-  -H "x-goog-api-key: $GEMINI_API_KEY" -H "Content-Type: application/json" \
-  -d '{"contents":[{"parts":[{"text":"<prompt>"}]}]}'
+python scripts/nano_banana.py "<prompt>" --out assets/name.png [--aspect 16:9] [--model <name>]
+python scripts/nano_banana.py "<edit instruction>" --image input.png --out assets/name-edit.png
 ```
-   The image comes back base64 in `candidates[0].content.parts[].inlineData.data`; decode it to a file. For edits, add a second part with `inlineData` (`mimeType`, base64 `data`) holding the source image.
+   `--dry-run` prints the request without sending it. The file is never overwritten (a `-2` suffix is added). If it reports no key, the user must set `GEMINI_API_KEY` and restart the terminal. Details of the raw REST call: `references/api.md`.
 4. Save into the project's assets folder with a descriptive name. Convert and compress for the web (WebP or AVIF, set `width` and `height`, add `alt` text). Check the result before showing it; regenerate with a changed prompt instead of stacking fixes.
 5. Report: model used, prompt, file path, size.
 

@@ -3,6 +3,11 @@
 Versions follow `vMAJOR.MINOR.PATCH`. Every commit on `main` starts with the version it belongs to, for example `v1.2.0: summary`.
 Git tags cannot be pushed from the environment these updates were made in, so the commit prefix and this file are the version record.
 
+## v2.2.1
+
+- **`nano-banana` now ships a CLI:** `REF/SKILLS/nano-banana/scripts/nano_banana.py` (Python standard library, no install) generates and edits images, supports `--aspect`, `--model`, `--image` and `--dry-run`, never overwrites files and never prints the key (reads `GEMINI_API_KEY`). The raw REST call and the Gemini CLI extension option moved to `references/api.md`; the Gemini CLI extension (Apache-2.0) runs inside Gemini CLI, not Claude Code, so it is not the default.
+- Tested: `--dry-run`, missing-key and missing-image errors, `package_skills.py --check`. Not tested: a real image request (needs the user's key) and the models listed.
+
 ## v2.2.0
 
 - **Four new skills (36):** `nano-banana` (AI raster images through the Gemini API, user's own key, ask first), `framer-motion` (Motion for React, ask first), `gsap` (timelines and ScrollTrigger, ask first; the official full set is github.com/greensock/gsap-skills, MIT) and `ui-components-21st` (21st.dev Magic MCP and CLI: stack gate, review checklist, key handling).
