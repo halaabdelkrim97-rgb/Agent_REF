@@ -3,6 +3,11 @@
 Versions follow `vMAJOR.MINOR.PATCH`. Every commit on `main` starts with the version it belongs to, for example `v1.2.0: summary`.
 Git tags cannot be pushed from the environment these updates were made in, so the commit prefix and this file are the version record.
 
+## v2.2.2
+
+- **`nano-banana` from a first real test:** the CLI also reads the key from a gitignored `.env` in the folder it runs from, explains a `429 ... limit: 0` (no free image quota on the key: billing needed) instead of printing raw JSON, and has `--list-models` to show the image models a key can use. The skill notes the free-key result and how to set up `.env` safely.
+- Tested on a real project: the key in `.env` was read and accepted by the API; a new free key got `limit: 0` on `gemini-2.5-flash-image` and `gemini-3.1-flash-image`, so no image was generated. Also `--list-models`, `--dry-run`, `package_skills.py --check`. Not tested: a successful image (needs billing).
+
 ## v2.2.1
 
 - **`nano-banana` now ships a CLI:** `REF/SKILLS/nano-banana/scripts/nano_banana.py` (Python standard library, no install) generates and edits images, supports `--aspect`, `--model`, `--image` and `--dry-run`, never overwrites files and never prints the key (reads `GEMINI_API_KEY`). The raw REST call and the Gemini CLI extension option moved to `references/api.md`; the Gemini CLI extension (Apache-2.0) runs inside Gemini CLI, not Claude Code, so it is not the default.

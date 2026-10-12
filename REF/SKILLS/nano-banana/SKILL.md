@@ -14,11 +14,12 @@ metadata:
 - `gemini-2.5-flash-image`: Nano Banana v1, the script's default.
 - `gemini-3.1-flash-image-preview`: Nano Banana 2, newer.
 - `gemini-3-pro-image-preview`: Nano Banana Pro, higher quality and text in images.
-Preview names change. Pick with `--model` or the `NANOBANANA_MODEL` variable.
+Preview names change, and some models close to new users. `python scripts/nano_banana.py --list-models` shows the image models the user's key can use. Pick with `--model` or the `NANOBANANA_MODEL` variable.
 
 ## Cost and key
 - Get a key from Google AI Studio. Whether image generation is free, and the limits, change over time: check Google's pricing page and tell the user. Do not promise "free".
-- The CLI reads the key from the `GEMINI_API_KEY` environment variable (`NANOBANANA_API_KEY` also works). Never paste it into a file, commit or log. If the user pastes a key in chat, tell them to revoke and replace it.
+- Seen 2026-10-13 on a new free key: every image model answered `429 ... limit: 0` (no free image quota) while the key itself was valid. The CLI then says billing is needed; tell the user plainly instead of retrying.
+- The CLI reads the key from the `GEMINI_API_KEY` environment variable (`NANOBANANA_API_KEY` also works), or from `GEMINI_API_KEY=...` in a `.env` file in the folder it runs from. Before relying on a project `.env`, check that git ignores it (`git check-ignore .env`) and, for hosted sites, that the deploy excludes it. Create the file for the user with an empty value and let them paste the key themselves. Never commit, log or print the key. If the user pastes a key in chat, tell them to revoke and replace it.
 
 ## Procedure
 1. Confirm purpose, size or aspect ratio, style, where the file goes, and that the image may be sent to Google.
