@@ -582,6 +582,6 @@ scene.add(batchedMesh);
 
 ## See Also
 
-- `threejs-fundamentals` - Scene setup and Object3D
-- `threejs-materials` - Material types for meshes
-- `threejs-shaders` - Custom vertex manipulation
+- [`fundamentals.md`](fundamentals.md) - Scene setup and Object3D
+- [`materials.md`](materials.md) - Material types for meshes
+- [`shaders.md`](shaders.md) - Custom vertex manipulation

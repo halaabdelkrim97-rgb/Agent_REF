@@ -644,6 +644,6 @@ Three.js r183 supports ISO 21496-1 gainmap metadata in HDR textures, enabling pr
 
 ## See Also
 
-- `threejs-materials` - Applying textures to materials
-- `threejs-loaders` - Loading texture files
-- `threejs-shaders` - Custom texture sampling
+- [`materials.md`](materials.md) - Applying textures to materials
+- [`loaders.md`](loaders.md) - Loading texture files
+- [`shaders.md`](shaders.md) - Custom texture sampling

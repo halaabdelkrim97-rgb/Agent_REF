@@ -73,6 +73,7 @@ CSV_CONFIG = {
 }
 
 STACK_CONFIG = {
+    "html-css-js": {"file": "stacks/html-css-js.csv"},
     "html-tailwind": {"file": "stacks/html-tailwind.csv"},
     "react": {"file": "stacks/react.csv"},
     "nextjs": {"file": "stacks/nextjs.csv"},

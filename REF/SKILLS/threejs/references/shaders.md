@@ -690,6 +690,6 @@ material.positionNode = add(
 
 ## See Also
 
-- `threejs-materials` - Built-in material types
-- `threejs-postprocessing` - Full-screen shader effects
-- `threejs-textures` - Texture sampling in shaders
+- [`materials.md`](materials.md) - Built-in material types
+- [`postprocessing.md`](postprocessing.md) - Full-screen shader effects
+- [`textures.md`](textures.md) - Texture sampling in shaders

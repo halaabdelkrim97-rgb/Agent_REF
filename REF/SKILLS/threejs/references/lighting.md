@@ -1,13 +1,3 @@
----
-name: threejs-lighting
-description: Three.js lighting - light types, shadows, environment lighting. Use when adding lights, configuring shadows, setting up IBL, or optimizing lighting performance.
-metadata:
-  source: community
-  date_added: '2026-09-04'
----
-
-> **Stack gate (vanilla-first):** This repo's default is native HTML, CSS and JavaScript. Three.js is an external library. If the project does not already use it, ask the user before adding it (it can be loaded without a build step through an import map).
-
 # Three.js Lighting
 
 ## When to Use
@@ -487,11 +477,6 @@ decorMesh.castShadow = false; // Small objects often don't need to cast
 
 ## See Also
 
-- `threejs-materials` - Material light response
-- `threejs-textures` - Lightmaps and environment maps
-- `threejs-postprocessing` - Bloom and other light effects
-
-## Limitations
-- Use this skill only when the task clearly matches the scope described above.
-- Do not treat the output as a substitute for environment-specific validation, testing, or expert review.
-- Stop and ask for clarification if required inputs, permissions, safety boundaries, or success criteria are missing.
+- [`materials.md`](materials.md) - Material light response
+- [`textures.md`](textures.md) - Lightmaps and environment maps
+- [`postprocessing.md`](postprocessing.md) - Bloom and other light effects

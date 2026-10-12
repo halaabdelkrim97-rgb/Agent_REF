@@ -530,6 +530,6 @@ WebGPU uses TSL (Three.js Shading Language) instead of GLSL. The WebGL renderer 
 
 ## See Also
 
-- `threejs-geometry` - Geometry creation and manipulation
-- `threejs-materials` - Material types and properties
-- `threejs-lighting` - Light types and shadows
+- [`geometry.md`](geometry.md) - Geometry creation and manipulation
+- [`materials.md`](materials.md) - Material types and properties
+- [`lighting.md`](lighting.md) - Light types and shadows

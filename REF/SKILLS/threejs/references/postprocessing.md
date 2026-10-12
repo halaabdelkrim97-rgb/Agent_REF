@@ -625,6 +625,6 @@ window.addEventListener("resize", onWindowResize);
 
 ## See Also
 
-- `threejs-shaders` - Custom shader development
-- `threejs-textures` - Render targets
-- `threejs-fundamentals` - Renderer setup
+- [`shaders.md`](shaders.md) - Custom shader development
+- [`textures.md`](textures.md) - Render targets
+- [`fundamentals.md`](fundamentals.md) - Renderer setup

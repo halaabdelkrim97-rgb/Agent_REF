@@ -8,7 +8,7 @@ metadata:
 
 # UI/UX Pro Max - Design Intelligence
 
-Comprehensive design guide for web and mobile applications. Contains 50+ styles, 97 color palettes, 57 font pairings, 99 UX guidelines, and 25 chart types across 9 technology stacks. Searchable database with priority-based recommendations.
+Comprehensive design guide for web and mobile applications. Contains 50+ styles, 97 color palettes, 57 font pairings, 99 UX guidelines, and 25 chart types across 12 technology stacks. Searchable database with priority-based recommendations.
 
 ## When to Use
 Reference these guidelines when:
@@ -125,7 +125,7 @@ winget install Python.Python.3.12
 This repo is vanilla-first: native HTML, CSS and JavaScript unless the user approves otherwise.
 
 - The `--design-system` and `--domain` searches are stack-agnostic. Use them freely.
-- `--stack html-tailwind` and the framework CSVs contain Tailwind or framework-specific advice. Use them only if the project already uses that stack. Otherwise read them for the underlying principle and write plain CSS.
+- `--stack html-css-js` is the default and is always allowed. `--stack html-tailwind` and the framework CSVs contain Tailwind or framework-specific advice. Use them only if the project already uses that stack. Otherwise read them for the underlying principle and write plain CSS.
 - If a framework or Tailwind would clearly give better results, do not add it. Tell the user why and ask first.
 
 ## How to Use This Skill
@@ -179,15 +179,15 @@ python3 scripts/search.py "<keyword>" --domain <domain> [-n <max_results>]
 | Alternative fonts | `typography` | `--domain typography "elegant luxury"` |
 | Landing structure | `landing` | `--domain landing "hero social-proof"` |
 
-### Step 4: Stack Guidelines (Default: html-tailwind)
+### Step 4: Stack Guidelines (Default: html-css-js)
 
-Get implementation-specific best practices. If user doesn't specify a stack, **default to `html-tailwind`**.
+Get implementation-specific best practices. If the user doesn't specify a stack, **default to `html-css-js`** (plain HTML, CSS and JavaScript).
 
 ```bash
-python3 scripts/search.py "<keyword>" --stack html-tailwind
+python3 scripts/search.py "<keyword>" --stack html-css-js
 ```
 
-Available stacks: `html-tailwind`, `react`, `nextjs`, `vue`, `svelte`, `swiftui`, `react-native`, `flutter`, `shadcn`
+Available stacks: `html-css-js`, `html-tailwind`, `react`, `nextjs`, `vue`, `svelte`, `swiftui`, `react-native`, `flutter`, `shadcn`
 
 ---
 
@@ -255,7 +255,7 @@ python3 scripts/search.py "elegant luxury serif" --domain typography
 ### Step 4: Stack Guidelines
 
 ```bash
-python3 scripts/search.py "layout responsive form" --stack html-tailwind
+python3 scripts/search.py "layout responsive form" --stack html-css-js
 ```
 
 **Then:** Synthesize design system + detailed searches and implement the design.

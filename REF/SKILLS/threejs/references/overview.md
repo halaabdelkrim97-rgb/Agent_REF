@@ -486,7 +486,7 @@ geometry.setAttribute("position", new THREE.BufferAttribute(vertices, 3));
 
 ### Post-Processing Effects
 
-Post-processing effects are available via import maps or build tools. See `threejs-postprocessing` skill for EffectComposer, bloom, DOF, and more.
+Post-processing effects are available via import maps or build tools. See [`postprocessing.md`](postprocessing.md) for EffectComposer, bloom, DOF, and more.
 
 ### Group Objects
 
@@ -538,7 +538,7 @@ await renderer.init();
 renderer.setSize(window.innerWidth, window.innerHeight);
 ```
 
-WebGPU uses TSL (Three.js Shading Language) instead of GLSL for custom shaders. See `threejs-shaders` for details.
+WebGPU uses TSL (Three.js Shading Language) instead of GLSL for custom shaders. See [`shaders.md`](shaders.md) for details.
 
 ### Timer (r183 Recommended)
 

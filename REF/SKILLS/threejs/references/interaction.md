@@ -674,6 +674,6 @@ clickables.push(collisionMesh);
 
 ## See Also
 
-- `threejs-fundamentals` - Camera and scene setup
-- `threejs-animation` - Animating interactions
-- `threejs-shaders` - Visual feedback effects
+- [`fundamentals.md`](fundamentals.md) - Camera and scene setup
+- [`animation.md`](animation.md) - Animating interactions
+- [`shaders.md`](shaders.md) - Visual feedback effects

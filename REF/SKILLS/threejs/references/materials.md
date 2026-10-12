@@ -555,6 +555,6 @@ As of r183, `MeshLambertMaterial` and `MeshPhongMaterial` support image-based li
 
 ## See Also
 
-- `threejs-textures` - Texture loading and configuration
-- `threejs-shaders` - Custom shader development
-- `threejs-lighting` - Light interaction with materials
+- [`textures.md`](textures.md) - Texture loading and configuration
+- [`shaders.md`](shaders.md) - Custom shader development
+- [`lighting.md`](lighting.md) - Light interaction with materials

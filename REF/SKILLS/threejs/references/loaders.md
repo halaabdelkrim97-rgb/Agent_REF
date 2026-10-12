@@ -646,6 +646,6 @@ As of r183, `VRMLLoader` supports loading cameras defined in VRML files.
 
 ## See Also
 
-- `threejs-textures` - Texture configuration
-- `threejs-animation` - Playing loaded animations
-- `threejs-materials` - Material from loaded models
+- [`textures.md`](textures.md) - Texture configuration
+- [`animation.md`](animation.md) - Playing loaded animations
+- [`materials.md`](materials.md) - Material from loaded models
