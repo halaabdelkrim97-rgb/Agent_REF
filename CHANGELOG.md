@@ -1,0 +1,23 @@
+# Changelog
+
+Versions follow `vMAJOR.MINOR.PATCH`. Every commit on `main` starts with the version it belongs to, for example `v1.2.0: summary`.
+Git tags cannot be pushed from the environment these updates were made in, so the commit prefix and this file are the version record.
+
+## v1.2.0: lighter rules, native skill loading, chat and Claude Code install
+- `agent-rules.md` rewritten: 473 lines / 19,117 characters down to 110 lines / 10,297 characters (46% smaller). Every requirement kept, each stated once instead of up to four times.
+- Skills now load natively (Claude Code, Claude chat) when their description fits. The README index is the fallback, not an every-prompt step.
+- Skills access is still mandatory, but any of three sources counts: native skills, the local `REF/SKILLS/` copy, or GitHub. The agent stops only if none is reachable.
+- `brainstorming`: trivial, fully specified edits (typo, rename, one value) no longer need a design document.
+- Removed generic filler ("When to Use" and "Limitations" boilerplate) from six skills.
+- README: install steps for Claude Code and Claude chat, version line.
+- New `scripts/package_skills.py`: validates each skill and builds one upload-ready ZIP per skill (standard library only).
+
+## v1.1.0: quick fixes, vanilla-first stack gate, upload-safe frontmatter
+- README: corrected `agent-rules.md` name, added `REF/TEMPLATES/001_PROJECT_CONTEXT.md`.
+- `ui-ux-pro-max`: commands run from the skill folder; default stack is plain HTML/CSS/JS.
+- Removed references to skills that are not in the repo.
+- "Stack gate (vanilla-first)" added to the React/Next.js, Tailwind, TypeScript/Node, backend, scroll-library and Three.js skills.
+- Frontmatter limited to `name`, `description`, `license`, `compatibility`, `metadata`; folders renamed to match skill names (`backend-architect`, `frontend-developer`, `coding-standards`).
+
+## v1.0.0: baseline
+- Rules file, README skills index and 22 skills as first published.

@@ -11,10 +11,6 @@ metadata:
   date_added: '2026-09-21'
 ---
 
-## When to Use
-- Use when this upstream workflow matches the user's stated goal.
-- Use when the task requires the procedures documented in this skill.
-
 # Writing Guidelines
 
 Review files for compliance with Writing Guidelines.
@@ -46,15 +42,6 @@ When a user provides a file or pattern argument:
 
 If no files specified, ask the user which files to review.
 
-
-## Examples
-
-```text
-User: Apply this skill to my current task.
-Assistant: Follow the workflow in this skill, cite limitations, and ask before risky steps.
-```
-
 ## Limitations
 
-- Imported upstream skill; verify credentials, permissions, and safety boundaries before execution.
-- Does not replace environment-specific validation, testing, or maintainer review.
+Needs network access (WebFetch) to fetch the latest rules. If the fetch fails, say so and do not guess the rules.

@@ -115,10 +115,3 @@ After saving the plan, offer execution choice:
 
 If the user picks neither, use Inline. Either way, finish and verify one task before starting the next, and stop to ask if a task turns out to need a technology the plan did not approve.
 
-## When to Use
-This skill is applicable to execute the workflow or actions described in the overview.
-
-## Limitations
-- Use this skill only when the task clearly matches the scope described above.
-- Do not treat the output as a substitute for environment-specific validation, testing, or expert review.
-- Stop and ask for clarification if required inputs, permissions, safety boundaries, or success criteria are missing.

@@ -13,10 +13,6 @@ metadata:
 > **Stack gate (vanilla-first):** This repo's default is native HTML, CSS and JavaScript. The Stack and Components rules below assume Tailwind CSS and React. Apply them only if the project already uses them or the user has approved them. Otherwise apply the Interaction, Animation, Typography, Layout, Performance and Design rules in plain CSS (for example `100dvh` instead of `h-dvh`). If Tailwind or a component library would clearly give better results, tell the user why and ask first.
 
 # Baseline UI
-## When to Use
-
-Use this skill when you need quickly deslop UI code by fixing spacing, hierarchy, typography, and small layout issues. Use when the interface needs a fast cleanup or polish pass.
-
 
 Enforces an opinionated UI baseline to prevent AI-generated interface slop.
 
@@ -102,9 +98,3 @@ Enforces an opinionated UI baseline to prevent AI-generated interface slop.
 **User request:**
 
 > Review this interface with @baseline-ui, identify the highest-impact design problems, and propose an implementation-ready improvement.
-
-## Limitations
-
-- Use this skill only when the task clearly matches its upstream source and local project context.
-- Verify commands, generated code, dependencies, credentials, and external service behavior before applying changes.
-- Do not treat examples as a substitute for environment-specific tests, security review, or user approval for destructive or costly actions.
