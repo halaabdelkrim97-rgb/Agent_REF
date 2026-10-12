@@ -1,9 +1,9 @@
 ---
 name: writing-plans
-description: "Use when you have a spec or requirements for a multi-step task, before touching code"
-risk: critical
-source: community
-date_added: "2026-02-27"
+description: Use when you have an approved spec or requirements for a multi-step task, before touching code. Produces a bite-sized implementation plan saved to docs/plans/.
+metadata:
+  source: community
+  date_added: '2026-02-27'
 ---
 
 # Writing Plans
@@ -16,7 +16,11 @@ Assume they are a skilled developer, but know almost nothing about our toolset o
 
 **Announce at start:** "I'm using the writing-plans skill to create the implementation plan."
 
-**Context:** This should be run in a dedicated worktree (created by brainstorming skill).
+**Context:** Run this after brainstorming has produced an approved design. Using a separate git branch or worktree is optional, not required.
+
+**Stack:** Plan with native HTML, CSS and JavaScript unless the project already uses something else. Never put a new framework, library, test runner or build tool in a plan without the user's approval. If one would clearly help, say so in the plan as a question for the user.
+
+**Testing:** Use the project's existing test approach. For plain HTML/CSS/JS with no test setup, the "test" can be a manual browser check with exact steps and expected result.
 
 **Save plans to:** `docs/plans/YYYY-MM-DD-<feature-name>.md`
 
@@ -36,7 +40,7 @@ Assume they are a skilled developer, but know almost nothing about our toolset o
 ```markdown
 # [Feature Name] Implementation Plan
 
-> **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.
+> **For Claude:** Implement this plan task-by-task, in order. Verify each task before starting the next.
 
 **Goal:** [One sentence describing what this builds]
 
@@ -103,20 +107,13 @@ After saving the plan, offer execution choice:
 
 **"Plan complete and saved to `docs/plans/<filename>.md`. Two execution options:**
 
-**1. Subagent-Driven (this session)** - I dispatch fresh subagent per task, review between tasks, fast iteration
+**1. Inline (this session, default)** - I work through the tasks in order, verify each one, and report at the end. Cheapest in tokens.
 
-**2. Parallel Session (separate)** - Open new session with executing-plans, batch execution with checkpoints
+**2. Subagent-Driven (only if subagents are available)** - A fresh subagent per task with a review between tasks. Slower to set up and uses more tokens.
 
 **Which approach?"**
 
-**If Subagent-Driven chosen:**
-- **REQUIRED SUB-SKILL:** Use superpowers:subagent-driven-development
-- Stay in this session
-- Fresh subagent per task + code review
-
-**If Parallel Session chosen:**
-- Guide them to open new session in worktree
-- **REQUIRED SUB-SKILL:** New session uses superpowers:executing-plans
+If the user picks neither, use Inline. Either way, finish and verify one task before starting the next, and stop to ask if a task turns out to need a technology the plan did not approve.
 
 ## When to Use
 This skill is applicable to execute the workflow or actions described in the overview.

@@ -1,14 +1,16 @@
 ---
 name: baseline-ui
 description: Quickly deslop UI code by fixing spacing, hierarchy, typography, and small layout issues. Use when the interface needs a fast cleanup or polish pass.
-risk: critical
-source: https://github.com/ibelick/ui-skills/tree/main/skills/baseline-ui
-source_repo: ibelick/ui-skills
-source_type: community
-date_added: 2026-07-01
 license: MIT
-license_source: https://github.com/ibelick/ui-skills/blob/main/LICENSE
+metadata:
+  source: https://github.com/ibelick/ui-skills/tree/main/skills/baseline-ui
+  source_repo: ibelick/ui-skills
+  source_type: community
+  date_added: '2026-07-01'
+  license_source: https://github.com/ibelick/ui-skills/blob/main/LICENSE
 ---
+
+> **Stack gate (vanilla-first):** This repo's default is native HTML, CSS and JavaScript. The Stack and Components rules below assume Tailwind CSS and React. Apply them only if the project already uses them or the user has approved them. Otherwise apply the Interaction, Animation, Typography, Layout, Performance and Design rules in plain CSS (for example `100dvh` instead of `h-dvh`). If Tailwind or a component library would clearly give better results, tell the user why and ask first.
 
 # Baseline UI
 ## When to Use

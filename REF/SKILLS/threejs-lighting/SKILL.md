@@ -1,10 +1,12 @@
 ---
 name: threejs-lighting
 description: Three.js lighting - light types, shadows, environment lighting. Use when adding lights, configuring shadows, setting up IBL, or optimizing lighting performance.
-risk: critical
-source: community
-date_added: "2026-09-04"
+metadata:
+  source: community
+  date_added: '2026-09-04'
 ---
+
+> **Stack gate (vanilla-first):** This repo's default is native HTML, CSS and JavaScript. Three.js is an external library. If the project does not already use it, ask the user before adding it (it can be loaded without a build step through an import map).
 
 # Three.js Lighting
 

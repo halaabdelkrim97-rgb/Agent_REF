@@ -1,6 +1,6 @@
 ---
 name: brainstorming
-description: "You MUST use this before any creative work - creating features, building components, adding functionality, or modifying behavior. Explores user intent, requirements and design before implementation."
+description: You MUST use this before any creative work - creating features, building components, adding functionality, or modifying behavior. Explores user intent, requirements and design before implementation.
 ---
 
 # Brainstorming Ideas Into Designs
@@ -52,7 +52,7 @@ digraph brainstorming {
 }
 ```
 
-**The terminal state is invoking writing-plans.** Do NOT invoke frontend-design, mcp-builder, or any other implementation skill. The ONLY skill you invoke after brainstorming is writing-plans.
+**The terminal state is invoking writing-plans.** Do NOT start any implementation skill (for example the UI, frontend or backend skills) before the plan exists. The ONLY skill you invoke after brainstorming is writing-plans.
 
 ## The Process
 
@@ -79,8 +79,8 @@ digraph brainstorming {
 
 **Documentation:**
 - Write the validated design to `docs/plans/YYYY-MM-DD-<topic>-design.md`
-- Use elements-of-style:writing-clearly-and-concisely skill if available
-- Commit the design document to git
+- Write it clearly and concisely: short sentences, no filler
+- Commit the design document to git if the project uses git
 
 **Implementation:**
 - Invoke the writing-plans skill to create a detailed implementation plan

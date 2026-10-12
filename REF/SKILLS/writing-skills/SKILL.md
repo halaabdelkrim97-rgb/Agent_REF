@@ -1,10 +1,10 @@
 ---
 name: writing-skills
-description: "Use when creating, updating, or improving agent skills."
-category: meta
-risk: critical
-source: community
-date_added: "2026-02-27"
+description: Use when creating, updating, or improving agent skills.
+metadata:
+  category: meta
+  source: community
+  date_added: '2026-02-27'
 ---
 
 # Writing Skills (Excellence)

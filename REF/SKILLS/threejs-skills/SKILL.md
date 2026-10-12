@@ -1,10 +1,12 @@
 ---
 name: threejs-skills
-description: "Create 3D scenes, interactive experiences, and visual effects using Three.js. Use when user requests 3D graphics, WebGL experiences, 3D visualizations, animations, or interactive 3D elements."
-risk: safe
-source: "https://github.com/CloudAI-X/threejs-skills"
-date_added: "2026-02-27"
+description: Create 3D scenes, interactive experiences, and visual effects using Three.js. Use when user requests 3D graphics, WebGL experiences, 3D visualizations, animations, or interactive 3D elements.
+metadata:
+  source: https://github.com/CloudAI-X/threejs-skills
+  date_added: '2026-02-27'
 ---
+
+> **Stack gate (vanilla-first):** This repo's default is native HTML, CSS and JavaScript. Three.js is an external library. If the project does not already use it, ask the user before adding it (it can be loaded without a build step through an import map).
 
 # Three.js Skills
 

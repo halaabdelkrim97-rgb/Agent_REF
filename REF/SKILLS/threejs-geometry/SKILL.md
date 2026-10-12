@@ -1,10 +1,12 @@
 ---
 name: threejs-geometry
 description: Three.js geometry creation - built-in shapes, BufferGeometry, custom geometry, instancing. Use when creating 3D shapes, working with vertices, building custom meshes, or optimizing with instanced rendering.
-risk: critical
-source: community
-date_added: "2026-09-04"
+metadata:
+  source: community
+  date_added: '2026-09-04'
 ---
+
+> **Stack gate (vanilla-first):** This repo's default is native HTML, CSS and JavaScript. Three.js is an external library. If the project does not already use it, ask the user before adding it (it can be loaded without a build step through an import map).
 
 # Three.js Geometry
 

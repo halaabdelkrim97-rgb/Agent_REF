@@ -1,10 +1,12 @@
 ---
 name: threejs-fundamentals
 description: Three.js scene setup, cameras, renderer, Object3D hierarchy, coordinate systems. Use when setting up 3D scenes, creating cameras, configuring renderers, managing object hierarchies, or working with transforms.
-risk: critical
-source: community
-date_added: "2026-09-04"
+metadata:
+  source: community
+  date_added: '2026-09-04'
 ---
+
+> **Stack gate (vanilla-first):** This repo's default is native HTML, CSS and JavaScript. Three.js is an external library. If the project does not already use it, ask the user before adding it (it can be loaded without a build step through an import map).
 
 # Three.js Fundamentals
 
