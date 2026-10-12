@@ -1,0 +1,13 @@
+{
+  "name": "agent-ref",
+  "owner": { "name": "halaabdelkrim97-rgb" },
+  "metadata": { "description": "REF Skills: vanilla-first agent rules and skills for Claude Code" },
+  "plugins": [
+    {
+      "name": "agent-ref",
+      "source": "./",
+      "description": "REF Skills (planning, UI/UX, Three.js, backend, writing) for native HTML, CSS and JavaScript projects",
+      "version": "1.4.0"
+    }
+  ]
+}

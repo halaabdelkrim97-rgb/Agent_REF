@@ -1,8 +1,28 @@
 # Agent_REF
 
-**Version v1.3.0** · see [CHANGELOG.md](CHANGELOG.md). Every update to `main` has a commit prefixed with its version, for example `v1.3.0: ...`.
+**Version v1.4.0** · see [CHANGELOG.md](CHANGELOG.md). Every update to `main` has a commit prefixed with its version, for example `v1.4.0: ...`.
 
 A lightweight context framework designed to ground AI coding agents in your project's specific domain logic, business rules, and technical requirements.
+
+---
+
+## 🤖 Agent setup (for Claude Code)
+
+> **Human:** open Claude Code in your project and say: *"Read https://github.com/halaabdelkrim97-rgb/Agent_REF/blob/main/README.md and follow the Agent setup section."*
+> **Agent:** the steps below are for you. Do them in order, skip anything already done, and do not install anything else.
+
+1. **Ask once:** install the skills for **this project only** (`.claude/skills/`) or for **all projects** (`~/.claude/skills/`)? Default to this project.
+2. **Plugin route (preferred).** Run `/plugin marketplace add halaabdelkrim97-rgb/Agent_REF`, then `/plugin install agent-ref@agent-ref`. If plugin commands are unavailable, use the copy route.
+3. **Copy route.** `git clone --depth 1 https://github.com/halaabdelkrim97-rgb/Agent_REF.git` into a temporary folder, copy each folder of `REF/SKILLS/` to the chosen skills folder (skip folders that already exist and tell the user), then delete the temporary clone.
+4. **Rules.** If `CLAUDE.md` does not already contain "REF PROJECT AGENT", append the contents of `REF/RULES/agent-rules.md` to it (create the file if missing). Do not edit the rules.
+5. **Context.** If `REF/CONTEXT/001_PROJECT_CONTEXT.md` is missing, create it from `REF/TEMPLATES/001_PROJECT_CONTEXT.md` and ask the user for the project name, goal and stack. Do not invent answers.
+6. **Report** in this form: installed skills (count and where), rules added or already present, context file created or found, and anything skipped. Tell the user to run `/skills` to confirm.
+
+Never add React, TypeScript, Tailwind, Node or any build tool during setup.
+
+### One-command options
+- Claude Code plugin: `/plugin marketplace add halaabdelkrim97-rgb/Agent_REF` then `/plugin install agent-ref@agent-ref`. After that, `/agent-ref:ref` loads the rules and project context in any session.
+- Claude chat has no install command: build ZIPs with `python3 scripts/package_skills.py` and upload them in Customize > Skills.
 
 ---
 
@@ -60,6 +80,9 @@ Default stack: native HTML, CSS and JavaScript. The agent will ask you before us
 Agent_REF/
 ├── README.md
 ├── CHANGELOG.md                # version history (commits on main are prefixed vX.Y.Z)
+├── .claude-plugin/             # marketplace.json and plugin.json (Claude Code plugin)
+├── commands/
+│   └── ref.md                  # /agent-ref:ref loads rules and project context
 ├── scripts/
 │   └── package_skills.py       # validates skills and builds upload-ready ZIPs for Claude chat
 └── REF/

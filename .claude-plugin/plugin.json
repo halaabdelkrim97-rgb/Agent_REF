@@ -1,0 +1,8 @@
+{
+  "name": "agent-ref",
+  "version": "1.4.0",
+  "description": "REF Skills: vanilla-first agent rules and skills",
+  "author": { "name": "halaabdelkrim97-rgb" },
+  "repository": "https://github.com/halaabdelkrim97-rgb/Agent_REF",
+  "skills": "./REF/SKILLS"
+}

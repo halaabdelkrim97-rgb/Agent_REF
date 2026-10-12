@@ -3,6 +3,11 @@
 Versions follow `vMAJOR.MINOR.PATCH`. Every commit on `main` starts with the version it belongs to, for example `v1.2.0: summary`.
 Git tags cannot be pushed from the environment these updates were made in, so the commit prefix and this file are the version record.
 
+## v1.4.0
+
+- **Agent setup section** at the top of the README: numbered, repeatable steps an agent follows when told to read the README (project or global choice, skip what exists, rules into `CLAUDE.md`, context from the template, final report).
+- **Claude Code plugin.** `.claude-plugin/marketplace.json` and `plugin.json` expose `REF/SKILLS` as the plugin's skills, so `/plugin marketplace add` plus `/plugin install` installs everything. New `/agent-ref:ref` command loads the rules and project context. Written from the plugin format documentation; not yet tested in a live Claude Code session.
+
 ## v1.3.0
 
 - **Three.js consolidated.** The 11 `threejs-*` skills are now one skill, `threejs`: a router `SKILL.md` (stack gate, trigger keywords, topic table, example workflow) plus 11 files in `references/`. The skill list in context drops from 22 to 12 entries and a Three.js task loads one small router, then only the topic file it needs.
