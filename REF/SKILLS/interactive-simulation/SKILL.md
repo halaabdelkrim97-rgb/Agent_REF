@@ -1,6 +1,6 @@
 ---
 name: interactive-simulation
-description: Builds interactive simulations, product demos and browser games for clients - model and state design, fixed-timestep loops, physics basics, parameter controls, 2D canvas or SVG first and 3D via the threejs skill, performance budgets and client delivery. Use for product simulations, configurators, mechanism or process demos, games and animated explainers.
+description: Model, state, fixed-timestep loop, physics basics, parameter controls, performance budget and delivery for 2D (Canvas or SVG) interactive simulations, product demos and browser games. For 3D scenes use 3d-scene-builder. Use for simulations, configurators, mechanism demos and animated explainers.
 metadata:
   source: original (Agent_REF); informed by public browser-game and Three.js game skill collections
   date_added: '2026-10-12'

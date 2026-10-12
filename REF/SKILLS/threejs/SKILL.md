@@ -1,6 +1,6 @@
 ---
 name: threejs
-description: Three.js 3D graphics for the web - scenes, cameras, renderer, Object3D hierarchies, geometry and instancing, materials (PBR), textures, UVs, lighting and shadows, animation (mixers, clips, keyframes, GLTF, skeletal, morph targets), raycasting, picking, controls and pointer input, loaders (GLTFLoader, TextureLoader, HDR), GLSL shaders, and post-processing (bloom, glow, DOF). Use for 3D scenes, WebGL, 3D visualizations, particles, interactive 3D elements or any mention of Three.js.
+description: Three.js API reference for 3D on the web - scenes, cameras, renderer, geometry, materials, textures, lighting and shadows, animation (mixers, clips, GLTF, skeletal, morph targets), raycasting and controls, loaders (GLTFLoader, HDR), GLSL shaders and post-processing (bloom, DOF). Use for Three.js or WebGL code. For art-directed client scenes use 3d-scene-builder first.
 metadata:
   source: https://github.com/CloudAI-X/threejs-skills
   merged_from: threejs-skills, threejs-fundamentals, threejs-geometry, threejs-materials, threejs-textures, threejs-lighting, threejs-animation, threejs-interaction, threejs-loaders, threejs-shaders, threejs-postprocessing

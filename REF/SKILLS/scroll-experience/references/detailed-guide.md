@@ -539,14 +539,14 @@ Fix action: Let users scroll naturally, use scrub animations instead
 
 ### Delegation Triggers
 
-- 3D|WebGL|three.js|spline -> 3d-web-experience (3D elements in scroll experience)
+- 3D|WebGL|three.js|spline -> `3d-scene-builder` and `threejs` (3D elements in a scroll experience; ask before adding Three.js)
 - react|vue|next|framework -> frontend (Frontend implementation)
 - performance|slow|optimize -> performance-hunter (Performance optimization)
 - design|mockup|visual -> ui-design (Visual design)
 
 ### Immersive Product Page
 
-Skills: scroll-experience, 3d-web-experience, landing-page-design
+Skills: scroll-experience, 3d-scene-builder, ui-ux-pro-max
 
 Workflow:
 
@@ -575,4 +575,4 @@ Workflow:
 
 ## Related Skills
 
-Works well with: `3d-web-experience`, `frontend`, `ui-design`, `landing-page-design`
+Works well with: `3d-scene-builder`, `frontend-developer`, `ui-ux-pro-max`, `css-motion`

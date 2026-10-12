@@ -3,6 +3,15 @@
 Versions follow `vMAJOR.MINOR.PATCH`. Every commit on `main` starts with the version it belongs to, for example `v1.2.0: summary`.
 Git tags cannot be pushed from the environment these updates were made in, so the commit prefix and this file are the version record.
 
+## v1.9.1 (audit)
+
+- **Unity policy:** Unity is used only when the user defines a project as a Unity project. `unity-scene-builder` and `3d-scene-builder` descriptions and bodies, the rules (section 6) and the README now say so; the default for 3D stays the plain web stack with Three.js after approval.
+- **Collisions fixed:** descriptions of `3d-scene-builder`, `threejs`, `unity-scene-builder` and `interactive-simulation` now say which one to use when; the README has a "Which skill for which job" routing table.
+- **Eager triggers removed:** "Use PROACTIVELY" and marketing wording dropped from `backend-architect`, `frontend-developer` and `scroll-experience` descriptions; `frontend-developer` now states plain HTML/CSS/JS by default.
+- **Dangling references fixed:** `scroll-experience` guide pointed to skills that do not exist (`3d-web-experience`, `landing-page-design`, `frontend`, `ui-design`); `writing-skills/anthropic-best-practices.md` had 9 broken links (docs paths and `EXAMPLES.md`).
+- **Token trim:** `ui-ux-pro-max` Search Reference, Example Workflow and Output Formats moved to `references/search-and-workflow.md` (374 to 293 lines, 0 lines lost, search outputs identical).
+- **New `CLAUDE.md`** with rules for working on this repo.
+
 ## v1.9.0
 
 - **New `unity-scene-builder`:** professional Unity scenes for web delivery. Includes `templates/` (scripts only): `RefSceneBuilder` (menu REF > Build Showcase Scene builds lights, ground, product, camera and bridge from the user's installed prefabs, with a placeholder fallback), `RefBuildWebGL`, `OrbitCamera` (mouse, touch, pinch), `PartInfo` and `HotspotPicker`, `ProductController` (lag model driving a part), `WebBridge` plus `RefBridge.jslib` (page to Unity and back), `unity.gitignore`, and `web-embed/index.html` (loader, progress bar, controls, error message). `references/webgl-embed.md` covers hosting headers, compression, embedding and common failures.

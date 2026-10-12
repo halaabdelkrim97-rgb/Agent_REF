@@ -1,12 +1,12 @@
 ---
 name: 3d-scene-builder
-description: Designs and builds interactive 3D scenes and game-like product demos for client websites - art direction, procedural modeling from primitives, materials, lighting, camera, interaction and website embedding with Three.js. Use when a client wants a 3D device, machine or product shown or simulated on their site, or when a scene needs to look good, not just work.
+description: Process for art-directed, game-like 3D scenes and product demos on client websites: brief, art direction, primitive blockout, materials, lighting, interaction, performance budget and embedding. Plain web stack and Three.js by default (ask first); Unity only when the user defines the project as a Unity project. Use when a client wants a device or product shown or simulated in 3D.
 metadata:
   source: original (Agent_REF); builds on the threejs and interactive-simulation skills
   date_added: '2026-10-12'
 ---
 
-> **Stack gate (vanilla-first):** For web showcases the default engine is Three.js, an external library: propose it once per project with the benefit and wait for approval; load it without a build step (import map, pinned version or a local copy). If the project is a professional Unity project, use `unity-scene-builder` after the art direction below. Asset generators, AI image or 3D services and extra libraries need their own approval. Without a 3D engine, fall back to SVG/Canvas 2D (`interactive-simulation`).
+> **Stack gate (vanilla-first):** For web showcases the default engine is Three.js, an external library: propose it once per project with the benefit and wait for approval; load it without a build step (import map, pinned version or a local copy). Unity is used only when the user says the project is a Unity project: use `unity-scene-builder` after the art direction below. Never propose Unity yourself, and never add it to basic or light projects. Asset generators, AI image or 3D services and extra libraries need their own approval. Without a 3D engine, fall back to SVG/Canvas 2D (`interactive-simulation`).
 
 # 3D Scene Builder
 
@@ -18,8 +18,8 @@ What the visitor should understand or do in 30 seconds, the product and its movi
 ## 1b. Choose the engine and asset level (ask the user)
 | Situation | Engine |
 | --- | --- |
-| Light product showcase, configurator, fast load, SEO or phone-first | Three.js (this skill, plus `threejs`) |
-| Professional project, heavy mechanics or physics, Asset Store content, high-end visuals | Unity (`unity-scene-builder`) |
+| Everything else: showcase, configurator, fast load, SEO, phone-first | Plain web stack with Three.js after approval (this skill, plus `threejs`) |
+| The user has defined the project as a Unity project (heavy mechanics, Asset Store content, high-end visuals) | Unity (`unity-scene-builder`), only because the user said so |
 Asset levels (each step up needs approval): (1) primitives only, no outside assets; (2) a client or CAD model as glTF, free HDRI and textures; (3) paid, purchased or AI-generated assets that the user provides or approves, with licenses checked and never committed to a public repo.
 
 ## 2. Art direction (write it down in about 8 lines)

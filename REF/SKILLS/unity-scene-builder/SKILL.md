@@ -1,6 +1,6 @@
 ---
 name: unity-scene-builder
-description: Builds professional interactive 3D scenes and product simulations in Unity for web delivery - scene-as-code editor scripts, orbit camera, hotspots, simulation scripts, URP or HDRP setup, WebGL build settings, a JavaScript bridge and a website embed. Use for Unity projects, Asset Store scenes, Unity WebGL builds, or embedding Unity in a web app.
+description: Unity scenes for web delivery - scene-as-code editor scripts, orbit camera, hotspots, simulation scripts, WebGL build settings, JavaScript bridge and website embed. Use ONLY when the user says the project is a Unity project. Never propose Unity for basic or light projects.
 metadata:
   source: original (Agent_REF); based on public Unity documentation, untested in the Unity editor
   date_added: '2026-10-12'
@@ -12,7 +12,7 @@ metadata:
 
 # Unity Scene Builder
 
-Use after `3d-scene-builder` has produced the brief and art direction. Unity is the user's choice for professional projects; propose Three.js instead only if the scene is a light product showcase.
+Use only when the user has defined the project as a Unity project (typically heavy 3D work). Basic and light projects stay on the plain web stack and never use Unity. Use after `3d-scene-builder` has produced the brief and art direction. Do not suggest switching engines; the user decides.
 
 ## 1. Ask first (one question at a time)
 Unity version and render pipeline (URP is the usual web choice; HDRP is too heavy for WebGL), target (WebGL in a web app, desktop too), which Asset Store packages are installed and their prefab paths, the product's moving parts and inputs, and the page that will host it. Read `REF/CONTEXT/001_PROJECT_CONTEXT.md` if it exists.

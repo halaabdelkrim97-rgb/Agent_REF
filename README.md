@@ -1,6 +1,6 @@
 # Agent_REF
 
-**Version v1.9.0** · see [CHANGELOG.md](CHANGELOG.md). Every update to `main` has a commit prefixed with its version, for example `v1.9.0: ...`.
+**Version v1.9.1** · see [CHANGELOG.md](CHANGELOG.md). Every update to `main` has a commit prefixed with its version, for example `v1.9.1: ...`.
 
 A lightweight context framework designed to ground AI coding agents in your project's specific domain logic, business rules, and technical requirements.
 
@@ -36,7 +36,7 @@ Never add React, TypeScript, Tailwind, Node or any build tool during setup.
 1. In your project, create the `REF/CONTEXT` folder. Copy [`REF/TEMPLATES/001_PROJECT_CONTEXT.md`](REF/TEMPLATES/001_PROJECT_CONTEXT.md) into it and fill it with your project's description, business rules and current stack.
 2. Copy the text in [`agent-rules.md`](REF/RULES/agent-rules.md) into your agent instructions, and it will perform automatically.
 
-Default stack: native HTML, CSS and JavaScript. The agent will ask you before using anything else.
+Default stack: native HTML, CSS and JavaScript. The agent will ask you before using anything else. Unity is used only for heavy projects that you define as Unity projects; basic and light projects never use it.
 
 ### Use it in Claude Code
 - **All projects:** copy the folders in `REF/SKILLS/` into `~/.claude/skills/`.
@@ -84,6 +84,7 @@ Default stack: native HTML, CSS and JavaScript. The agent will ask you before us
 ```
 Agent_REF/
 ├── README.md
+├── CLAUDE.md                   # rules for working on this repo
 ├── CHANGELOG.md                # version history (commits on main are prefixed vX.Y.Z)
 ├── .claude-plugin/             # marketplace.json and plugin.json (Claude Code plugin)
 ├── commands/
@@ -107,6 +108,23 @@ Agent_REF/
 ## 🧰 Skills
 
 All skills live in [`REF/SKILLS/`](REF/SKILLS). Each skill is a folder containing a `SKILL.md` (with `name` and `description` frontmatter) and, for some, extra `references/`, data, or scripts. Claude loads a skill when its description fits the task, so the agent does not need to read this folder on every prompt. If skills are not loaded natively, the agent reads only the index below and opens the relevant skills. It reports which skills it used.
+
+### Which skill for which job (quick routing)
+
+| You want to... | Skill | Not this one |
+| --- | --- | --- |
+| Plan before building | `brainstorming`, then `writing-plans` | |
+| Build UI with a design direction | `ui-ux-pro-max` | `frontend-developer` is for component and state code; `baseline-ui` is a quick polish |
+| Add motion | `css-motion` | `scroll-experience` only for scroll-driven pages |
+| Show a product in 3D on a website | `3d-scene-builder`, then `threejs` for API details | `interactive-simulation` is for 2D and the model/loop logic |
+| Heavy 3D project you defined as Unity | `unity-scene-builder` | never for basic or light projects |
+| Draw illustrations or icons | `art-svg-canvas` | |
+| Write docs or a README | `doc-writer` | `project-summarizer` is for session status and handoff |
+| Test or verify a change | `testing` | |
+| Check security | `security-review` | |
+| Hardware, CAD, firmware | `cad-firmware` | |
+| Improve a skill after a session | `reflect` | |
+| Build a whole agent or a new skill from sources | `agent-builder` (uses `writing-skills` for the rules) | `writing-great-skills` is a reference for wording |
 
 ### Planning & Process
 
