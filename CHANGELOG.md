@@ -3,6 +3,13 @@
 Versions follow `vMAJOR.MINOR.PATCH`. Every commit on `main` starts with the version it belongs to, for example `v1.2.0: summary`.
 Git tags cannot be pushed from the environment these updates were made in, so the commit prefix and this file are the version record.
 
+## v2.2.0
+
+- **Four new skills (36):** `nano-banana` (AI raster images through the Gemini API, user's own key, ask first), `framer-motion` (Motion for React, ask first), `gsap` (timelines and ScrollTrigger, ask first; the official full set is github.com/greensock/gsap-skills, MIT) and `ui-components-21st` (21st.dev Magic MCP and CLI: stack gate, review checklist, key handling).
+- Written for this repo from public docs; no third-party skill text copied. Each carries a vanilla-first gate: they are dependencies or paid/keyed services, so Forge asks before using them. The 21st.dev commands are given to the user to run themselves; no API key is stored anywhere in the repo.
+- `forge.md` routing table updated; version bumped in README, `forge.md` and `.claude-plugin/*.json`.
+- Tested: `package_skills.py --check`. Not tested: any of the four in a live session, the Gemini request, the 21st.dev commands (setup differs between guides).
+
 ## v2.1.1
 
 - **`project-summarizer` removed (32 skills).** Its full body moved, nothing dropped, to `REF/SKILLS/doc-writer/references/project-context.md`; `doc-writer` has a short "Project context file" section and its description now covers wrap-up, handoff and `/forge:context`.

@@ -1,8 +1,8 @@
 # Agent_REF: Forge, the REF dev agent
 
-**Version v2.1.1** · see [CHANGELOG.md](CHANGELOG.md). Every update to `main` has a commit prefixed with its version, for example `v2.0.0: ...`.
+**Version v2.2.0** · see [CHANGELOG.md](CHANGELOG.md). Every update to `main` has a commit prefixed with its version, for example `v2.0.0: ...`.
 
-**Forge** is a dev agent for Claude Code and Claude chat. It is one instruction file ([`REF/AGENT/forge.md`](REF/AGENT/forge.md)) plus 32 skills, a project context file convention and four commands. Forge works in native HTML, CSS and JavaScript first, asks before adding anything else, keeps the project context file current, reports which skills it used, and is built to spend few tokens.
+**Forge** is a dev agent for Claude Code and Claude chat. It is one instruction file ([`REF/AGENT/forge.md`](REF/AGENT/forge.md)) plus 36 skills, a project context file convention and four commands. Forge works in native HTML, CSS and JavaScript first, asks before adding anything else, keeps the project context file current, reports which skills it used, and is built to spend few tokens.
 
 ---
 
@@ -98,12 +98,12 @@ Agent_REF/
     │   └── forge.md            # the Forge agent instruction file
     ├── TEMPLATES/
     │   └── 001_PROJECT_CONTEXT.md   # copy into a project as REF/CONTEXT/001_PROJECT_CONTEXT.md
-    └── SKILLS/                 # 32 skills, one folder each (SKILL.md + optional references)
+    └── SKILLS/                 # 36 skills, one folder each (SKILL.md + optional references)
 ```
 
 ---
 
-## 🧰 Skills (32)
+## 🧰 Skills (36)
 
 Each skill is a folder with a `SKILL.md` (name and description frontmatter) and, for some, `references/`, data, scripts or templates. Claude loads a skill when its description fits the task, so reading the whole folder is never needed. The task-to-skill routing table is in [`forge.md`](REF/AGENT/forge.md), section 4.
 
@@ -120,6 +120,7 @@ Each skill is a folder with a `SKILL.md` (name and description frontmatter) and,
 | --- | --- |
 | [`backend-architect`](REF/SKILLS/backend-architect) | Backend and API architecture: REST, GraphQL and gRPC design, service boundaries, event-driven patterns, resilience and observability. Use when designing or reviewing a backend service or API. Recommends technology but asks before adding any runtime, framework or database. |
 | [`frontend-developer`](REF/SKILLS/frontend-developer) | Frontend component, responsive layout, client-side state, performance and accessibility guidance. Plain HTML, CSS and JavaScript by default; React 19 and Next.js 15 parts apply only if the project already uses them. Use when building or fixing UI components or frontend behavior. |
+| [`ui-components-21st`](REF/SKILLS/ui-components-21st) | Use 21st.dev (Magic MCP and 21st-dev CLI) to find or generate UI components from a prompt. Use only when the user asks for 21st.dev or wants ready-made React, Tailwind or shadcn components. Covers the stack gate, the setup the user runs themselves, key handling, and how to review and adapt the output. |
 | [`coding-standards`](REF/SKILLS/coding-standards) | Coding standards and best practices for JavaScript, plus TypeScript, React and Node.js where the project already uses them. Use when writing, reviewing or refactoring code. |
 | [`debugging`](REF/SKILLS/debugging) | Root-cause debugging procedure - reproduce, isolate, form ranked hypotheses, gather evidence, apply the smallest fix and verify. Use for bugs, errors, blank pages, wrong output, flaky behavior or "it worked yesterday". |
 | [`git-workflow`](REF/SKILLS/git-workflow) | Git habits for clean history - branches, small commits, version-prefixed messages, safe pushes, pull requests, changelogs and recovery. Use when committing, branching, versioning, pushing, opening a PR or undoing a git mistake. |
@@ -132,8 +133,11 @@ Each skill is a folder with a `SKILL.md` (name and description frontmatter) and,
 | [`baseline-ui`](REF/SKILLS/baseline-ui) | Quickly deslop UI code by fixing spacing, hierarchy, typography, and small layout issues. Use when the interface needs a fast cleanup or polish pass. |
 | [`scroll-experience`](REF/SKILLS/scroll-experience) | Scroll-driven web experiences: parallax storytelling, scroll animations, interactive narratives and cinematic pages, using CSS scroll-driven animation and IntersectionObserver before any library. Use when a page should unfold as the visitor scrolls. |
 | [`css-motion`](REF/SKILLS/css-motion) | Plain CSS and Web Animations motion: transitions, keyframes, scroll-driven animation, FLIP, micro-interactions, easing and reduced motion. Use when adding or fixing UI animation. Not for 3D. |
+| [`framer-motion`](REF/SKILLS/framer-motion) | Motion (formerly Framer Motion) for React projects: motion components, variants, gestures, AnimatePresence exit animations, layout and shared-layout transitions, scroll-linked values, springs and reduced motion. Use only when the project already uses React and CSS motion is not enough. Ask before adding the dependency. |
+| [`gsap`](REF/SKILLS/gsap) | GSAP (GreenSock) animation: tweens, timelines, easing, ScrollTrigger, stagger, SVG and text effects, React cleanup with useGSAP, matchMedia and reduced motion. Use for complex sequenced or scroll-driven animation that CSS cannot do cleanly. Ask before adding the library; for simple motion use css-motion. |
 | [`art-svg-canvas`](REF/SKILLS/art-svg-canvas) | Illustrations, icons, patterns, generative art, backgrounds and simple image assets in plain SVG, CSS and Canvas, with no libraries or image services. Use for logo and icon sketches, hero art, patterns, favicons or social images. |
 | [`canvas-design`](REF/SKILLS/canvas-design) | Creates original static visual art (poster, cover, art piece) as a single .png or .pdf, guided by a short written design philosophy. Use when asked for a poster, artwork or other static design piece, not for UI, web pages or charts. Never copies existing artists' work. |
+| [`nano-banana`](REF/SKILLS/nano-banana) | Generates and edits raster images (hero art, mockups, icons, textures, product shots) with Google's Nano Banana image models through the Gemini API. Use when the user asks for an AI-generated image or an edit of an existing image. Not for SVG or CSS art (art-svg-canvas) or posters made by code (canvas-design). |
 | [`data-and-charts`](REF/SKILLS/data-and-charts) | Charts, KPIs and small dashboards for client sites in plain SVG or Canvas - chart choice, scales, labels, accessible color palettes, tooltips, table fallbacks and performance. Use when showing data, measurements or simulation results visually. |
 | [`accessibility`](REF/SKILLS/accessibility) | WCAG 2.2 AA accessibility checks and fixes for web pages and interactive tools - keyboard, focus, names, contrast, forms, motion, dialogs, canvas and 3D alternatives. Use when building or auditing for accessibility, or before client launch. |
 
