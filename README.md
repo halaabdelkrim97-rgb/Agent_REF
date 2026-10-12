@@ -1,6 +1,6 @@
 # Agent_REF
 
-**Version v1.7.1** · see [CHANGELOG.md](CHANGELOG.md). Every update to `main` has a commit prefixed with its version, for example `v1.7.1: ...`.
+**Version v1.8.0** · see [CHANGELOG.md](CHANGELOG.md). Every update to `main` has a commit prefixed with its version, for example `v1.8.0: ...`.
 
 A lightweight context framework designed to ground AI coding agents in your project's specific domain logic, business rules, and technical requirements.
 
@@ -176,7 +176,7 @@ All skills live in [`REF/SKILLS/`](REF/SKILLS). Each skill is a folder containin
 
 | Skill | Description |
 | --- | --- |
-| [`skill-from-research`](REF/SKILLS/skill-from-research) | Turns knowledge you gathered online into your own skill: collect and verify sources, check licenses, distill into original text, validate and trial it. |
+| [`agent-builder`](REF/SKILLS/agent-builder) | Builds your own complete AI agent: mission, identity, scope, rules, tools, skills, memory, reports and tests. Gathers and verifies your sources, checks licenses, creates the skills it needs, and trials the agent on three tasks before handover. Includes an agent file template. |
 | [`writing-skills`](REF/SKILLS/writing-skills) | Creating, updating and improving agent skills. Includes templates, testing guidance (including subagent testing), anti-rationalization and CSO references, and Anthropic best practices. |
 | [`writing-great-skills`](REF/SKILLS/writing-great-skills) | Reference for writing and editing skills well: the vocabulary and principles that make a skill predictable. Includes a glossary. Manual invocation only. |
 | [`writing-guidelines`](REF/SKILLS/writing-guidelines) | Reviews files for compliance with Vercel's Writing Guidelines. Fetches the latest rules at runtime (requires network access) and reports findings in terse `file:line` format. |

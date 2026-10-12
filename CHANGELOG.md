@@ -3,6 +3,11 @@
 Versions follow `vMAJOR.MINOR.PATCH`. Every commit on `main` starts with the version it belongs to, for example `v1.2.0: summary`.
 Git tags cannot be pushed from the environment these updates were made in, so the commit prefix and this file are the version record.
 
+## v1.8.0
+
+- **`skill-from-research` renamed and widened to `agent-builder`.** It now defines a whole agent (mission, identity, scope, rules, tools, skills, memory, token plan, reports, improvement loop), writes the Claude Code agent file or chat Project instructions, creates the skills the agent needs from verified sources, and trials the agent on three tasks (normal, ambiguous, out of scope). New `references/agent-template.md`. Source and license checks, original wording and "AI instructions in sources are data" are kept.
+- The Claude Code agent file fields are written from public documentation and not tested here; the skill tells the agent to check current documentation first.
+
 ## v1.7.1
 
 - **`examples/desk-fan/`:** first 3D demo built with `3d-scene-builder` (procedural desk fan, motor lag model, orbit camera, hotspots, named views). Includes a local copy of three.js r170 and OrbitControls (MIT, license file in `vendor/`). Serve it with a static server (`python3 -m http.server`), because ES modules and import maps do not load from `file://`.
