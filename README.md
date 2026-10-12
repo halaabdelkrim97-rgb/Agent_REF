@@ -1,6 +1,6 @@
 # Agent_REF
 
-**Version v1.5.0** · see [CHANGELOG.md](CHANGELOG.md). Every update to `main` has a commit prefixed with its version, for example `v1.5.0: ...`.
+**Version v1.6.0** · see [CHANGELOG.md](CHANGELOG.md). Every update to `main` has a commit prefixed with its version, for example `v1.6.0: ...`.
 
 A lightweight context framework designed to ground AI coding agents in your project's specific domain logic, business rules, and technical requirements.
 
@@ -21,7 +21,7 @@ A lightweight context framework designed to ground AI coding agents in your proj
 Never add React, TypeScript, Tailwind, Node or any build tool during setup.
 
 ### One-command options
-- Claude Code plugin: `/plugin marketplace add halaabdelkrim97-rgb/Agent_REF` then `/plugin install agent-ref@agent-ref`. After that, `/agent-ref:ref` loads the rules and project context in any session.
+- Claude Code plugin (`/agent-ref:report` prints the session report: skills used, tokens, plan, improvements): `/plugin marketplace add halaabdelkrim97-rgb/Agent_REF` then `/plugin install agent-ref@agent-ref`. After that, `/agent-ref:ref` loads the rules and project context in any session.
 - Claude chat has no install command: build ZIPs with `python3 scripts/package_skills.py` and upload them in Customize > Skills.
 
 ---
@@ -82,7 +82,8 @@ Agent_REF/
 ├── CHANGELOG.md                # version history (commits on main are prefixed vX.Y.Z)
 ├── .claude-plugin/             # marketplace.json and plugin.json (Claude Code plugin)
 ├── commands/
-│   └── ref.md                  # /agent-ref:ref loads rules and project context
+│   ├── ref.md                  # /agent-ref:ref loads rules and project context
+│   └── report.md               # /agent-ref:report session report
 ├── scripts/
 │   └── package_skills.py       # validates skills and builds upload-ready ZIPs for Claude chat
 └── REF/
@@ -90,7 +91,7 @@ Agent_REF/
     │   └── agent-rules.md      # System prompt / execution rules for the agent
     ├── TEMPLATES/
     │   └── 001_PROJECT_CONTEXT.md   # Copy into your project as REF/CONTEXT/001_PROJECT_CONTEXT.md
-    └── SKILLS/                 # 17 skills, one folder each (SKILL.md + optional references)
+    └── SKILLS/                 # 21 skills, one folder each (SKILL.md + optional references)
 ```
 
 ---
@@ -136,6 +137,20 @@ All skills live in [`REF/SKILLS/`](REF/SKILLS). Each skill is a folder containin
 | [`doc-writer`](REF/SKILLS/doc-writer) | READMEs, setup steps, design notes, handover and release notes written from the real code, with every command and path checked. |
 | [`testing`](REF/SKILLS/testing) | Manual browser checklists and native checks first (console, responsive, keyboard, accessibility, forms); test tools only with your approval. |
 
+### Simulation, Motion & Art
+
+| Skill | Description |
+| --- | --- |
+| [`interactive-simulation`](REF/SKILLS/interactive-simulation) | Interactive product simulations, configurators and browser games for clients: model/view split, fixed-timestep loop, physics basics, parameter controls, performance budget, client delivery. Plain Canvas/SVG first; 3D through `threejs` after approval. |
+| [`css-motion`](REF/SKILLS/css-motion) | Native CSS/Web Animations motion: transitions, keyframes, scroll-driven animation, FLIP, reduced motion. No animation libraries. |
+| [`art-svg-canvas`](REF/SKILLS/art-svg-canvas) | Illustrations, icons, patterns and generative art in SVG, CSS and Canvas. No image services. |
+
+### Security
+
+| Skill | Description |
+| --- | --- |
+| [`security-review`](REF/SKILLS/security-review) | Checklist review of web code: secrets, XSS, input, forms, headers, third-party scripts, dependencies, storage, APIs. Findings as severity, `file:line`, fix. |
+
 ### Mechatronics
 
 | Skill | Description |
@@ -166,6 +181,7 @@ Several skills are imported from community and upstream projects. Each `SKILL.md
 - [`CloudAI-X/threejs-skills`](https://github.com/CloudAI-X/threejs-skills) (`threejs`)
 - [`mattpocock/skills`](https://github.com/mattpocock/skills) (`writing-great-skills`, MIT)
 - [`vercel-labs/agent-skills`](https://github.com/vercel-labs/agent-skills) (`writing-guidelines`)
+- Ideas for `ui-ux-pro-max`, `testing`, `security-review`, `css-motion`, `art-svg-canvas` and `interactive-simulation` come from public community skill lists (Anthropic `anthropics/skills`, `vercel-labs/agent-skills`, `trailofbits/skills`, `majidmanzarpour/threejs-game-skills`). The skills here are original text written for this repo; no third-party skill text was copied.
 - `vibeship-spawner-skills`, Apache 2.0 (`scroll-experience`)
 
 Check each skill's frontmatter for its exact license before reuse.

@@ -22,6 +22,9 @@ Goal: a later session reads one small file instead of the whole project. The sum
 4. Move settled decisions to section 7 as one line each: decision, reason, date. Move new constraints to section 6.
 5. Show the user the diff of the context file and wait for approval before saving it, unless they asked you to save directly.
 
+## Handoff note (when the session ends or the user switches tool)
+Add a short block at the end of section 9, replaced each time: **Goal of this session**, **State** (what is done and verified), **Decisions** made and why, **Next action** (one concrete step), **Do not redo** (things already tried or rejected). Under 12 lines. A new session reads it first and continues from "Next action".
+
 ## Rules
 - Keep section 9 under about 25 lines. Replace old status instead of appending a history; git keeps the history.
 - Facts only: paths, commands, decisions, results you verified. Mark anything unverified as "unverified".

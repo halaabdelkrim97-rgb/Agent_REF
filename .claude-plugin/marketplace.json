@@ -7,7 +7,7 @@
       "name": "agent-ref",
       "source": "./",
       "description": "REF Skills (planning, UI/UX, Three.js, backend, writing) for native HTML, CSS and JavaScript projects",
-      "version": "1.5.0"
+      "version": "1.6.0"
     }
   ]
 }

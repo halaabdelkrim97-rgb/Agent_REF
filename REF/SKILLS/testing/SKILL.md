@@ -41,6 +41,9 @@ Expected: <observable result>
 Result: pass | fail | not verified (<reason>)
 ```
 
+## Browser automation (ask first)
+Driving a real browser (Playwright and similar) is the best way to test flows and take screenshots, but it is a new dependency. Offer it when manual steps would be repeated often or the project has many flows. Explain the benefit and the cost (install, maintenance) and wait for approval. Without it, keep the manual checklist.
+
 ## Rules
 - Test the behavior you changed and the nearest behavior it could break. Do not run the whole project's checks for a one-line change.
 - A test you did not run is "not verified", never "passed".

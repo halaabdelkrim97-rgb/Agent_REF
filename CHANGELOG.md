@@ -3,6 +3,14 @@
 Versions follow `vMAJOR.MINOR.PATCH`. Every commit on `main` starts with the version it belongs to, for example `v1.2.0: summary`.
 Git tags cannot be pushed from the environment these updates were made in, so the commit prefix and this file are the version record.
 
+## v1.6.0
+
+- **Session report.** Rules section 9 defines a short report (skills used with reasons, tokens, plan, improvements). Tokens are reported only from figures the environment shows (`/cost`, `/context`); otherwise "not measured". New `/agent-ref:report` command prints it without opening extra files.
+- **New skills (4):** `interactive-simulation` (client product simulations, configurators, games; plain Canvas/SVG first, patterns file), `css-motion`, `art-svg-canvas`, `security-review`. Original text; community lists were used to choose topics, not copied.
+- **Merges:** `ui-ux-pro-max` gets a "Design direction first" step; `project-summarizer` gets a handoff note; `testing` gets an "ask first" browser-automation section.
+- Not added: skills that need outside services or API keys (image/audio/3D generators), plugins with background services, and sources that could not be read (the `anthropics/skills` pages were not reachable, so nothing from them was used).
+- 17 to 21 skills.
+
 ## v1.5.0
 
 - **Skill-use report and token discipline** in the rules: each used skill is listed with the reason, reference files are named, and a new "Token discipline" block limits what is opened and re-read.

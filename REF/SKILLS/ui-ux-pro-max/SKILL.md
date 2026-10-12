@@ -128,6 +128,16 @@ This repo is vanilla-first: native HTML, CSS and JavaScript unless the user appr
 - `--stack html-css-js` is the default and is always allowed. `--stack html-tailwind` and the framework CSVs contain Tailwind or framework-specific advice. Use them only if the project already uses that stack. Otherwise read them for the underlying principle and write plain CSS.
 - If a framework or Tailwind would clearly give better results, do not add it. Tell the user why and ask first.
 
+## Design direction first
+
+Before any code or search, choose a direction in a few lines. This is what keeps the result from looking like a template.
+1. **Purpose and audience:** what the screen must do, for whom, on which device.
+2. **Tone:** pick one clear word (for example calm, technical, playful, premium, editorial) and avoid mixing several.
+3. **One memorable idea:** a distinctive layout, type pairing, color move or motion that the page is remembered for.
+4. **Constraints:** brand colors, accessibility level, performance budget, vanilla stack.
+5. **Avoid generic defaults:** no default system-font-only pages, purple-gradient-on-white, identical card grids, or stock hero layouts unless the brief asks for them.
+Then use `--design-system` to ground the direction in real palettes, type and patterns, and `css-motion` for motion.
+
 ## How to Use This Skill
 
 Run every `python3 scripts/search.py` command below from this skill's own folder (`ui-ux-pro-max/`), wherever the skill is installed.
