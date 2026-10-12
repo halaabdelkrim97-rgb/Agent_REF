@@ -3,6 +3,14 @@
 Versions follow `vMAJOR.MINOR.PATCH`. Every commit on `main` starts with the version it belongs to, for example `v1.2.0: summary`.
 Git tags cannot be pushed from the environment these updates were made in, so the commit prefix and this file are the version record.
 
+## v1.7.0
+
+- **New `3d-scene-builder`:** art-directed, game-like 3D scenes and product demos for client websites (brief, art direction, primitive blockout, look, interaction, performance budget, embedding). Builds on `threejs` and `interactive-simulation`; Three.js stays ask-first.
+- **New `skill-from-research`:** turns knowledge gathered online into a validated, original, token-efficient skill (sources, licenses, distilling, trial run).
+- **Tested example:** `examples/spring-damper/`, built with `interactive-simulation`. Checks run: undamped period within 0.14% of 2π√(m/k), energy bounded over 20 s, critical damping settles without overshoot, no NaN at slider extremes, no horizontal overflow at 360/768/1280 px, pause/reset/preset buttons, reduced motion starts paused, console clean.
+- **Fix found by the test:** `interactive-simulation` said "opens by double click" while the pattern used ES modules, which browsers block on `file://`. The skill now states both options, and adds the favicon line that removed a console 404.
+- 21 to 23 skills.
+
 ## v1.6.1
 
 - README "Agent setup" step 6: optional, ask-first install of the official `frontend-design` and `webapp-testing` skills through the Anthropic marketplace. Commands are from public documentation and not tested here; the agent must report errors instead of guessing names. Playwright still needs explicit approval.

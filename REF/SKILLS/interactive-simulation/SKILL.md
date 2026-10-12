@@ -48,7 +48,8 @@ Goal: a client opens one page, moves a control, and sees how their product behav
 - Large assets: compress, lazy load, show progress.
 
 ## 6. Client delivery
-- One folder, opens by double click or any static host. No build step, no external CDN unless approved (and then pinned).
+- One folder, no build step, no external CDN unless approved (and then pinned). Browsers block ES modules (`type="module"`, `import`) on `file://`, so choose one: (a) plain `<script>` files or one inline script if the client must open it by double click, or (b) modules plus a static host or `python3 -m http.server`, and say so in the README.
+- Add `<link rel="icon" href="data:,">` (or a real icon) so the console has no 404 for `favicon.ico`.
 - Works offline if promised. No tracking, no third-party calls without the client's consent.
 - Touch and keyboard support, labels on every control, readable on a phone.
 - Include a one-page README: how to run, how to change parameters, units, assumptions, known limits.
