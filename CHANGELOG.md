@@ -3,6 +3,11 @@
 Versions follow `vMAJOR.MINOR.PATCH`. Every commit on `main` starts with the version it belongs to, for example `v1.2.0: summary`.
 Git tags cannot be pushed from the environment these updates were made in, so the commit prefix and this file are the version record.
 
+## v2.2.3
+
+- **`ui-components-21st` from a first real test:** new `scripts/twentyfirst.py` (Python standard library) calls the 21st.dev MCP server over HTTP without registering it: `tools`, `search`, `call <tool> '<json>'`. It reads `TWENTYFIRST_API_KEY` from the environment or a gitignored `.env`, never prints the key, and prints UTF-8 on Windows consoles. The skill adds `--scope user` to the `claude mcp add` command, the main tools, and the free-tier limits (2 code retrievals a day, AI generation off) so the agent checks `get_usage` first.
+- Tested on a real project without the `claude` CLI: key from `.env` accepted, `tools` (51), `search`, `get_usage`, missing-key and bad-JSON errors; `package_skills.py --check`. Not tested: `get_component` (kept the user's daily retrievals), `claude mcp add` (no CLI on that machine).
+
 ## v2.2.2
 
 - **`nano-banana` from a first real test:** the CLI also reads the key from a gitignored `.env` in the folder it runs from, explains a `429 ... limit: 0` (no free image quota on the key: billing needed) instead of printing raw JSON, and has `--list-models` to show the image models a key can use. The skill notes the free-key result and how to set up `.env` safely.

@@ -1,6 +1,6 @@
 # Agent_REF: Forge, the REF dev agent
 
-**Version v2.2.2** · see [CHANGELOG.md](CHANGELOG.md). Every update to `main` has a commit prefixed with its version, for example `v2.0.0: ...`.
+**Version v2.2.3** · see [CHANGELOG.md](CHANGELOG.md). Every update to `main` has a commit prefixed with its version, for example `v2.0.0: ...`.
 
 **Forge** is a dev agent for Claude Code and Claude chat. It is one instruction file ([`REF/AGENT/forge.md`](REF/AGENT/forge.md)) plus 36 skills, a project context file convention and four commands. Forge works in native HTML, CSS and JavaScript first, asks before adding anything else, keeps the project context file current, reports which skills it used, and is built to spend few tokens.
 

@@ -15,9 +15,11 @@ A hosted service: the Magic MCP server turns a prompt (for example "/ui a pricin
 
 ## Setup (the user runs these, not the agent)
 The agent must not type, store or echo API keys. Give the user the command to run in their own terminal, with their key taken from the 21st.dev console:
-- Remote MCP: `claude mcp add --transport http 21st https://21st.dev/api/mcp --header "x-api-key: <YOUR_KEY>"`
+- Remote MCP: `claude mcp add --transport http --scope user 21st https://21st.dev/api/mcp --header "x-api-key: <YOUR_KEY>"` (`--scope user` keeps the key out of the project).
 - CLI installer: `npx @21st-dev/cli init --client claude --write` (it edits MCP config files: say so before it runs).
 - Exact current commands: 21st.dev and github.com/21st-dev/magic. Guides differ, so confirm there.
+- **No install, no registration (tested 2026-10-13):** when there is no `claude` command on the PATH (the VS Code extension alone) or the server is not registered, call the same server with the bundled script, run from the project folder: `python scripts/twentyfirst.py tools`, `search "<query>"`, `call get_component '{"id": <id>}'`, `call get_usage`. It reads `TWENTYFIRST_API_KEY` from the environment or from the project's `.env` (check `git check-ignore .env` first; create the line empty and let the user paste the key) and never prints it.
+- Main tools: `search` (components, themes, templates; metadata and preview images, free), `get_component` (the code), `get_theme`, `get_inspiration`, `search_logo`, `get_usage`. Run `get_usage` first: on the free tier (seen 2026-10-13) `get_component` allows 2 code retrievals a day and AI generation is off, so search and compare previews before spending a retrieval.
 
 Keys never go into the repo, `CLAUDE.md`, the context file, screenshots or chat. If a key was pasted in chat, tell the user to revoke and replace it. If the key lives in a project MCP config, that file must be git-ignored.
 
