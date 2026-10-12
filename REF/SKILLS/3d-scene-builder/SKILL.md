@@ -6,20 +6,27 @@ metadata:
   date_added: '2026-10-12'
 ---
 
-> **Stack gate (vanilla-first):** Three.js is an external library. The user has asked for 3D scenes, so propose it once per project with the benefit, load it without a build step (import map, pinned version, or a local copy) and wait for approval. Asset generators, AI image or 3D services and extra libraries need their own approval. Without Three.js, fall back to SVG/Canvas 2D (`interactive-simulation`).
+> **Stack gate (vanilla-first):** For web showcases the default engine is Three.js, an external library: propose it once per project with the benefit and wait for approval; load it without a build step (import map, pinned version or a local copy). If the project is a professional Unity project, use `unity-scene-builder` after the art direction below. Asset generators, AI image or 3D services and extra libraries need their own approval. Without a 3D engine, fall back to SVG/Canvas 2D (`interactive-simulation`).
 
 # 3D Scene Builder
 
-Order of work: brief, art direction, blockout, look, interaction, polish, delivery. Do not jump to details before the blockout reads well. Use `threejs` for API details (open only the topic file you need) and `interactive-simulation` for the model and loop.
+Order of work: brief, engine choice, art direction, blockout, look, interaction, polish, delivery. Do not jump to details before the blockout reads well. Use `threejs` for API details (open only the topic file you need) and `interactive-simulation` for the model and loop.
 
 ## 1. Brief (ask one question at a time)
 What the visitor should understand or do in 30 seconds, the product and its moving parts, brand colors and mood, the page it sits in (size, position), device targets, and source assets (CAD export, photos, logo). Ask for a CAD export in glTF (or STEP/STL to convert) when the product exists.
+
+## 1b. Choose the engine and asset level (ask the user)
+| Situation | Engine |
+| --- | --- |
+| Light product showcase, configurator, fast load, SEO or phone-first | Three.js (this skill, plus `threejs`) |
+| Professional project, heavy mechanics or physics, Asset Store content, high-end visuals | Unity (`unity-scene-builder`) |
+Asset levels (each step up needs approval): (1) primitives only, no outside assets; (2) a client or CAD model as glTF, free HDRI and textures; (3) paid, purchased or AI-generated assets that the user provides or approves, with licenses checked and never committed to a public repo.
 
 ## 2. Art direction (write it down in about 8 lines)
 - **Mood** in two words, **palette** of 4 to 6 colors (one hero color, neutrals, one accent), **background** (solid, soft gradient, studio floor).
 - **Hero object** and what moves. **Camera:** a 3/4 view at 35 to 50 degrees field of view, orbit limits so the visitor cannot get lost.
 - **Light plan:** key + fill + rim, or an environment light. **Level of detail:** clean, slightly stylized shapes read better than noisy realism.
-- Share this with the user before building. Change it first, not later.
+- Share this with the user before building. Change it first, not later. The same direction drives Three.js or Unity.
 
 ## 3. Blockout with primitives (no external assets needed)
 - Build the product from boxes, cylinders, spheres, lathe and extrude shapes. Group parts in `Group`s that match real assemblies (base, arm, door, rotor) so they can move.

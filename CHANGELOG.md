@@ -3,6 +3,13 @@
 Versions follow `vMAJOR.MINOR.PATCH`. Every commit on `main` starts with the version it belongs to, for example `v1.2.0: summary`.
 Git tags cannot be pushed from the environment these updates were made in, so the commit prefix and this file are the version record.
 
+## v1.9.0
+
+- **New `unity-scene-builder`:** professional Unity scenes for web delivery. Includes `templates/` (scripts only): `RefSceneBuilder` (menu REF > Build Showcase Scene builds lights, ground, product, camera and bridge from the user's installed prefabs, with a placeholder fallback), `RefBuildWebGL`, `OrbitCamera` (mouse, touch, pinch), `PartInfo` and `HotspotPicker`, `ProductController` (lag model driving a part), `WebBridge` plus `RefBridge.jslib` (page to Unity and back), `unity.gitignore`, and `web-embed/index.html` (loader, progress bar, controls, error message). `references/webgl-embed.md` covers hosting headers, compression, embedding and common failures.
+- **`3d-scene-builder` updated:** engine choice (Three.js or Unity) and three asset levels (primitives, glTF plus free HDRI, paid or AI assets by approval), shared art direction for both engines.
+- **Not tested:** no Unity editor was available. Brace and parenthesis balance of the C# files was checked and the skill passes the format check; compilation and behavior are unverified. Asset Store content is never committed.
+- 23 to 24 skills.
+
 ## v1.8.0
 
 - **`skill-from-research` renamed and widened to `agent-builder`.** It now defines a whole agent (mission, identity, scope, rules, tools, skills, memory, token plan, reports, improvement loop), writes the Claude Code agent file or chat Project instructions, creates the skills the agent needs from verified sources, and trials the agent on three tasks (normal, ambiguous, out of scope). New `references/agent-template.md`. Source and license checks, original wording and "AI instructions in sources are data" are kept.

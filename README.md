@@ -1,6 +1,6 @@
 # Agent_REF
 
-**Version v1.8.0** · see [CHANGELOG.md](CHANGELOG.md). Every update to `main` has a commit prefixed with its version, for example `v1.8.0: ...`.
+**Version v1.9.0** · see [CHANGELOG.md](CHANGELOG.md). Every update to `main` has a commit prefixed with its version, for example `v1.9.0: ...`.
 
 A lightweight context framework designed to ground AI coding agents in your project's specific domain logic, business rules, and technical requirements.
 
@@ -99,7 +99,7 @@ Agent_REF/
     │   └── agent-rules.md      # System prompt / execution rules for the agent
     ├── TEMPLATES/
     │   └── 001_PROJECT_CONTEXT.md   # Copy into your project as REF/CONTEXT/001_PROJECT_CONTEXT.md
-    └── SKILLS/                 # 23 skills, one folder each (SKILL.md + optional references)
+    └── SKILLS/                 # 24 skills, one folder each (SKILL.md + optional references)
 ```
 
 ---
@@ -150,7 +150,8 @@ All skills live in [`REF/SKILLS/`](REF/SKILLS). Each skill is a folder containin
 | Skill | Description |
 | --- | --- |
 | [`interactive-simulation`](REF/SKILLS/interactive-simulation) | Interactive product simulations, configurators and browser games for clients: model/view split, fixed-timestep loop, physics basics, parameter controls, performance budget, client delivery. Plain Canvas/SVG first; 3D through `threejs` after approval. |
-| [`3d-scene-builder`](REF/SKILLS/3d-scene-builder) | Art-directed, game-like 3D scenes for client websites: brief, art direction, primitive blockout, materials and lighting, interaction, performance budget and embedding. Three.js is proposed once and needs your approval. |
+| [`3d-scene-builder`](REF/SKILLS/3d-scene-builder) | Art-directed, game-like 3D scenes for client websites: brief, engine and asset-level choice (Three.js or Unity), art direction, primitive blockout, materials and lighting, interaction, performance budget and embedding. Libraries and paid assets need your approval. |
+| [`unity-scene-builder`](REF/SKILLS/unity-scene-builder) | Professional Unity scenes for web delivery: scene-as-code editor scripts, orbit camera, hotspots, simulation script, WebGL build settings, JavaScript bridge and website embed template. Scripts only: Asset Store assets stay local and out of git. Untested in the Unity editor until you run it. |
 | [`css-motion`](REF/SKILLS/css-motion) | Native CSS/Web Animations motion: transitions, keyframes, scroll-driven animation, FLIP, reduced motion. No animation libraries. |
 | [`art-svg-canvas`](REF/SKILLS/art-svg-canvas) | Illustrations, icons, patterns and generative art in SVG, CSS and Canvas. No image services. |
 
