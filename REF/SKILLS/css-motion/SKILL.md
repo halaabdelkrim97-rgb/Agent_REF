@@ -1,6 +1,6 @@
 ---
 name: css-motion
-description: Plain CSS and JavaScript animation and motion design - transitions, keyframes, scroll-driven animation, Web Animations API, FLIP, micro-interactions, page transitions, easing and reduced motion. Use when adding animation to UI, making things feel alive, or fixing janky or heavy animations. Not for 3D.
+description: Plain CSS and Web Animations motion: transitions, keyframes, scroll-driven animation, FLIP, micro-interactions, easing and reduced motion. Use when adding or fixing UI animation. Not for 3D.
 metadata:
   source: original (Agent_REF); informed by public motion-design skill lists
   date_added: '2026-10-12'

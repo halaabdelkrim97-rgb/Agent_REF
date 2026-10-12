@@ -1,30 +1,43 @@
 ---
 name: reflect
-description: Improves the REF skills over time. Reviews the session for corrections and approvals, then proposes small, confidence-tagged edits to skills or rules as a diff for the user to approve. Use when the user runs /reflect, says a skill got something wrong, or asks to learn from this session.
+description: End-of-day and end-of-session self-improvement: reviews the session or today for corrections, approvals and token waste, skips what exists, proposes small edits for approval. Use for /forge:improve or when a skill got something wrong.
 metadata:
   source: original (Agent_REF), pattern from public self-improving-skills write-ups
   date_added: '2026-10-12'
 ---
 
-# Reflect
+# Reflect (improve mode)
 
-Manual by design: nothing changes a skill without the user approving the diff.
+Manual by design: nothing is saved or changed without the user's approval. Command: `/forge:improve`.
+
+## Scope (ask once if not stated)
+- **This session** (default): the current conversation.
+- **Today:** today's Claude Code transcripts for this project only (`~/.claude/projects/`), read after the user agrees. Never read other projects.
 
 ## Procedure
-1. Pick the target: the skill the user names, or the skill that was used when the correction happened. If unclear, ask.
-2. Scan the session for three signals only: **corrections** the user made, **approvals** the user confirmed, and **repeated patterns** that worked.
-3. For each signal, write one proposed learning: the rule, where it goes (skill file and section) and why. Skip anything that is a one-off preference for the current task.
-4. Tag each learning with confidence:
-   - **High**: an explicit "always" or "never" from the user.
-   - **Medium**: a pattern that worked more than once.
-   - **Low**: a single observation. Record it as a note only if the user wants it.
-5. Show the proposed edits as a diff. Keep each edit small, and merge with an existing rule instead of adding a duplicate.
-6. After approval only: apply the edit, run `python3 scripts/package_skills.py --check` if the repo has it, and commit with a message that says which skill changed and why.
+1. **Collect** three signals: **corrections** the user made, **approvals** they confirmed, **repeated patterns** that worked. Add **token waste**: skills opened but unused, files read twice, long replies, unneeded tool calls.
+2. **Skip what exists.** Check the learnings file `REF/CONTEXT/forge-learnings.md`, the context file, the installed skills and the Forge rules. Drop any item already covered and report how many were skipped. Merge near-duplicates into one rule.
+3. **Classify each remaining item:**
+   - *Project lesson* (this project's conventions, client preferences, constraints) -> `REF/CONTEXT/forge-learnings.md`.
+   - *Skill or Forge improvement* (applies to any project) -> a proposal for the Agent_REF repo. In a project session, never edit installed skill or Forge files; write the proposal in the learnings file under "Proposals for Agent_REF" so it can be applied later in the repo.
+4. **Tag confidence:** High (explicit "always" or "never"), Medium (worked more than once), Low (single observation; keep only if the user wants it).
+5. **Show a short list** (rule, destination, confidence) and wait for approval.
+6. **Apply only approved items.** In the Agent_REF repo: edit the skill, run `python3 scripts/package_skills.py --check`, bump the version, update the CHANGELOG, commit with the version prefix.
+7. **Update the context file** with `project-summarizer` (status, decisions, visual identity) and show the diff.
+8. **Finish** with the session report: skills used, tokens (only figures the environment shows), learned, skipped, tomorrow's first step.
+
+## Learnings file format
+```
+# Forge learnings (project)
+## Rules
+- [high] <rule>. (YYYY-MM-DD)
+## Proposals for Agent_REF
+- [medium] <skill or Forge change>. (YYYY-MM-DD)
+```
+Keep it under about 60 lines; merge and delete obsolete entries.
 
 ## Guardrails
-- Never edit a skill without approval. Never run automatically unless the user has set that up and asked for it.
-- Never add rules that weaken the vanilla-first policy, the permission rules, or honesty and security rules.
-- Never store secrets, personal data or client names in a skill.
-- Prefer deleting or tightening a rule to piling on more text. A skill that grows without limit costs tokens every time.
-- Keep a changed skill's description accurate and under 1024 characters.
-- If a correction shows a skill is wrong or unclear, fix the wording; if it shows the rules file is wrong, propose that edit separately.
+- Never weaken the vanilla-first policy, permission rules, honesty or security rules.
+- Never store secrets, client data or personal data.
+- Prefer tightening or deleting a rule to adding text: every line costs tokens each time it loads.
+- Keep descriptions accurate and under 1024 characters.

@@ -1,6 +1,6 @@
 ---
 name: art-svg-canvas
-description: Creates illustrations, icons, patterns, generative art, backgrounds and simple image assets in plain SVG, CSS and Canvas - no libraries or image services. Use for logos and icon sketches, hero art, patterns, textures, animated backgrounds, favicons, social images or when image art is needed without an external generator.
+description: Illustrations, icons, patterns, generative art, backgrounds and simple image assets in plain SVG, CSS and Canvas, with no libraries or image services. Use for logo and icon sketches, hero art, patterns, favicons or social images.
 metadata:
   source: original (Agent_REF); informed by public canvas and generative-art skill lists
   date_added: '2026-10-12'

@@ -1,6 +1,6 @@
 ---
 name: cad-firmware
-description: Mechatronics help for CAD and microcontroller firmware - parametric CAD models and printable parts, Arduino and ESP32 C++ habits, pin maps, wiring and bill-of-materials docs, and a hardware safety checklist. Use for CAD design notes, Arduino/ESP32/STM32 code, sensors and actuators, wiring, or enclosure and part design.
+description: Mechatronics help: parametric CAD and printable parts, Arduino/ESP32/STM32 C++ habits, pin maps, wiring and BOM docs, hardware safety checklist. Use for CAD notes, microcontroller code, sensors, actuators, wiring or enclosure design.
 metadata:
   source: original (Agent_REF)
   date_added: '2026-10-12'

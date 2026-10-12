@@ -1,6 +1,6 @@
 ---
 name: 3d-scene-builder
-description: Process for art-directed, game-like 3D scenes and product demos on client websites: brief, art direction, primitive blockout, materials, lighting, interaction, performance budget and embedding. Plain web stack and Three.js by default (ask first); Unity only when the user defines the project as a Unity project. Use when a client wants a device or product shown or simulated in 3D.
+description: Process for art-directed, game-like 3D product demos on client websites: brief, art direction, blockout, materials, lighting, interaction, performance budget, embedding. Three.js by default (ask first); Unity only if the user defines a Unity project.
 metadata:
   source: original (Agent_REF); builds on the threejs and interactive-simulation skills
   date_added: '2026-10-12'

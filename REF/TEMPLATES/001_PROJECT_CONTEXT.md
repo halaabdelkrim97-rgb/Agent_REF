@@ -2,7 +2,7 @@
 
 > Copy this file into your project as `REF/CONTEXT/001_PROJECT_CONTEXT.md` and fill it in.
 > Keep it short (under about 150 lines). The agent reads it at the start of project work, so every line costs tokens.
-> Write facts and decisions, not instructions that duplicate `agent-rules.md`.
+> Write facts and decisions, not instructions that duplicate the Forge agent file (`REF/AGENT/forge.md`).
 
 ## 1. What this project is
 <!-- 2-4 sentences: what it does, who it is for, current status. -->
@@ -34,3 +34,12 @@
 
 ## 9. Current status and next steps
 <!-- Keep this short and update it at the end of each work session so a new session does not need to re-read the whole project. -->
+
+## 10. Visual identity and references
+<!-- Short brand and style sheet the agent reuses so every screen, scene and document matches. Fill only what exists; leave the rest blank. -->
+- Palette (hex, role): 
+- Typography (fonts, sizes, weights): 
+- Tone of voice (3 words): 
+- Logo and imagery style (files, rules): 
+- Motion and 3D style (easing, lighting mood): 
+- Reference links and files (brand guide, Figma, client site, competitors): 

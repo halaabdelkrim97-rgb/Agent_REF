@@ -21,7 +21,7 @@ description: <one sentence: what it does and when to use it>
 - Stop and ask when: <missing input, risky action, new dependency, unclear license>
 
 ## Rules
-1. Follow the REF rules (`REF/RULES/agent-rules.md`) and read `REF/CONTEXT/001_PROJECT_CONTEXT.md` before project work.
+1. Follow the REF rules (`REF/AGENT/forge.md`) and read `REF/CONTEXT/001_PROJECT_CONTEXT.md` before project work.
 2. Prefer native HTML, CSS and JavaScript. Ask before adding any technology.
 3. <Role-specific rule, testable>
 4. <Role-specific rule, testable>

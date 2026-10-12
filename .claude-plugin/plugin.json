@@ -1,8 +1,10 @@
 {
-  "name": "agent-ref",
-  "version": "1.9.1",
-  "description": "REF Skills: vanilla-first agent rules and skills",
-  "author": { "name": "halaabdelkrim97-rgb" },
+  "name": "forge",
+  "version": "2.0.0",
+  "description": "Forge, the REF dev agent: rules, skills and commands",
+  "author": {
+    "name": "halaabdelkrim97-rgb"
+  },
   "repository": "https://github.com/halaabdelkrim97-rgb/Agent_REF",
   "skills": "./REF/SKILLS"
 }

@@ -1,216 +1,192 @@
-# Agent_REF
+# Agent_REF: Forge, the REF dev agent
 
-**Version v1.9.1** · see [CHANGELOG.md](CHANGELOG.md). Every update to `main` has a commit prefixed with its version, for example `v1.9.1: ...`.
+**Version v2.0.0** · see [CHANGELOG.md](CHANGELOG.md). Every update to `main` has a commit prefixed with its version, for example `v2.0.0: ...`.
 
-A lightweight context framework designed to ground AI coding agents in your project's specific domain logic, business rules, and technical requirements.
+**Forge** is a dev agent for Claude Code and Claude chat. It is one instruction file ([`REF/AGENT/forge.md`](REF/AGENT/forge.md)) plus 32 skills, a project context file convention and four commands. Forge works in native HTML, CSS and JavaScript first, asks before adding anything else, keeps the project context file current, reports which skills it used, and is built to spend few tokens.
 
 ---
 
 ## 🤖 Agent setup (for Claude Code)
 
 > **Human:** open Claude Code in your project and say: *"Read https://github.com/halaabdelkrim97-rgb/Agent_REF/blob/main/README.md and follow the Agent setup section."*
-> **Agent:** the steps below are for you. Do them in order, skip anything already done, and do not install anything else.
+> **Agent:** the steps below are for you. Do them in order, skip anything already done, and install nothing else.
 
-1. **Ask once:** install the skills for **this project only** (`.claude/skills/`) or for **all projects** (`~/.claude/skills/`)? Default to this project.
-2. **Plugin route (preferred).** Run `/plugin marketplace add halaabdelkrim97-rgb/Agent_REF`, then `/plugin install agent-ref@agent-ref`. If plugin commands are unavailable, use the copy route.
-3. **Copy route.** `git clone --depth 1 https://github.com/halaabdelkrim97-rgb/Agent_REF.git` into a temporary folder, copy each folder of `REF/SKILLS/` to the chosen skills folder (skip folders that already exist and tell the user), then delete the temporary clone.
-4. **Rules.** If `CLAUDE.md` does not already contain "REF PROJECT AGENT", append the contents of `REF/RULES/agent-rules.md` to it (create the file if missing). Do not edit the rules.
-5. **Context.** If `REF/CONTEXT/001_PROJECT_CONTEXT.md` is missing, create it from `REF/TEMPLATES/001_PROJECT_CONTEXT.md` and ask the user for the project name, goal and stack. Do not invent answers.
-6. **Official add-ons (optional, ask the user first).** Offer these Anthropic skills, and install only the ones the user accepts:
-   - `frontend-design` (distinctive UI direction): `/plugin marketplace add anthropics/skills`, then install the plugin that contains it (`/plugin` lists them; the group is likely `example-skills@anthropic-agent-skills`). Alternative: `/plugin install frontend-design@claude-plugins-official`.
-   - `webapp-testing` (real-browser tests with Playwright): same marketplace. It adds Playwright, which is a new dependency, so explain why it helps and install it only with explicit approval, per the technology policy.
-   - The plugin names above come from public documentation and may change. If a command fails or a name is not found, report the exact error and what `/plugin` shows. Do not guess other names, and do not install from other sources.
-   - Added skills add their descriptions to the context, which costs tokens. After installing, run `/skills` and tell the user how many were added.
-7. **Report** in this form: installed skills (count and where), rules added or already present, context file created or found, and anything skipped. Tell the user to run `/skills` to confirm.
+1. **Ask once:** install for **this project only** (`.claude/skills/`) or **all projects** (`~/.claude/skills/`)? Default to this project.
+2. **Plugin route (preferred):** run `/plugin marketplace add halaabdelkrim97-rgb/Agent_REF`, then `/plugin install forge@agent-ref`. This installs the skills and the commands `/forge:start`, `/forge:context`, `/forge:improve` and `/forge:report`. If plugin commands are unavailable, use the copy route.
+3. **Copy route:** `git clone --depth 1 https://github.com/halaabdelkrim97-rgb/Agent_REF.git` into a temporary folder, copy each folder of `REF/SKILLS/` to the chosen skills folder (skip folders that already exist and say so), then delete the clone.
+4. **Forge file:** if `CLAUDE.md` contains "FORGE — REF DEV AGENT", leave it (compare the version line and offer to update). If it contains the older "REF PROJECT AGENT" block, offer to replace that block. Otherwise append the contents of `REF/AGENT/forge.md` to `CLAUDE.md` (create the file if missing). Do not edit the rules.
+5. **Context file:** run the Forge start routine. If `REF/CONTEXT/001_PROJECT_CONTEXT.md` is missing, create it from `REF/TEMPLATES/001_PROJECT_CONTEXT.md` and ask the user for goal, stack and constraints. If it exists in another format, offer `/forge:context` to migrate it without losing content. Do not invent answers.
+6. **Official add-ons (optional, ask first):** offer Anthropic's `frontend-design` and `webapp-testing` skills through `/plugin marketplace add anthropics/skills` (`/plugin` lists the plugins; the group is likely `example-skills@anthropic-agent-skills`). `webapp-testing` adds Playwright, a new dependency: explain why and install only with explicit approval. Names come from public documentation; if a command fails, report the exact error and what `/plugin` shows. Do not guess other names or sources. Added skills add their descriptions to the context, so tell the user how many were added.
+7. **Report:** installed skills (count and where), Forge file added or present, context file created, found or migrated, and anything skipped. Tell the user to run `/skills` to confirm.
 
 Never add React, TypeScript, Tailwind, Node or any build tool during setup.
 
-### One-command options
-- Claude Code plugin (`/agent-ref:report` prints the session report: skills used, tokens, plan, improvements): `/plugin marketplace add halaabdelkrim97-rgb/Agent_REF` then `/plugin install agent-ref@agent-ref`. After that, `/agent-ref:ref` loads the rules and project context in any session.
-- Claude chat has no install command: build ZIPs with `python3 scripts/package_skills.py` and upload them in Customize > Skills.
+---
+
+## 🧭 Daily use: the four commands
+
+| Command | When | What it does |
+| --- | --- | --- |
+| `/forge:start` | Start of a session | Loads the Forge rules, checks the project context file (reads it, or offers to create or migrate it), then waits. |
+| `/forge:context` | Any time | Makes `REF/CONTEXT/001_PROJECT_CONTEXT.md` follow the REF template: creates it if missing, or maps every existing fact into the ten sections without dropping content, updates status and visual identity, shows the diff. |
+| `/forge:improve` | End of the workday | Learns from this session (or today's sessions) with `reflect`: collects corrections, approvals and token waste, skips what already exists, proposes small edits, applies only what you approve, updates the context file, and prints the report. |
+| `/forge:report` | Any time | Prints the session report: skills used, tokens (only figures the environment shows), plan, improvements. |
+
+Without the plugin, say the same in plain words ("Forge: improve"). Forge also runs the start routine on its own when it begins project work.
+
+**Learnings and where they go.** Project lessons are saved in `REF/CONTEXT/forge-learnings.md`. Lessons that should change a skill or Forge itself are written as "Proposals for Agent_REF", and you apply them in this repo; a project session never edits the installed skills.
 
 ---
 
-## 🚀 Quick Start
+## 🧪 Test it in a real project (for example MakeIntelligens Studios)
 
-1. In your project, create the `REF/CONTEXT` folder. Copy [`REF/TEMPLATES/001_PROJECT_CONTEXT.md`](REF/TEMPLATES/001_PROJECT_CONTEXT.md) into it and fill it with your project's description, business rules and current stack.
-2. Copy the text in [`agent-rules.md`](REF/RULES/agent-rules.md) into your agent instructions, and it will perform automatically.
+1. Open Claude Code in that project's folder and say the sentence from the Agent setup section (or run the two `/plugin` commands).
+2. Run `/skills` and check that the REF skills are listed.
+3. Run `/forge:start`. Expect at most three lines: Forge version, whether the context file was found, and the next step.
+4. Run `/forge:context`. Expect a diff of the context file for your approval.
+5. Give Forge one small real task. Expect: a short approach, only the skills it needs, and a closing "REF Skills Used" list with reasons.
+6. Run `/forge:report`, then at the end of the day `/forge:improve`.
+7. Note anything wrong (a skill that did not trigger, a command that failed, too many tokens) and send it back: it becomes the next version.
 
-Default stack: native HTML, CSS and JavaScript. The agent will ask you before using anything else. Unity is used only for heavy projects that you define as Unity projects; basic and light projects never use it.
-
-### Use it in Claude Code
-- **All projects:** copy the folders in `REF/SKILLS/` into `~/.claude/skills/`.
-- **One project only:** copy the ones you want into that project's `.claude/skills/` and commit them.
-- Paste `agent-rules.md` into your project's `CLAUDE.md`, or `@`-import it from there.
-- Check what loaded with `/skills`. If a skill does not trigger, invoke it with `/skill-name`.
-
-### Use it in Claude chat
-- Build upload-ready ZIPs with `python3 scripts/package_skills.py` (standard library only; ZIPs go to `dist/`).
-- In Claude, open Customize > Skills (older versions: Settings > Capabilities > Skills), choose "Upload a skill" and upload a ZIP.
-- Skills uploaded in chat apply to your whole account. For project-specific rules, put the context in the Project's instructions instead.
-- Paste `agent-rules.md` into your custom instructions or the Project instructions.
-- Skills enabled in chat also sync into Claude Code when you sign in with the same account.
-   
-<img width="880" height="345" alt="image" src="https://github.com/user-attachments/assets/c0f1d273-d486-4c49-80ee-bdd6c26e6509" />
+Not yet tested in a live Claude Code session: the plugin install names, the command namespace (`/forge:...`) and reading today's transcripts. If any fail, the plain-words route still works.
 
 ---
 
-## ⚙️ How It Works
+## ⚙️ How Forge works
 
 ```
-┌──────────────────────────────┐
-│  001_PROJECT_CONTEXT.md      │ ──► Reads domain logic & technical constraints
-└──────────────┬───────────────┘
-               │
-               ▼
-┌──────────────────────────────┐
-│        agent-rules.md        │ ──► Enforces execution rules & operational guidelines
-└──────────────┬───────────────┘
-               │
-               ▼
-┌──────────────────────────────┐
-│ Context-Aware Code & Output  │ ──► Generates tailored, production-ready code
-└──────────────────────────────┘
+Start routine ──► context file (read, create or migrate)
+      │
+      ▼
+Routing table ──► one or two skills for the task (SKILL.md, then at most one reference file)
+      │
+      ▼
+Work (HTML/CSS/JS first, ask before any new technology) ──► validate ──► report skills used
+      │
+      ▼
+End of day: /forge:improve ──► learnings, context update, session report
 ```
 
-1. **Context Reading:** The agent reads `001_PROJECT_CONTEXT.md` to understand your project's background and logic.
-2. **Rule Enforcement:** The agent follows the rules defined in `agent-rules.md`.
-3. **Execution:** Code and tasks are executed automatically aligned with your setup.
+- **Routing and token budget** live in [`forge.md`](REF/AGENT/forge.md) sections 4 and 10: a task-to-skill table, one or two skills per step, never re-read, targeted reads, short replies. Skills load on demand, so only their short descriptions sit in context.
+- **Technology policy:** native HTML, CSS and JavaScript first. React, Tailwind, TypeScript, Node, build tools, Three.js, physics engines, test frameworks and outside services need your approval. Unity is used only for projects you define as Unity projects.
+- **Honesty:** Forge never claims access, tests or token numbers it does not have.
 
 ---
 
-## 📁 Repository Structure
+## 💬 Use it in Claude chat
+
+- Build upload-ready ZIPs with `python3 scripts/package_skills.py` (standard library only; ZIPs go to `dist/`), then open Customize > Skills (older versions: Settings > Capabilities > Skills) and upload them. Skills apply to your whole account and also sync into Claude Code with the same account.
+- Paste [`REF/AGENT/forge.md`](REF/AGENT/forge.md) into the Project instructions (or custom instructions). For project-specific facts, keep the context file's text in the Project knowledge.
+- The slash commands are a Claude Code feature; in chat, ask for the same in plain words.
+
+---
+
+## 📁 Repository structure
 
 ```
 Agent_REF/
 ├── README.md
-├── CLAUDE.md                   # rules for working on this repo
 ├── CHANGELOG.md                # version history (commits on main are prefixed vX.Y.Z)
-├── .claude-plugin/             # marketplace.json and plugin.json (Claude Code plugin)
-├── commands/
-│   ├── ref.md                  # /agent-ref:ref loads rules and project context
-│   └── report.md               # /agent-ref:report session report
-├── examples/
-│   ├── spring-damper/          # tested reference demo built with interactive-simulation (plain HTML/CSS/JS)
-│   └── desk-fan/               # 3D demo built with 3d-scene-builder (Three.js r170, local copy; serve with a static server)
+├── CLAUDE.md                   # rules for working on this repo
+├── .claude-plugin/             # marketplace.json and plugin.json (plugin "forge")
+├── commands/                   # /forge:start, /forge:context, /forge:improve, /forge:report
+├── examples/                   # tested demos: spring-damper (2D), desk-fan (Three.js)
 ├── scripts/
 │   └── package_skills.py       # validates skills and builds upload-ready ZIPs for Claude chat
 └── REF/
-    ├── RULES/
-    │   └── agent-rules.md      # System prompt / execution rules for the agent
+    ├── AGENT/
+    │   └── forge.md            # the Forge agent instruction file
     ├── TEMPLATES/
-    │   └── 001_PROJECT_CONTEXT.md   # Copy into your project as REF/CONTEXT/001_PROJECT_CONTEXT.md
-    └── SKILLS/                 # 24 skills, one folder each (SKILL.md + optional references)
+    │   └── 001_PROJECT_CONTEXT.md   # copy into a project as REF/CONTEXT/001_PROJECT_CONTEXT.md
+    └── SKILLS/                 # 32 skills, one folder each (SKILL.md + optional references)
 ```
 
 ---
 
-## 🧰 Skills
+## 🧰 Skills (32)
 
-All skills live in [`REF/SKILLS/`](REF/SKILLS). Each skill is a folder containing a `SKILL.md` (with `name` and `description` frontmatter) and, for some, extra `references/`, data, or scripts. Claude loads a skill when its description fits the task, so the agent does not need to read this folder on every prompt. If skills are not loaded natively, the agent reads only the index below and opens the relevant skills. It reports which skills it used.
-
-### Which skill for which job (quick routing)
-
-| You want to... | Skill | Not this one |
-| --- | --- | --- |
-| Plan before building | `brainstorming`, then `writing-plans` | |
-| Build UI with a design direction | `ui-ux-pro-max` | `frontend-developer` is for component and state code; `baseline-ui` is a quick polish |
-| Add motion | `css-motion` | `scroll-experience` only for scroll-driven pages |
-| Show a product in 3D on a website | `3d-scene-builder`, then `threejs` for API details | `interactive-simulation` is for 2D and the model/loop logic |
-| Heavy 3D project you defined as Unity | `unity-scene-builder` | never for basic or light projects |
-| Draw illustrations or icons | `art-svg-canvas` | |
-| Write docs or a README | `doc-writer` | `project-summarizer` is for session status and handoff |
-| Test or verify a change | `testing` | |
-| Check security | `security-review` | |
-| Hardware, CAD, firmware | `cad-firmware` | |
-| Improve a skill after a session | `reflect` | |
-| Build a whole agent or a new skill from sources | `agent-builder` (uses `writing-skills` for the rules) | `writing-great-skills` is a reference for wording |
+Each skill is a folder with a `SKILL.md` (name and description frontmatter) and, for some, `references/`, data, scripts or templates. Claude loads a skill when its description fits the task, so reading the whole folder is never needed. The task-to-skill routing table is in [`forge.md`](REF/AGENT/forge.md), section 4.
 
 ### Planning & Process
 
 | Skill | Description |
 | --- | --- |
-| [`brainstorming`](REF/SKILLS/brainstorming) | Mandatory before any creative work (features, components, behavior changes). Explores intent, requirements and design through one-question-at-a-time dialogue, and requires an approved design before any implementation starts. |
-| [`writing-plans`](REF/SKILLS/writing-plans) | Turns a spec or requirements into a detailed multi-step implementation plan before touching code: bite-sized tasks, exact files, tests, and frequent commits. Plans are saved to `docs/plans/`. |
+| [`brainstorming`](REF/SKILLS/brainstorming) | You MUST use this before any creative work - creating features, building components, adding functionality, or modifying behavior. Explores user intent, requirements and design before implementation. |
+| [`writing-plans`](REF/SKILLS/writing-plans) | Use when you have an approved spec or requirements for a multi-step task, before touching code. Produces a bite-sized implementation plan saved to docs/plans/. |
 
-### Engineering & Code Quality
-
-| Skill | Description |
-| --- | --- |
-| [`backend-architect`](REF/SKILLS/backend-architect) | Scalable API and backend design: REST/GraphQL/gRPC, microservices, event-driven architecture, service boundaries, inter-service communication, resilience patterns and observability. Use when creating new backend services or APIs. Recommends technology but asks before adding any runtime, framework or database. |
-| [`frontend-developer`](REF/SKILLS/frontend-developer) | Builds React components and responsive layouts, handles client-side state, and focuses on performance and accessibility (React 19, Next.js 15). Stack-gated: applies only if the project already uses React/Next.js or you approved them; otherwise its principles are applied in plain HTML/CSS/JS. |
-| [`coding-standards`](REF/SKILLS/coding-standards) | Universal coding standards, best practices and patterns for JavaScript by default; the TypeScript, React and Node.js parts apply only if the project already uses them. |
-
-### UI / UX Design
+### Engineering
 
 | Skill | Description |
 | --- | --- |
-| [`ui-ux-pro-max`](REF/SKILLS/ui-ux-pro-max) | Comprehensive design guide for web and mobile apps: designing components and pages, choosing color palettes and typography, and reviewing code for UX issues. Backed by CSV knowledge bases (styles, colors, typography, charts, icons, landing patterns, UX guidelines, per-stack guidance with plain HTML/CSS/JS as the default, plus React, Next.js, Vue, Svelte, Flutter, SwiftUI and more) and search/design-system scripts. |
-| [`baseline-ui`](REF/SKILLS/baseline-ui) | Fast cleanup pass for UI code: fixes spacing, hierarchy, typography and small layout issues. Use when an interface needs quick polish. Its Tailwind/React rules are stack-gated; the rest is applied in plain CSS. |
-| [`scroll-experience`](REF/SKILLS/scroll-experience) | Immersive scroll-driven experiences: parallax storytelling, scroll animations, interactive narratives and cinematic web pages. Prefers CSS scroll-driven animation and `IntersectionObserver` over libraries. Includes a detailed guide. |
+| [`backend-architect`](REF/SKILLS/backend-architect) | Backend and API architecture: REST, GraphQL and gRPC design, service boundaries, event-driven patterns, resilience and observability. Use when designing or reviewing a backend service or API. Recommends technology but asks before adding any runtime, framework or database. |
+| [`frontend-developer`](REF/SKILLS/frontend-developer) | Frontend component, responsive layout, client-side state, performance and accessibility guidance. Plain HTML, CSS and JavaScript by default; React 19 and Next.js 15 parts apply only if the project already uses them. Use when building or fixing UI components or frontend behavior. |
+| [`coding-standards`](REF/SKILLS/coding-standards) | Coding standards and best practices for JavaScript, plus TypeScript, React and Node.js where the project already uses them. Use when writing, reviewing or refactoring code. |
+| [`debugging`](REF/SKILLS/debugging) | Root-cause debugging procedure - reproduce, isolate, form ranked hypotheses, gather evidence, apply the smallest fix and verify. Use for bugs, errors, blank pages, wrong output, flaky behavior or "it worked yesterday". |
+| [`git-workflow`](REF/SKILLS/git-workflow) | Git habits for clean history - branches, small commits, version-prefixed messages, safe pushes, pull requests, changelogs and recovery. Use when committing, branching, versioning, pushing, opening a PR or undoing a git mistake. |
 
-### Three.js / 3D
-
-| Skill | Description |
-| --- | --- |
-| [`threejs`](REF/SKILLS/threejs) | One router skill for 3D on the web with Three.js: scenes, cameras, geometry, materials, textures, lighting and shadows, animation, raycasting and controls, loaders, GLSL shaders and post-processing. `SKILL.md` stays small and points to 11 topic files in `references/`, so only the part you need is read. Three.js is an external library, so the agent asks before adding it to a project. |
-
-### Project, Docs & Quality
+### UI, Motion & Visuals
 
 | Skill | Description |
 | --- | --- |
-| [`project-summarizer`](REF/SKILLS/project-summarizer) | Keeps section 9 of the project context current (done, in progress, next, blockers, how to resume) so new sessions do not re-read the whole project. |
-| [`doc-writer`](REF/SKILLS/doc-writer) | READMEs, setup steps, design notes, handover and release notes written from the real code, with every command and path checked. |
-| [`testing`](REF/SKILLS/testing) | Manual browser checklists and native checks first (console, responsive, keyboard, accessibility, forms); test tools only with your approval. |
+| [`ui-ux-pro-max`](REF/SKILLS/ui-ux-pro-max) | Comprehensive design guide for web and mobile applications. Use when designing new UI components or pages, choosing color palettes and typography, or reviewing code for UX issues. |
+| [`baseline-ui`](REF/SKILLS/baseline-ui) | Quickly deslop UI code by fixing spacing, hierarchy, typography, and small layout issues. Use when the interface needs a fast cleanup or polish pass. |
+| [`scroll-experience`](REF/SKILLS/scroll-experience) | Scroll-driven web experiences: parallax storytelling, scroll animations, interactive narratives and cinematic pages, using CSS scroll-driven animation and IntersectionObserver before any library. Use when a page should unfold as the visitor scrolls. |
+| [`css-motion`](REF/SKILLS/css-motion) | Plain CSS and Web Animations motion: transitions, keyframes, scroll-driven animation, FLIP, micro-interactions, easing and reduced motion. Use when adding or fixing UI animation. Not for 3D. |
+| [`art-svg-canvas`](REF/SKILLS/art-svg-canvas) | Illustrations, icons, patterns, generative art, backgrounds and simple image assets in plain SVG, CSS and Canvas, with no libraries or image services. Use for logo and icon sketches, hero art, patterns, favicons or social images. |
+| [`data-and-charts`](REF/SKILLS/data-and-charts) | Charts, KPIs and small dashboards for client sites in plain SVG or Canvas - chart choice, scales, labels, accessible color palettes, tooltips, table fallbacks and performance. Use when showing data, measurements or simulation results visually. |
+| [`accessibility`](REF/SKILLS/accessibility) | WCAG 2.2 AA accessibility checks and fixes for web pages and interactive tools - keyboard, focus, names, contrast, forms, motion, dialogs, canvas and 3D alternatives. Use when building or auditing for accessibility, or before client launch. |
 
-### Simulation, Motion & Art
-
-| Skill | Description |
-| --- | --- |
-| [`interactive-simulation`](REF/SKILLS/interactive-simulation) | Interactive product simulations, configurators and browser games for clients: model/view split, fixed-timestep loop, physics basics, parameter controls, performance budget, client delivery. Plain Canvas/SVG first; 3D through `threejs` after approval. |
-| [`3d-scene-builder`](REF/SKILLS/3d-scene-builder) | Art-directed, game-like 3D scenes for client websites: brief, engine and asset-level choice (Three.js or Unity), art direction, primitive blockout, materials and lighting, interaction, performance budget and embedding. Libraries and paid assets need your approval. |
-| [`unity-scene-builder`](REF/SKILLS/unity-scene-builder) | Professional Unity scenes for web delivery: scene-as-code editor scripts, orbit camera, hotspots, simulation script, WebGL build settings, JavaScript bridge and website embed template. Scripts only: Asset Store assets stay local and out of git. Untested in the Unity editor until you run it. |
-| [`css-motion`](REF/SKILLS/css-motion) | Native CSS/Web Animations motion: transitions, keyframes, scroll-driven animation, FLIP, reduced motion. No animation libraries. |
-| [`art-svg-canvas`](REF/SKILLS/art-svg-canvas) | Illustrations, icons, patterns and generative art in SVG, CSS and Canvas. No image services. |
-
-### Security
+### 3D & Simulation
 
 | Skill | Description |
 | --- | --- |
-| [`security-review`](REF/SKILLS/security-review) | Checklist review of web code: secrets, XSS, input, forms, headers, third-party scripts, dependencies, storage, APIs. Findings as severity, `file:line`, fix. |
+| [`threejs`](REF/SKILLS/threejs) | Three.js API reference: scenes, cameras, renderer, geometry, materials, textures, lighting, shadows, animation, raycasting, controls, loaders (GLTF, HDR), GLSL shaders, post-processing. Use for Three.js or WebGL code; for client scenes use 3d-scene-builder first. |
+| [`3d-scene-builder`](REF/SKILLS/3d-scene-builder) | Process for art-directed, game-like 3D product demos on client websites: brief, art direction, blockout, materials, lighting, interaction, performance budget, embedding. Three.js by default (ask first); Unity only if the user defines a Unity project. |
+| [`web-3d-assets`](REF/SKILLS/web-3d-assets) | Turning CAD or 3D models into fast web assets - glTF export, cleanup, PBR materials, texture sizes, compression, HDRI and lighting sources, license tracking and loading in Three.js. Use when a client model, CAD export or downloaded 3D asset must run in a web scene. |
+| [`interactive-simulation`](REF/SKILLS/interactive-simulation) | Model, state, fixed-timestep loop, physics basics, controls and delivery for 2D (Canvas or SVG) simulations, product demos and browser games. For 3D use 3d-scene-builder. Use for simulations, configurators and animated explainers. |
+| [`unity-scene-builder`](REF/SKILLS/unity-scene-builder) | Unity scenes for web delivery - scene-as-code editor scripts, orbit camera, hotspots, simulation scripts, WebGL build settings, JavaScript bridge and website embed. Use ONLY when the user says the project is a Unity project. Never propose Unity for basic or light projects. |
+
+### Quality & Delivery
+
+| Skill | Description |
+| --- | --- |
+| [`testing`](REF/SKILLS/testing) | Plans and runs tests for plain HTML, CSS and JavaScript projects - manual browser checklists first, then simple native tests. Use when verifying a change, writing test steps, checking responsive or accessibility behavior, or before saying work is done. |
+| [`security-review`](REF/SKILLS/security-review) | Security checklist review for web code and static sites - secrets, input handling and XSS, forms and CSRF, headers, third-party scripts, dependencies, storage and APIs. Use before release, when handling user input, auth, payments or client data, or when asked to check security. |
+| [`seo-performance`](REF/SKILLS/seo-performance) | Search visibility and page speed for client websites - semantic HTML, titles, metadata, structured data, sitemap, images, Core Web Vitals and loading strategy. Use before launching a site, when asked about SEO or speed, or when a page loads slowly. |
+| [`i18n-forms`](REF/SKILLS/i18n-forms) | Multilingual pages and reliable web forms: lang and RTL, text files, Intl formatting, language switcher, labels, validation, errors, spam protection, submission. Use for translations, RTL, contact forms and any user input. |
+| [`client-delivery`](REF/SKILLS/client-delivery) | Freelance client project flow - discovery brief, scope and acceptance criteria, milestones, change requests, final checklist and a handover pack. Use when starting, scoping, reviewing or handing over a client website, web app or interactive tool. |
+
+### Docs & Memory
+
+| Skill | Description |
+| --- | --- |
+| [`doc-writer`](REF/SKILLS/doc-writer) | Writes and updates project documentation from the real code - README, setup and run steps, specs, handover notes, changelogs and code comments. Use when asked to document, write a README, explain how a project works, or when docs are out of date after a change. |
+| [`project-summarizer`](REF/SKILLS/project-summarizer) | Keeps the project context file current - status, decisions, constraints and visual identity - so new sessions do not re-read the project or conversation. Use at the end of work, before a handoff, when no context file exists, or for /forge:context. |
+| [`reflect`](REF/SKILLS/reflect) | End-of-day and end-of-session self-improvement: reviews the session or today for corrections, approvals and token waste, skips what exists, proposes small edits for approval. Use for /forge:improve or when a skill got something wrong. |
 
 ### Mechatronics
 
 | Skill | Description |
 | --- | --- |
-| [`cad-firmware`](REF/SKILLS/cad-firmware) | Parametric CAD and printable-part rules, Arduino/ESP32 C++ habits, pin maps, wiring and BOM docs, and a hardware safety checklist. Uses your toolchain; asks before proposing a new one. |
+| [`cad-firmware`](REF/SKILLS/cad-firmware) | Mechatronics help: parametric CAD and printable parts, Arduino/ESP32/STM32 C++ habits, pin maps, wiring and BOM docs, hardware safety checklist. Use for CAD notes, microcontroller code, sensors, actuators, wiring or enclosure design. |
 
-### Improving the agent
-
-| Skill | Description |
-| --- | --- |
-| [`reflect`](REF/SKILLS/reflect) | Reviews a session for corrections and approvals and proposes small, confidence-tagged edits to skills as a diff. Manual: nothing changes without your approval. |
-
-### Writing & Skill Authoring
+### Agents & Skill Authoring
 
 | Skill | Description |
 | --- | --- |
-| [`agent-builder`](REF/SKILLS/agent-builder) | Builds your own complete AI agent: mission, identity, scope, rules, tools, skills, memory, reports and tests. Gathers and verifies your sources, checks licenses, creates the skills it needs, and trials the agent on three tasks before handover. Includes an agent file template. |
-| [`writing-skills`](REF/SKILLS/writing-skills) | Creating, updating and improving agent skills. Includes templates, testing guidance (including subagent testing), anti-rationalization and CSO references, and Anthropic best practices. |
-| [`writing-great-skills`](REF/SKILLS/writing-great-skills) | Reference for writing and editing skills well: the vocabulary and principles that make a skill predictable. Includes a glossary. Manual invocation only. |
-| [`writing-guidelines`](REF/SKILLS/writing-guidelines) | Reviews files for compliance with Vercel's Writing Guidelines. Fetches the latest rules at runtime (requires network access) and reports findings in terse `file:line` format. |
+| [`agent-builder`](REF/SKILLS/agent-builder) | Builds a complete task-specific AI agent: mission, identity, scope, rules, tools, skills, memory, reports and tests, creating needed skills from verified sources. Use to create, define, improve or test an agent or specialist role. |
+| [`writing-skills`](REF/SKILLS/writing-skills) | Use when creating, updating, testing or improving agent skills (SKILL.md files). Routes to templates, testing guidance, description-writing (CSO) and anthropic best-practice references. Use before writing any new skill. |
+| [`writing-great-skills`](REF/SKILLS/writing-great-skills) | Reference for writing and editing skills well: the vocabulary and principles that make a skill predictable. Use only when the user explicitly asks for it. |
+| [`writing-guidelines`](REF/SKILLS/writing-guidelines) | Reviews files for compliance with Vercel's Writing Guidelines. Fetches the latest rules at runtime (needs network access) and reports findings in terse file:line format. Use when the user asks to review prose, docs or UI copy against those guidelines. |
 
 ---
 
 ## 📚 Skill Sources & Credits
 
-Several skills are imported from community and upstream projects. Each `SKILL.md` records its origin in its frontmatter (`source`, `license`, etc.), including:
+Some skills are imported from community and upstream projects; each `SKILL.md` records its origin in its frontmatter. Imported: [`ibelick/ui-skills`](https://github.com/ibelick/ui-skills) (`baseline-ui`, MIT), [`CloudAI-X/threejs-skills`](https://github.com/CloudAI-X/threejs-skills) (`threejs`), [`mattpocock/skills`](https://github.com/mattpocock/skills) (`writing-great-skills`, MIT), [`vercel-labs/agent-skills`](https://github.com/vercel-labs/agent-skills) (`writing-guidelines`), and `vibeship-spawner-skills`, Apache 2.0 (`scroll-experience`).
 
-- [`ibelick/ui-skills`](https://github.com/ibelick/ui-skills) (`baseline-ui`, MIT)
-- [`CloudAI-X/threejs-skills`](https://github.com/CloudAI-X/threejs-skills) (`threejs`)
-- [`mattpocock/skills`](https://github.com/mattpocock/skills) (`writing-great-skills`, MIT)
-- [`vercel-labs/agent-skills`](https://github.com/vercel-labs/agent-skills) (`writing-guidelines`)
-- Ideas for `ui-ux-pro-max`, `testing`, `security-review`, `css-motion`, `art-svg-canvas` and `interactive-simulation` come from public community skill lists (Anthropic `anthropics/skills`, `vercel-labs/agent-skills`, `trailofbits/skills`, `majidmanzarpour/threejs-game-skills`). The skills here are original text written for this repo; no third-party skill text was copied.
-- `vibeship-spawner-skills`, Apache 2.0 (`scroll-experience`)
+The newer skills are original text written for this repo. Topics were chosen from public community skill lists (Anthropic `anthropics/skills`, `vercel-labs/agent-skills`, `trailofbits/skills`, `majidmanzarpour/threejs-game-skills`); no third-party skill text was copied. `examples/desk-fan/vendor/` contains three.js r170 and OrbitControls (MIT, license file included). Check each skill's frontmatter for its exact license before reuse.
 
-Check each skill's frontmatter for its exact license before reuse.
+## 🛠 Contributing and versions
+
+See [`CLAUDE.md`](CLAUDE.md). Run `python3 scripts/package_skills.py --check` before every push, update the README table and CHANGELOG, and prefix commits with the version. The repo has no `LICENSE` file yet; add one before sharing it publicly.

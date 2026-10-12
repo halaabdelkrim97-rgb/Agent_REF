@@ -1,6 +1,6 @@
 ---
 name: project-summarizer
-description: Keeps a short, current project summary so new sessions do not re-read the whole project or conversation. Use at the end of substantial work, when a session is getting long, before handing off, or when starting work in a project with no summary.
+description: Keeps the project context file current - status, decisions, constraints and visual identity - so new sessions do not re-read the project or conversation. Use at the end of work, before a handoff, when no context file exists, or for /forge:context.
 metadata:
   source: original (Agent_REF)
   date_added: '2026-10-12'
@@ -24,6 +24,16 @@ Goal: a later session reads one small file instead of the whole project. The sum
 
 ## Handoff note (when the session ends or the user switches tool)
 Add a short block at the end of section 9, replaced each time: **Goal of this session**, **State** (what is done and verified), **Decisions** made and why, **Next action** (one concrete step), **Do not redo** (things already tried or rejected). Under 12 lines. A new session reads it first and continues from "Next action".
+
+## Context file check (every project)
+- **Exists:** read it once. If it does not follow the REF template, map every fact to the template's ten sections without dropping anything, add missing sections as empty placeholders, and show the diff.
+- **Missing:** create it from `REF/TEMPLATES/001_PROJECT_CONTEXT.md` (the REF repo). Fill only what you can verify from the files (name, stack in use, how to run). Ask the user for goal, constraints and visual identity.
+- Keep it under about 150 lines; it is read at the start of every session.
+
+## Visual identity and references (section 10)
+Capture it so later screens, scenes and documents match. Sources: CSS variables and font declarations in the project, logo and image files, the brief, and what the user said in the conversation.
+- Palette with roles (primary, accent, background, text), typography, tone of voice in three words, logo and imagery rules, motion and 3D style, and reference links or files.
+- Record only what exists or was stated; mark guesses "unconfirmed". Offer a one-page HTML brand sheet (swatches, type samples) if the user wants to see it.
 
 ## Rules
 - Keep section 9 under about 25 lines. Replace old status instead of appending a history; git keeps the history.

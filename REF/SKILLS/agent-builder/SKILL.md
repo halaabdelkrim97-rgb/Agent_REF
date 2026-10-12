@@ -1,6 +1,6 @@
 ---
 name: agent-builder
-description: Builds a complete, task-specific AI agent from the user's goal and the knowledge they gathered - who the agent is, its mission, boundaries, rules, tools, skills, memory, reports and tests - then creates the skills it needs from verified sources. Use when the user wants to create, define, shape, improve or test their own AI agent or a specialist role.
+description: Builds a complete task-specific AI agent: mission, identity, scope, rules, tools, skills, memory, reports and tests, creating needed skills from verified sources. Use to create, define, improve or test an agent or specialist role.
 metadata:
   source: original (Agent_REF); complements writing-skills and reflect
   date_added: '2026-10-12'

@@ -1,6 +1,6 @@
 ---
 name: interactive-simulation
-description: Model, state, fixed-timestep loop, physics basics, parameter controls, performance budget and delivery for 2D (Canvas or SVG) interactive simulations, product demos and browser games. For 3D scenes use 3d-scene-builder. Use for simulations, configurators, mechanism demos and animated explainers.
+description: Model, state, fixed-timestep loop, physics basics, controls and delivery for 2D (Canvas or SVG) simulations, product demos and browser games. For 3D use 3d-scene-builder. Use for simulations, configurators and animated explainers.
 metadata:
   source: original (Agent_REF); informed by public browser-game and Three.js game skill collections
   date_added: '2026-10-12'

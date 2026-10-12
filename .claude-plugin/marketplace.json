@@ -1,13 +1,17 @@
 {
   "name": "agent-ref",
-  "owner": { "name": "halaabdelkrim97-rgb" },
-  "metadata": { "description": "REF Skills: vanilla-first agent rules and skills for Claude Code" },
+  "owner": {
+    "name": "halaabdelkrim97-rgb"
+  },
+  "metadata": {
+    "description": "Forge and the REF Skills for Claude Code"
+  },
   "plugins": [
     {
-      "name": "agent-ref",
+      "name": "forge",
       "source": "./",
-      "description": "REF Skills (planning, UI/UX, Three.js, backend, writing) for native HTML, CSS and JavaScript projects",
-      "version": "1.9.1"
+      "description": "Forge, the REF dev agent: rules, skills and commands (start, context, improve, report) for native HTML, CSS and JavaScript projects",
+      "version": "2.0.0"
     }
   ]
 }

@@ -3,6 +3,16 @@
 Versions follow `vMAJOR.MINOR.PATCH`. Every commit on `main` starts with the version it belongs to, for example `v1.2.0: summary`.
 Git tags cannot be pushed from the environment these updates were made in, so the commit prefix and this file are the version record.
 
+## v2.0.0 (Forge)
+
+- **The agent is now named Forge.** `REF/RULES/agent-rules.md` became `REF/AGENT/forge.md` and was rewritten: 11.1 KB to 8.6 KB while adding a start routine (context file check), a task-to-skill routing table, token rules (one or two skills per step, one reference file, never re-read), context upkeep, and the command list. Old users: replace the "REF PROJECT AGENT" block in `CLAUDE.md` with the new file.
+- **Plugin renamed `forge`** (install: `/plugin install forge@agent-ref`). Commands: `/forge:start`, `/forge:context` (create or migrate the context file to the REF template, update status and visual identity), `/forge:improve` (end-of-day self-improvement through `reflect`, skips what exists, project lessons to `REF/CONTEXT/forge-learnings.md`, Agent_REF proposals listed separately, nothing applied without approval) and `/forge:report`. The old `/agent-ref:ref` became `/forge:start`.
+- **Eight new skills:** `git-workflow`, `debugging`, `seo-performance`, `client-delivery`, `web-3d-assets`, `accessibility`, `data-and-charts`, `i18n-forms`.
+- **`reflect` rewritten** as the improve mode (scope: session or today, skip existing, confidence tags, destinations). **`project-summarizer`** now checks and migrates the context file and keeps a visual identity section; the context template gained section 10, "Visual identity and references".
+- **Token diet:** nine long skill descriptions shortened; resident description text 8.2 KB for 32 skills.
+- **README rewritten** around Forge: agent setup, the four commands, a test checklist for a real project, how Forge works, structure, and skill tables generated from the skill descriptions.
+- Not tested in a live Claude Code session: plugin name and namespace, command behavior, reading today's transcripts.
+
 ## v1.9.1 (audit)
 
 - **Unity policy:** Unity is used only when the user defines a project as a Unity project. `unity-scene-builder` and `3d-scene-builder` descriptions and bodies, the rules (section 6) and the README now say so; the default for 3D stays the plain web stack with Three.js after approval.
