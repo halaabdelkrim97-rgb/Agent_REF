@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Desk fan - interactive 3D demo</title>
+<link rel="icon" href="data:,">
+<style>
+  :root { --bg:#0b1220; --panel:#16202f; --text:#e6edf5; --muted:#93a4b8; --accent:#4cc9f0; --accent-ink:#04263a; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:system-ui,sans-serif; background:var(--bg); color:var(--text); line-height:1.5; }
+  main { max-width:64rem; margin:0 auto; padding:1rem; display:grid; gap:1rem; }
+  h1 { font-size:1.25rem; margin:0; }
+  .note { color:var(--muted); font-size:.875rem; margin:0; }
+  #stage { position:relative; width:100%; aspect-ratio:16/10; background:#101a2b; border-radius:.75rem; overflow:hidden; }
+  main > * { min-width:0; }
+  @media (max-width:40rem) { #stage { aspect-ratio:4/3; } }
+  #gl { width:100%; height:100%; display:block; touch-action:none; }
+  .hot { position:absolute; transform:translate(-50%,-50%); min-width:2.75rem; min-height:2.75rem; border-radius:50%; border:2px solid #fff; background:rgba(76,201,240,.25); color:#fff; font-size:.75rem; font-weight:700; cursor:pointer; }
+  .hot:focus-visible { outline:3px solid #fff; outline-offset:2px; }
+  #info { margin:0; padding:.5rem .75rem; background:var(--panel); border-radius:.5rem; font-size:.875rem; }
+  #fallback { display:none; padding:2rem; }
+  .panel { background:var(--panel); border-radius:.75rem; padding:1rem; display:grid; gap:.75rem 1rem; grid-template-columns:repeat(auto-fit,minmax(14rem,1fr)); }
+  label { display:flex; justify-content:space-between; font-size:.875rem; }
+  input[type=range] { width:100%; min-height:2.75rem; accent-color:var(--accent); }
+  .row { display:flex; flex-wrap:wrap; gap:.5rem; align-items:center; }
+  button.cmd { min-height:2.75rem; min-width:2.75rem; padding:0 1rem; border:0; border-radius:.5rem; background:#2a3a52; color:var(--text); font-weight:600; cursor:pointer; }
+  button.cmd[aria-pressed="true"] { background:var(--accent); color:var(--accent-ink); }
+  button:focus-visible, input:focus-visible { outline:2px solid #fff; outline-offset:2px; }
+  .readout { display:flex; flex-wrap:wrap; gap:1rem; font-variant-numeric:tabular-nums; }
+  details { background:var(--panel); border-radius:.75rem; padding:.75rem 1rem; font-size:.875rem; color:var(--muted); }
+  summary { color:var(--text); cursor:pointer; }
+</style>
+<script type="importmap">{ "imports": { "three": "./vendor/three.module.min.js" } }</script>
+</head>
+<body>
+<main>
+  <h1>Desk fan: interactive 3D demo</h1>
+  <p class="note">Illustrative model. Drag to orbit, scroll or pinch to zoom, tap a numbered point to learn about a part.</p>
+  <div id="stage">
+    <canvas id="gl" role="img" aria-label="3D desk fan. Use the controls below to switch it on, change speed and oscillation."></canvas>
+    <button class="hot" id="h-blades" type="button" aria-label="Blades: show details">1</button>
+    <button class="hot" id="h-motor" type="button" aria-label="Motor: show details">2</button>
+    <button class="hot" id="h-base" type="button" aria-label="Base: show details">3</button>
+    <div id="fallback">3D view is not available in this browser. Speed 0 to 100% maps linearly to 0 to 1200 rpm.</div>
+  </div>
+  <p id="info" aria-live="polite">Select a numbered point on the fan to learn about a part.</p>
+  <div class="readout" aria-live="off">
+    <span>Speed <strong id="o-rpm">0</strong> rpm</span>
+    <span>Airflow <strong id="o-air">0.0</strong> m³/min (est.)</span>
+    <span>Power <strong id="o-pw">0</strong> W (est.)</span>
+  </div>
+  <div class="panel">
+    <div class="row">
+      <button class="cmd" id="power" type="button" aria-pressed="false">Power</button>
+      <button class="cmd" id="osc" type="button" aria-pressed="false">Oscillate</button>
+    </div>
+    <div><label for="speed">Speed <output id="speed-o">50%</output></label><input id="speed" type="range" min="10" max="100" step="5" value="50"></div>
+    <div class="row" role="group" aria-label="Camera view">
+      <button class="cmd" data-view="front" type="button">Front</button>
+      <button class="cmd" data-view="side" type="button">Side</button>
+      <button class="cmd" data-view="top" type="button">Top</button>
+    </div>
+  </div>
+  <details>
+    <summary>How this works</summary>
+    <p>The motor speed follows the setting with a first-order lag (time constant 0.8 s). Blade angle is the time integral of rpm. Airflow and power are rough illustrative estimates (airflow proportional to rpm, power rising with the cube of speed), not measured data. The 3D model is built from simple shapes.</p>
+  </details>
+</main>
+<script type="module" src="app.js"></script>
+</body>
+</html>

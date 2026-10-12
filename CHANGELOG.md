@@ -3,6 +3,12 @@
 Versions follow `vMAJOR.MINOR.PATCH`. Every commit on `main` starts with the version it belongs to, for example `v1.2.0: summary`.
 Git tags cannot be pushed from the environment these updates were made in, so the commit prefix and this file are the version record.
 
+## v1.7.1
+
+- **`examples/desk-fan/`:** first 3D demo built with `3d-scene-builder` (procedural desk fan, motor lag model, orbit camera, hotspots, named views). Includes a local copy of three.js r170 and OrbitControls (MIT, license file in `vendor/`). Serve it with a static server (`python3 -m http.server`), because ES modules and import maps do not load from `file://`.
+- Verified in headless Chromium before the last edit: model checks, no console errors, no overflow at 768 and 1280 px, camera views, reduced motion. The test also found a frame-rate-dependent camera move and a 360 px overflow, both fixed.
+- **Not re-tested after the last edit:** hotspot positions, narrow-screen framing, rounded blades, larger floor. Treat the demo as a proof of the pipeline, not client quality.
+
 ## v1.7.0
 
 - **New `3d-scene-builder`:** art-directed, game-like 3D scenes and product demos for client websites (brief, art direction, primitive blockout, look, interaction, performance budget, embedding). Builds on `threejs` and `interactive-simulation`; Three.js stays ask-first.

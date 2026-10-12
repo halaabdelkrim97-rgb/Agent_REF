@@ -1,6 +1,6 @@
 # Agent_REF
 
-**Version v1.7.0** · see [CHANGELOG.md](CHANGELOG.md). Every update to `main` has a commit prefixed with its version, for example `v1.7.0: ...`.
+**Version v1.7.1** · see [CHANGELOG.md](CHANGELOG.md). Every update to `main` has a commit prefixed with its version, for example `v1.7.1: ...`.
 
 A lightweight context framework designed to ground AI coding agents in your project's specific domain logic, business rules, and technical requirements.
 
@@ -90,7 +90,8 @@ Agent_REF/
 │   ├── ref.md                  # /agent-ref:ref loads rules and project context
 │   └── report.md               # /agent-ref:report session report
 ├── examples/
-│   └── spring-damper/          # tested reference demo built with interactive-simulation (plain HTML/CSS/JS)
+│   ├── spring-damper/          # tested reference demo built with interactive-simulation (plain HTML/CSS/JS)
+│   └── desk-fan/               # 3D demo built with 3d-scene-builder (Three.js r170, local copy; serve with a static server)
 ├── scripts/
 │   └── package_skills.py       # validates skills and builds upload-ready ZIPs for Claude chat
 └── REF/
