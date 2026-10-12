@@ -3,6 +3,12 @@
 Versions follow `vMAJOR.MINOR.PATCH`. Every commit on `main` starts with the version it belongs to, for example `v1.2.0: summary`.
 Git tags cannot be pushed from the environment these updates were made in, so the commit prefix and this file are the version record.
 
+## v2.1.0
+
+- **New skill `canvas-design`** (33 skills): original static posters and art as a single .png or .pdf, written as a short design philosophy first and then expressed on a canvas. Adapted from `canvas-design` in [anthropics/skills](https://github.com/anthropics/skills/tree/main/skills/canvas-design), found through BehiSecc/awesome-claude-skills. Apache-2.0: `LICENSE.txt` is next to it. Changes: shorter description, repo frontmatter, and the bundled font folder is not included (system fonts first, ask before downloading any font).
+- `forge.md` routing table points posters and static art to `canvas-design`; version bumped in README, `forge.md` and `.claude-plugin/*.json`.
+- Tested: `package_skills.py --check`. Not tested: the skill in a live session.
+
 ## v2.0.0 (Forge)
 
 - **The agent is now named Forge.** `REF/RULES/agent-rules.md` became `REF/AGENT/forge.md` and was rewritten: 11.1 KB to 8.6 KB while adding a start routine (context file check), a task-to-skill routing table, token rules (one or two skills per step, one reference file, never re-read), context upkeep, and the command list. Old users: replace the "REF PROJECT AGENT" block in `CLAUDE.md` with the new file.

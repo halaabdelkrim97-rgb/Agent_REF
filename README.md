@@ -1,8 +1,8 @@
 # Agent_REF: Forge, the REF dev agent
 
-**Version v2.0.0** · see [CHANGELOG.md](CHANGELOG.md). Every update to `main` has a commit prefixed with its version, for example `v2.0.0: ...`.
+**Version v2.1.0** · see [CHANGELOG.md](CHANGELOG.md). Every update to `main` has a commit prefixed with its version, for example `v2.0.0: ...`.
 
-**Forge** is a dev agent for Claude Code and Claude chat. It is one instruction file ([`REF/AGENT/forge.md`](REF/AGENT/forge.md)) plus 32 skills, a project context file convention and four commands. Forge works in native HTML, CSS and JavaScript first, asks before adding anything else, keeps the project context file current, reports which skills it used, and is built to spend few tokens.
+**Forge** is a dev agent for Claude Code and Claude chat. It is one instruction file ([`REF/AGENT/forge.md`](REF/AGENT/forge.md)) plus 33 skills, a project context file convention and four commands. Forge works in native HTML, CSS and JavaScript first, asks before adding anything else, keeps the project context file current, reports which skills it used, and is built to spend few tokens.
 
 ---
 
@@ -98,12 +98,12 @@ Agent_REF/
     │   └── forge.md            # the Forge agent instruction file
     ├── TEMPLATES/
     │   └── 001_PROJECT_CONTEXT.md   # copy into a project as REF/CONTEXT/001_PROJECT_CONTEXT.md
-    └── SKILLS/                 # 32 skills, one folder each (SKILL.md + optional references)
+    └── SKILLS/                 # 33 skills, one folder each (SKILL.md + optional references)
 ```
 
 ---
 
-## 🧰 Skills (32)
+## 🧰 Skills (33)
 
 Each skill is a folder with a `SKILL.md` (name and description frontmatter) and, for some, `references/`, data, scripts or templates. Claude loads a skill when its description fits the task, so reading the whole folder is never needed. The task-to-skill routing table is in [`forge.md`](REF/AGENT/forge.md), section 4.
 
@@ -133,6 +133,7 @@ Each skill is a folder with a `SKILL.md` (name and description frontmatter) and,
 | [`scroll-experience`](REF/SKILLS/scroll-experience) | Scroll-driven web experiences: parallax storytelling, scroll animations, interactive narratives and cinematic pages, using CSS scroll-driven animation and IntersectionObserver before any library. Use when a page should unfold as the visitor scrolls. |
 | [`css-motion`](REF/SKILLS/css-motion) | Plain CSS and Web Animations motion: transitions, keyframes, scroll-driven animation, FLIP, micro-interactions, easing and reduced motion. Use when adding or fixing UI animation. Not for 3D. |
 | [`art-svg-canvas`](REF/SKILLS/art-svg-canvas) | Illustrations, icons, patterns, generative art, backgrounds and simple image assets in plain SVG, CSS and Canvas, with no libraries or image services. Use for logo and icon sketches, hero art, patterns, favicons or social images. |
+| [`canvas-design`](REF/SKILLS/canvas-design) | Creates original static visual art (poster, cover, art piece) as a single .png or .pdf, guided by a short written design philosophy. Use when asked for a poster, artwork or other static design piece, not for UI, web pages or charts. Never copies existing artists' work. |
 | [`data-and-charts`](REF/SKILLS/data-and-charts) | Charts, KPIs and small dashboards for client sites in plain SVG or Canvas - chart choice, scales, labels, accessible color palettes, tooltips, table fallbacks and performance. Use when showing data, measurements or simulation results visually. |
 | [`accessibility`](REF/SKILLS/accessibility) | WCAG 2.2 AA accessibility checks and fixes for web pages and interactive tools - keyboard, focus, names, contrast, forms, motion, dialogs, canvas and 3D alternatives. Use when building or auditing for accessibility, or before client launch. |
 
