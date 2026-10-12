@@ -1,16 +1,16 @@
 ---
-description: Curated upstream guidance for Writing Guidelines; use when the workflow matches the user goal.
 name: writing-guidelines
+description: Reviews files for compliance with Vercel's Writing Guidelines. Fetches the latest rules at runtime (needs network access) and reports findings in terse file:line format. Use when the user asks to review prose, docs or UI copy against those guidelines.
 metadata:
   author: vercel
   version: 1.0.0
   argument-hint: <file-or-pattern>
-source_repo: vercel-labs/agent-skills
-source_type: official
-source: vercel-labs
-date_added: '2026-09-21'
-risk: unknown
+  source_repo: vercel-labs/agent-skills
+  source_type: official
+  source: vercel-labs
+  date_added: '2026-09-21'
 ---
+
 ## When to Use
 - Use when this upstream workflow matches the user's stated goal.
 - Use when the task requires the procedures documented in this skill.

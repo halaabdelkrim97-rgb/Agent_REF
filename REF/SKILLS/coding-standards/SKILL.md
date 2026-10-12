@@ -1,9 +1,12 @@
 ---
 name: coding-standards
-description: Universal coding standards, best practices, and patterns for TypeScript, JavaScript, React, and Node.js development.
-author: affaan-m
-version: "1.0"
+description: Coding standards and best practices for JavaScript, plus TypeScript, React and Node.js where the project already uses them. Use when writing, reviewing or refactoring code.
+metadata:
+  author: affaan-m
+  version: '1.0'
 ---
+
+> **Stack gate (vanilla-first):** This repo's default is native HTML, CSS and JavaScript. This skill covers JavaScript, TypeScript, React and Node.js. Apply the JavaScript parts by default. Apply the TypeScript, React and Node.js parts only if the project already uses them or the user has approved them. Never convert JavaScript to TypeScript on your own.
 
 # Coding Standards & Best Practices
 

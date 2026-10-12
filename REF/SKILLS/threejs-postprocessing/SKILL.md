@@ -1,10 +1,12 @@
 ---
 name: threejs-postprocessing
 description: Three.js post-processing - EffectComposer, bloom, DOF, screen effects. Use when adding visual effects, color grading, blur, glow, or creating custom screen-space shaders.
-risk: critical
-source: community
-date_added: "2026-09-04"
+metadata:
+  source: community
+  date_added: '2026-09-04'
 ---
+
+> **Stack gate (vanilla-first):** This repo's default is native HTML, CSS and JavaScript. Three.js is an external library. If the project does not already use it, ask the user before adding it (it can be loaded without a build step through an import map).
 
 # Three.js Post-Processing
 

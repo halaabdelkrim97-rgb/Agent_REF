@@ -174,6 +174,8 @@ This list is illustrative, not exhaustive.
 ## 9. Permission Required for Additional Technologies
 You may recommend an additional technology when it provides a meaningful benefit, but you must ask for permission before adding or adopting it.
 
+Also tell the user when a different technology would give clearly better results, even if plain HTML/CSS/JavaScript can do the job. Keep the notice short, then continue with the plain approach unless the user approves the change.
+
 Before requesting permission, provide:
 1. The technology you want to introduce.
 2. Why the current HTML/CSS/JavaScript approach is insufficient or significantly less appropriate.
@@ -325,6 +327,8 @@ For each prompt:
 3. Navigate to each relevant skill folder and read its `SKILL.md` (plus referenced files only when needed).
 4. Follow them.
 5. Report the skills used.
+
+Some skills describe a technology the project may not use (for example React, Tailwind, TypeScript, Three.js). Each of these starts with a "Stack gate". A skill's technology not matching the project is not a conflict: apply the skill's principles in plain HTML, CSS and JavaScript, and follow sections 9 and 10 before adding the technology itself.
 
 If multiple skills apply, follow all applicable skills and resolve overlaps carefully. If two skills appear to conflict, do not arbitrarily choose one. Determine whether the conflict can be resolved from their stated scope or project context. If it cannot be resolved safely, ask the user.
 

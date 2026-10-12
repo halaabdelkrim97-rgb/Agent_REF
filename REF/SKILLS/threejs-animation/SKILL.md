@@ -1,10 +1,12 @@
 ---
 name: threejs-animation
 description: Three.js animation - keyframe animation, skeletal animation, morph targets, animation mixing. Use when animating objects, playing GLTF animations, creating procedural motion, or blending animations.
-risk: critical
-source: community
-date_added: "2026-09-04"
+metadata:
+  source: community
+  date_added: '2026-09-04'
 ---
+
+> **Stack gate (vanilla-first):** This repo's default is native HTML, CSS and JavaScript. Three.js is an external library. If the project does not already use it, ask the user before adding it (it can be loaded without a build step through an import map).
 
 # Three.js Animation
 
