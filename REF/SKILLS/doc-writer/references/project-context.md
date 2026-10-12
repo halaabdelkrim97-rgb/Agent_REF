@@ -1,12 +1,4 @@
----
-name: project-summarizer
-description: Keeps the project context file current - status, decisions, constraints and visual identity - so new sessions do not re-read the project or conversation. Use at the end of work, before a handoff, when no context file exists, or for /forge:context.
-metadata:
-  source: original (Agent_REF)
-  date_added: '2026-10-12'
----
-
-# Project Summarizer
+# Project context file upkeep
 
 Goal: a later session reads one small file instead of the whole project. The summary lives in `REF/CONTEXT/001_PROJECT_CONTEXT.md`, section 9 "Current status and next steps". Do not create another file.
 

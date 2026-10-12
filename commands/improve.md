@@ -2,7 +2,7 @@
 description: End-of-day improvement - learn from this session or today's work, update context, skip what already exists
 ---
 
-Run the end-of-day improvement. Use the `reflect` skill (improve mode) and `project-summarizer`.
+Run the end-of-day improvement. Use the `reflect` skill (improve mode) and `doc-writer` (project context file).
 
 Scope: ask once if not stated: this session (default), or today's sessions. For today's sessions, you may read only today's Claude Code transcripts for this project (under `~/.claude/projects/`), after the user agrees. Do not read other projects.
 

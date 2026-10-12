@@ -2,7 +2,7 @@
 description: Check, migrate or create the project context file so it follows the REF template
 ---
 
-Make `REF/CONTEXT/001_PROJECT_CONTEXT.md` follow the REF template. Use the `project-summarizer` skill.
+Make `REF/CONTEXT/001_PROJECT_CONTEXT.md` follow the REF template. Use the `doc-writer` skill (project context file section).
 
 1. If the file does not exist: create it from `${CLAUDE_PLUGIN_ROOT}/REF/TEMPLATES/001_PROJECT_CONTEXT.md`. Fill what you can verify from the project files (name, stack actually in use, how to run). Ask the user for goal, constraints and visual identity. Never invent.
 2. If it exists: map its content to the template's ten sections. Keep every fact the user wrote; move it to the right section; add missing sections as empty placeholders; remove only exact duplicates. Do not drop anything.

@@ -1,8 +1,8 @@
 # Agent_REF: Forge, the REF dev agent
 
-**Version v2.1.0** · see [CHANGELOG.md](CHANGELOG.md). Every update to `main` has a commit prefixed with its version, for example `v2.0.0: ...`.
+**Version v2.1.1** · see [CHANGELOG.md](CHANGELOG.md). Every update to `main` has a commit prefixed with its version, for example `v2.0.0: ...`.
 
-**Forge** is a dev agent for Claude Code and Claude chat. It is one instruction file ([`REF/AGENT/forge.md`](REF/AGENT/forge.md)) plus 33 skills, a project context file convention and four commands. Forge works in native HTML, CSS and JavaScript first, asks before adding anything else, keeps the project context file current, reports which skills it used, and is built to spend few tokens.
+**Forge** is a dev agent for Claude Code and Claude chat. It is one instruction file ([`REF/AGENT/forge.md`](REF/AGENT/forge.md)) plus 32 skills, a project context file convention and four commands. Forge works in native HTML, CSS and JavaScript first, asks before adding anything else, keeps the project context file current, reports which skills it used, and is built to spend few tokens.
 
 ---
 
@@ -98,12 +98,12 @@ Agent_REF/
     │   └── forge.md            # the Forge agent instruction file
     ├── TEMPLATES/
     │   └── 001_PROJECT_CONTEXT.md   # copy into a project as REF/CONTEXT/001_PROJECT_CONTEXT.md
-    └── SKILLS/                 # 33 skills, one folder each (SKILL.md + optional references)
+    └── SKILLS/                 # 32 skills, one folder each (SKILL.md + optional references)
 ```
 
 ---
 
-## 🧰 Skills (33)
+## 🧰 Skills (32)
 
 Each skill is a folder with a `SKILL.md` (name and description frontmatter) and, for some, `references/`, data, scripts or templates. Claude loads a skill when its description fits the task, so reading the whole folder is never needed. The task-to-skill routing table is in [`forge.md`](REF/AGENT/forge.md), section 4.
 
@@ -161,8 +161,7 @@ Each skill is a folder with a `SKILL.md` (name and description frontmatter) and,
 
 | Skill | Description |
 | --- | --- |
-| [`doc-writer`](REF/SKILLS/doc-writer) | Writes and updates project documentation from the real code - README, setup and run steps, specs, handover notes, changelogs and code comments. Use when asked to document, write a README, explain how a project works, or when docs are out of date after a change. |
-| [`project-summarizer`](REF/SKILLS/project-summarizer) | Keeps the project context file current - status, decisions, constraints and visual identity - so new sessions do not re-read the project or conversation. Use at the end of work, before a handoff, when no context file exists, or for /forge:context. |
+| [`doc-writer`](REF/SKILLS/doc-writer) | Writes and updates project documentation from the real code - README, setup and run steps, specs, handover notes, changelogs and code comments, and keeps the project context file current. Use when asked to document, write a README, explain how a project works, wrap up or hand off, for /forge:context, or when docs are out of date after a change. |
 | [`reflect`](REF/SKILLS/reflect) | End-of-day and end-of-session self-improvement: reviews the session or today for corrections, approvals and token waste, skips what exists, proposes small edits for approval. Use for /forge:improve or when a skill got something wrong. |
 
 ### Mechatronics

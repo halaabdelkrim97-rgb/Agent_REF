@@ -36,7 +36,7 @@ description: <one sentence: what it does and when to use it>
 - Needs approval: <installing packages, outside services, deleting files, pushing>
 
 ## Memory
-Keep status in section 9 of the project context. End sessions with a handoff note (`project-summarizer`).
+Keep status in section 9 of the project context. End sessions with a handoff note (`doc-writer`).
 
 ## Token plan
 Open a skill only when its description fits the step. One reference file at most. Short replies, result first.

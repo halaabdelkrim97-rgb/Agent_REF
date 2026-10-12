@@ -23,7 +23,7 @@ Manual by design: nothing is saved or changed without the user's approval. Comma
 4. **Tag confidence:** High (explicit "always" or "never"), Medium (worked more than once), Low (single observation; keep only if the user wants it).
 5. **Show a short list** (rule, destination, confidence) and wait for approval.
 6. **Apply only approved items.** In the Agent_REF repo: edit the skill, run `python3 scripts/package_skills.py --check`, bump the version, update the CHANGELOG, commit with the version prefix.
-7. **Update the context file** with `project-summarizer` (status, decisions, visual identity) and show the diff.
+7. **Update the context file** with `doc-writer` (project context file: status, decisions, visual identity) and show the diff.
 8. **Finish** with the session report: skills used, tokens (only figures the environment shows), learned, skipped, tomorrow's first step.
 
 ## Learnings file format

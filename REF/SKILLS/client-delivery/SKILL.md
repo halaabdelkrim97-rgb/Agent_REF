@@ -33,4 +33,4 @@ Check every new request against the scope. In scope: do it. Out of scope: descri
 - A short walkthrough of the finished work and the acceptance checklist, signed off by the client.
 
 ## 7. After launch
-Agree a support window, record the final status with `project-summarizer`, and note lessons for `reflect`.
+Agree a support window, record the final status with `doc-writer`, and note lessons for `reflect`.

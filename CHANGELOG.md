@@ -3,6 +3,12 @@
 Versions follow `vMAJOR.MINOR.PATCH`. Every commit on `main` starts with the version it belongs to, for example `v1.2.0: summary`.
 Git tags cannot be pushed from the environment these updates were made in, so the commit prefix and this file are the version record.
 
+## v2.1.1
+
+- **`project-summarizer` removed (32 skills).** Its full body moved, nothing dropped, to `REF/SKILLS/doc-writer/references/project-context.md`; `doc-writer` has a short "Project context file" section and its description now covers wrap-up, handoff and `/forge:context`.
+- References updated: `/forge:context` and `/forge:improve` commands, `forge.md` (routing table, context upkeep), `reflect`, `client-delivery`, `agent-builder` template, README. Older changelog entries still mention the old name as history.
+- Tested: `package_skills.py --check`, no remaining references, README links. Not tested: `/forge:context` in a live session.
+
 ## v2.1.0
 
 - **New skill `canvas-design`** (33 skills): original static posters and art as a single .png or .pdf, written as a short design philosophy first and then expressed on a canvas. Adapted from `canvas-design` in [anthropics/skills](https://github.com/anthropics/skills/tree/main/skills/canvas-design), found through BehiSecc/awesome-claude-skills. Apache-2.0: `LICENSE.txt` is next to it. Changes: shorter description, repo frontmatter, and the bundled font folder is not included (system fonts first, ask before downloading any font).
