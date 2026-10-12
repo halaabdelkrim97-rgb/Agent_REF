@@ -1,6 +1,6 @@
 # Agent_REF
 
-**Version v1.6.0** · see [CHANGELOG.md](CHANGELOG.md). Every update to `main` has a commit prefixed with its version, for example `v1.6.0: ...`.
+**Version v1.6.1** · see [CHANGELOG.md](CHANGELOG.md). Every update to `main` has a commit prefixed with its version, for example `v1.6.1: ...`.
 
 A lightweight context framework designed to ground AI coding agents in your project's specific domain logic, business rules, and technical requirements.
 
@@ -16,7 +16,12 @@ A lightweight context framework designed to ground AI coding agents in your proj
 3. **Copy route.** `git clone --depth 1 https://github.com/halaabdelkrim97-rgb/Agent_REF.git` into a temporary folder, copy each folder of `REF/SKILLS/` to the chosen skills folder (skip folders that already exist and tell the user), then delete the temporary clone.
 4. **Rules.** If `CLAUDE.md` does not already contain "REF PROJECT AGENT", append the contents of `REF/RULES/agent-rules.md` to it (create the file if missing). Do not edit the rules.
 5. **Context.** If `REF/CONTEXT/001_PROJECT_CONTEXT.md` is missing, create it from `REF/TEMPLATES/001_PROJECT_CONTEXT.md` and ask the user for the project name, goal and stack. Do not invent answers.
-6. **Report** in this form: installed skills (count and where), rules added or already present, context file created or found, and anything skipped. Tell the user to run `/skills` to confirm.
+6. **Official add-ons (optional, ask the user first).** Offer these Anthropic skills, and install only the ones the user accepts:
+   - `frontend-design` (distinctive UI direction): `/plugin marketplace add anthropics/skills`, then install the plugin that contains it (`/plugin` lists them; the group is likely `example-skills@anthropic-agent-skills`). Alternative: `/plugin install frontend-design@claude-plugins-official`.
+   - `webapp-testing` (real-browser tests with Playwright): same marketplace. It adds Playwright, which is a new dependency, so explain why it helps and install it only with explicit approval, per the technology policy.
+   - The plugin names above come from public documentation and may change. If a command fails or a name is not found, report the exact error and what `/plugin` shows. Do not guess other names, and do not install from other sources.
+   - Added skills add their descriptions to the context, which costs tokens. After installing, run `/skills` and tell the user how many were added.
+7. **Report** in this form: installed skills (count and where), rules added or already present, context file created or found, and anything skipped. Tell the user to run `/skills` to confirm.
 
 Never add React, TypeScript, Tailwind, Node or any build tool during setup.
 

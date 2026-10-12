@@ -3,6 +3,10 @@
 Versions follow `vMAJOR.MINOR.PATCH`. Every commit on `main` starts with the version it belongs to, for example `v1.2.0: summary`.
 Git tags cannot be pushed from the environment these updates were made in, so the commit prefix and this file are the version record.
 
+## v1.6.1
+
+- README "Agent setup" step 6: optional, ask-first install of the official `frontend-design` and `webapp-testing` skills through the Anthropic marketplace. Commands are from public documentation and not tested here; the agent must report errors instead of guessing names. Playwright still needs explicit approval.
+
 ## v1.6.0
 
 - **Session report.** Rules section 9 defines a short report (skills used with reasons, tokens, plan, improvements). Tokens are reported only from figures the environment shows (`/cost`, `/context`); otherwise "not measured". New `/agent-ref:report` command prints it without opening extra files.
