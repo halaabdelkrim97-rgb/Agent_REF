@@ -3,6 +3,14 @@
 Versions follow `vMAJOR.MINOR.PATCH`. Every commit on `main` starts with the version it belongs to, for example `v1.2.0: summary`.
 Git tags cannot be pushed from the environment these updates were made in, so the commit prefix and this file are the version record.
 
+## v1.5.0
+
+- **Skill-use report and token discipline** in the rules: each used skill is listed with the reason, reference files are named, and a new "Token discipline" block limits what is opened and re-read.
+- **Lossless trims.** `coding-standards` 524 to 296 lines (React, API design and performance/testing moved to `references/`), `backend-architect` 331 to 127 lines (capabilities moved to `references/capabilities.md`). A line-by-line check found 0 missing lines in both.
+- **`writing-skills`** description rewritten so it triggers reliably (body unchanged).
+- **New skills (5):** `project-summarizer`, `doc-writer`, `testing`, `cad-firmware`, `reflect`. Written for this repo from the user's picks and a public survey of community skills; no third-party skill text was copied.
+- Skill count 12 to 17. Plugin manifests, README and rules version updated.
+
 ## v1.4.0
 
 - **Agent setup section** at the top of the README: numbered, repeatable steps an agent follows when told to read the README (project or global choice, skip what exists, rules into `CLAUDE.md`, context from the template, final report).

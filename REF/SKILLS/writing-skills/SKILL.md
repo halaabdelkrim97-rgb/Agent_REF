@@ -1,6 +1,6 @@
 ---
 name: writing-skills
-description: Use when creating, updating, or improving agent skills.
+description: Use when creating, updating, testing or improving agent skills (SKILL.md files). Routes to templates, testing guidance, description-writing (CSO) and anthropic best-practice references. Use before writing any new skill.
 metadata:
   category: meta
   source: community

@@ -1,6 +1,6 @@
 # Agent_REF
 
-**Version v1.4.0** · see [CHANGELOG.md](CHANGELOG.md). Every update to `main` has a commit prefixed with its version, for example `v1.4.0: ...`.
+**Version v1.5.0** · see [CHANGELOG.md](CHANGELOG.md). Every update to `main` has a commit prefixed with its version, for example `v1.5.0: ...`.
 
 A lightweight context framework designed to ground AI coding agents in your project's specific domain logic, business rules, and technical requirements.
 
@@ -90,7 +90,7 @@ Agent_REF/
     │   └── agent-rules.md      # System prompt / execution rules for the agent
     ├── TEMPLATES/
     │   └── 001_PROJECT_CONTEXT.md   # Copy into your project as REF/CONTEXT/001_PROJECT_CONTEXT.md
-    └── SKILLS/                 # 12 skills, one folder each (SKILL.md + optional references)
+    └── SKILLS/                 # 17 skills, one folder each (SKILL.md + optional references)
 ```
 
 ---
@@ -127,6 +127,26 @@ All skills live in [`REF/SKILLS/`](REF/SKILLS). Each skill is a folder containin
 | Skill | Description |
 | --- | --- |
 | [`threejs`](REF/SKILLS/threejs) | One router skill for 3D on the web with Three.js: scenes, cameras, geometry, materials, textures, lighting and shadows, animation, raycasting and controls, loaders, GLSL shaders and post-processing. `SKILL.md` stays small and points to 11 topic files in `references/`, so only the part you need is read. Three.js is an external library, so the agent asks before adding it to a project. |
+
+### Project, Docs & Quality
+
+| Skill | Description |
+| --- | --- |
+| [`project-summarizer`](REF/SKILLS/project-summarizer) | Keeps section 9 of the project context current (done, in progress, next, blockers, how to resume) so new sessions do not re-read the whole project. |
+| [`doc-writer`](REF/SKILLS/doc-writer) | READMEs, setup steps, design notes, handover and release notes written from the real code, with every command and path checked. |
+| [`testing`](REF/SKILLS/testing) | Manual browser checklists and native checks first (console, responsive, keyboard, accessibility, forms); test tools only with your approval. |
+
+### Mechatronics
+
+| Skill | Description |
+| --- | --- |
+| [`cad-firmware`](REF/SKILLS/cad-firmware) | Parametric CAD and printable-part rules, Arduino/ESP32 C++ habits, pin maps, wiring and BOM docs, and a hardware safety checklist. Uses your toolchain; asks before proposing a new one. |
+
+### Improving the agent
+
+| Skill | Description |
+| --- | --- |
+| [`reflect`](REF/SKILLS/reflect) | Reviews a session for corrections and approvals and proposes small, confidence-tagged edits to skills as a diff. Manual: nothing changes without your approval. |
 
 ### Writing & Skill Authoring
 
