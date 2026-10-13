@@ -3,6 +3,14 @@
 Versions follow `vMAJOR.MINOR.PATCH`. Every commit on `main` starts with the version it belongs to, for example `v1.2.0: summary`.
 Git tags cannot be pushed from the environment these updates were made in, so the commit prefix and this file are the version record.
 
+## v2.7.0 (Hub: real electrical schematic, Work plan tab)
+
+- **Wiring schematic for hardware projects, in the hub style.** New diagram kind `schematic`, shown first on the Hardware tab: every part as a block with its pins, every connection as a typed wire (power, signal, data, control), identical parts drawn once as "x N", lanes for power, inputs, controller, modules and sensors, shared ground in the note. Light and dark themes come from the hub. Optional EDA sheets (`hardware.schematics`, images embedded by `hub_inline.py`) can follow it. A hardware project without either gets an automatic "Where is the electrical schematic?" gap.
+- **Work plan has its own tab.** Plan keeps the summary (hours, next up, workload, risks, decisions); the task-by-task plan with list or board view and filters moves to **Work plan**, added automatically after Plan whenever there are tasks (also when `ui.tabs` leaves it out).
+- **Statuses come from real progress.** Task statuses and spent hours are updated by Forge from what the user reports, commits, files and test results, not edited on the page.
+- `scripts/hub_inline.py` embeds images in the hub folder (`.svg`, `.png`, `.jpg`, `.webp`) as data URIs (`window.HUB_FILES`) so the single-file hub carries its schematic sheets.
+- **Tested** (headless Chromium, 1280 and 360 px, on the Smart Trash Bin hub): no console errors, no horizontal scroll, tabs Project, Plan, Work plan, merged Device tab, Gaps; the Plan tab's Work plan button switches tab; list, board and status filters still work on the Work plan tab; image sheets load from the inlined file and zoom. Schematic diagram checked in light and dark mode. Fictional example hub (1200 and 360 px): no errors, Work plan tab and board view work, its schematic diagram shows first on Hardware. **Not tested:** the EDA export route with `kicad-cli`, screen readers.
+
 ## v2.6.0 (Hub built from the project: hardware, software, diagrams)
 
 - **The hub is generated from the project Forge works on.** `project-hub` now starts with an analysis step (file list and manifests only, no source reading) that decides the tabs, tracks and diagrams. Hardware tab only for hardware or firmware, Software tab only for backend or frontend, a system overview always; small projects merge sections with `HUB.ui.tabs` (for example one "Build" tab). The separate Tracks tab is gone: each track card appears in the tab it belongs to (hardware and firmware in Hardware, backend and frontend in Software, others in Plan).

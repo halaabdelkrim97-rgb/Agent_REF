@@ -73,7 +73,7 @@ const HUB = {
   // Optional. Without it the tabs are generated from the project: Hardware only if there is hardware or firmware, Software only if there is backend or frontend.
   // To merge sections: ui: { tabs: ["Project", "Plan", { label: "Build", parts: ["Hardware", "Software"] }, "Business", "Docs", "Agent", "Gaps", "Identity"] }
   // ui: { tabs: [...] },
-  diagrams: [  // kind: system (Project tab) | hardware, wiring (Hardware tab) | software, dataflow, state (Software tab). Set "tab" to override. status: proposed | decided | built
+  diagrams: [  // kind: system (Project tab) | schematic (first on Hardware) | hardware, wiring (Hardware tab) | software, dataflow, state (Software tab). Set "tab" to override. status: proposed | decided | built
     { id: "sys", kind: "system", status: "decided", title: "System overview", note: "Who talks to whom. Dashed boxes are planned.",
       columns: ["Power", "Sensing", "Device", "Demo", "Visitor"],   // optional lanes, left to right; without it the layout follows the arrows
       nodes: [{ id: "usb", label: "USB 5 V supply", group: "Power" }, { id: "soil", label: "Soil moisture sensor", sub: "capacitive", group: "Sensing" },
@@ -81,7 +81,7 @@ const HUB = {
               { id: "api", label: "Mock API", sub: "readings, pump commands", group: "Demo", status: "planned" }, { id: "web", label: "Web demo", sub: "3D scene and dashboard", group: "Visitor" }],
       edges: [{ from: "usb", to: "mcu", label: "5 V", kind: "power" }, { from: "soil", to: "mcu", label: "analog level", kind: "signal" }, { from: "mcu", to: "pump", label: "on / off", kind: "control" },
               { from: "mcu", to: "api", label: "readings (Wi-Fi)", kind: "data" }, { from: "api", to: "web", label: "JSON", kind: "data" }] },
-    { id: "hw", kind: "hardware", status: "proposed", title: "Block-level schematic: controller board", note: "Drawn from the project data to agree the design. The electrical design is hardware/schematic-v2.pdf.",
+    { id: "hw", kind: "schematic", status: "proposed", title: "Wiring schematic: controller board", note: "Every part and connection. All parts share GND. The detailed EDA drawing is hardware/schematic-v2.pdf.",
       columns: ["Power", "Sensing", "Controller", "Driver", "Load"],   // in / out are the pins drawn on the left and right of a block; edges can name a pin as "block.pin"
       nodes: [{ id: "pwr", label: "Power supply", sub: "USB-C and 3V3 regulator", group: "Power", out: ["5V", "3V3"] },
               { id: "snr", label: "Moisture sensor", group: "Sensing", in: ["VCC"], out: ["AOUT"] },
@@ -98,7 +98,11 @@ const HUB = {
               { id: "store", label: "Readings store", sub: "in memory", status: "planned" }, { id: "ui", label: "Dashboard and 3D scene", sub: "Three.js" }],
       edges: [{ from: "fw", to: "api", label: "POST readings", kind: "data" }, { from: "api", to: "store", label: "save", kind: "data" }, { from: "store", to: "ui", label: "GET readings", kind: "data" }, { from: "sim", to: "ui", label: "simulated readings", kind: "data" }] }
   ],
-  hardware: { summary: "One ESP32-C3 board reads a capacitive moisture sensor and switches a 5 V pump through a MOSFET.", interfaces: ["ADC", "GPIO", "UART debug", "Wi-Fi"], currency: "EUR",
+  hardware: {
+    // Real electrical schematic sheets, shown first on the Hardware tab. src: image next to index.html (exported from the EDA file).
+    // schematics: [{ title: "Electrical schematic: sensor board", sheet: "1 of 1", src: "schematic-sensor.svg", status: "review", revision: "B", source: "hardware/sensor.kicad_sch", note: "Exported with kicad-cli." }],
+    schematics: [],
+    summary: "One ESP32-C3 board reads a capacitive moisture sensor and switches a 5 V pump through a MOSFET.", interfaces: ["ADC", "GPIO", "UART debug", "Wi-Fi"], currency: "EUR",
     power: [{ rail: "5 V USB", source: "USB-C", capacity: 500, loads: [{ name: "Pump", mA: 380 }, { name: "3V3 regulator", mA: 90 }] },
             { rail: "3V3", source: "regulator", capacity: 600, loads: [{ name: "ESP32-C3 with Wi-Fi", mA: 260 }, { name: "Moisture sensor", mA: 5 }] }],   // capacity and mA are numbers you entered
     bom: [{ ref: "U1", part: "ESP32-C3 module", qty: 1, unit: 3.2, status: "approved" }, { ref: "S1", part: "Capacitive moisture sensor", qty: 1, unit: 1.8, status: "approved" }, { ref: "Q1", part: "Logic-level MOSFET", qty: 1, unit: 0.4, status: "review" },
