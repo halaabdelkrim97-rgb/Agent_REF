@@ -6,9 +6,9 @@
 <title>Project Hub</title>
 <style>
 /* Forge Project Hub. Static page: never edit it per project. Project content lives in hub-data.js. */
-:root{--primary:#4f46e5;--accent:#f59e0b;--bg:#f6f7fb;--card:#fff;--text:#161a2b;--muted:#5d647a;--line:#e3e6f0;--ok:#16a34a;--warn:#d97706;--bad:#dc2626;--ok-t:#166534;--warn-t:#92400e;--bad-t:#991b1b;--fill:var(--primary);--pt:color-mix(in srgb,var(--primary) 55%,var(--text));--r:14px}
-@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0e1020;--card:#171a30;--text:#eceefb;--muted:#9aa1bd;--line:#272b49;--ok-t:#86efac;--warn-t:#fcd34d;--bad-t:#fca5a5;color-scheme:dark}}
-:root[data-theme=dark]{--bg:#0e1020;--card:#171a30;--text:#eceefb;--muted:#9aa1bd;--line:#272b49;--ok-t:#86efac;--warn-t:#fcd34d;--bad-t:#fca5a5;color-scheme:dark}
+:root{--primary:#4f46e5;--accent:#f59e0b;--bg:#f6f7fb;--card:#fff;--text:#161a2b;--muted:#5d647a;--line:#e3e6f0;--ok:#16a34a;--warn:#d97706;--bad:#dc2626;--ok-t:#166534;--warn-t:#92400e;--bad-t:#991b1b;--sig:#1d4ed8;--fill:var(--primary);--pt:color-mix(in srgb,var(--primary) 55%,var(--text));--r:14px}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0e1020;--card:#171a30;--text:#eceefb;--muted:#9aa1bd;--line:#272b49;--ok-t:#86efac;--warn-t:#fcd34d;--bad-t:#fca5a5;--sig:#93c5fd;color-scheme:dark}}
+:root[data-theme=dark]{--bg:#0e1020;--card:#171a30;--text:#eceefb;--muted:#9aa1bd;--line:#272b49;--ok-t:#86efac;--warn-t:#fcd34d;--bad-t:#fca5a5;--sig:#93c5fd;color-scheme:dark}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
 .wrap{max-width:1140px;margin:0 auto;padding:0 16px 48px}
@@ -49,7 +49,7 @@ ul.tasks li{padding:2px 0}ul.tasks li.done{color:var(--muted);text-decoration:li
 table{width:100%;border-collapse:collapse}
 th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:top}
 th{font-size:.78rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
-td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+th.num,td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 .sw{display:flex;gap:12px;flex-wrap:wrap}.sw div{width:104px}.sw b{display:block;height:56px;border-radius:10px;border:1px solid var(--line)}.sw small{display:block;color:var(--muted)}
 .tbd{color:var(--muted);font-style:italic}
 a{color:var(--pt)}
@@ -63,6 +63,25 @@ a{color:var(--pt)}
 .ticket.high{border-left-color:var(--bad)}.ticket.medium{border-left-color:var(--warn)}.ticket.low{border-left-color:var(--ok)}
 .tracktag{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:10px;color:#fff;font-weight:800;margin-right:10px;background:var(--fill)}
 .tcard.off{opacity:.55}
+.dgw{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--bg);padding:6px}
+.dgw svg{display:block;margin:0 auto;height:auto}
+.dg-box{fill:var(--card);stroke:var(--muted);stroke-width:1.4}.dg-box.planned{stroke-dasharray:6 4}
+.dg-lane{fill:color-mix(in srgb,var(--line) 32%,transparent)}
+.dg-lh{fill:var(--muted);font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.dg-t{fill:var(--text);font-size:13px;font-weight:700}.dg-s{fill:var(--muted);font-size:11px}.dg-p{fill:var(--text);font-size:11px}
+.dg-pin{fill:var(--card);stroke:var(--muted);stroke-width:1.4}
+.dg-e{fill:none;stroke-width:1.8}.dg-e.data{stroke:var(--pt)}.dg-e.power{stroke:var(--bad-t)}.dg-e.signal{stroke:var(--sig)}.dg-e.control{stroke:var(--muted);stroke-dasharray:5 4}
+.dg-l{fill:var(--text);font-size:10.5px}.dg-lb{fill:var(--card);stroke:var(--line)}
+.dglegend{display:flex;gap:14px;flex-wrap:wrap;margin:10px 0 0;font-size:.85rem;color:var(--muted)}
+.dglegend i{display:inline-block;width:26px;height:0;border-top:3px solid;vertical-align:middle;margin-right:6px}
+details.alt{margin-top:8px}details.alt summary{cursor:pointer;color:var(--pt);font-weight:600}
+.layers{display:grid;gap:8px}.layer{display:flex;gap:14px;flex-wrap:wrap;align-items:center;border:1px solid var(--line);border-left:6px solid var(--c);border-radius:12px;padding:10px 14px;background:var(--bg)}
+.lname{min-width:190px;display:grid}.litems{display:flex;gap:8px;flex-wrap:wrap}.lit{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:3px 10px;font-size:.9rem}
+.bar.warn>i{background:var(--warn)}.bar.bad>i{background:var(--bad)}
+.badge.proposed{background:color-mix(in srgb,var(--warn) 18%,transparent);color:var(--warn-t)}
+.badge.built,.badge.decided{background:color-mix(in srgb,var(--ok) 18%,transparent);color:var(--ok-t)}
+.ph{margin:24px 0 12px;font-size:1.2rem}.part+.part{margin-top:8px}
+.m{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.85rem}
 .badge.blocked,.badge.outdated,.badge.missing{background:color-mix(in srgb,var(--bad) 18%,transparent);color:var(--bad-t)}
 .badge.approved{background:color-mix(in srgb,var(--ok) 18%,transparent);color:var(--ok-t)}
 .badge.review{background:color-mix(in srgb,var(--warn) 18%,transparent);color:var(--warn-t)}
@@ -122,13 +141,13 @@ footer{margin-top:28px;color:var(--muted);font-size:.85rem}
 <script src="hub-data.js"></script>
 <script>
 /*SKILLS:BEGIN*/
-const FORGE = {"version": "v2.5.0", "groups": [
+const FORGE = {"version": "v2.6.0", "groups": [
 {"g": "Planning & Process", "skills": [["brainstorming", "You MUST use this before any creative work - creating features, building components, adding functionality, or modifying…"], ["writing-plans", "Use when you have an approved spec or requirements for a multi-step task, before touching code."]]},
 {"g": "Engineering", "skills": [["backend-architect", "Backend and API architecture: REST, GraphQL and gRPC design, service boundaries, event-driven patterns, resilience and…"], ["frontend-developer", "Frontend component, responsive layout, client-side state, performance and accessibility guidance."], ["ui-components-21st", "Use 21st.dev (Magic MCP and 21st-dev CLI) to find or generate UI components from a prompt."], ["coding-standards", "Coding standards and best practices for JavaScript, plus TypeScript, React and Node.js where the project already uses t…"], ["debugging", "Root-cause debugging procedure - reproduce, isolate, form ranked hypotheses, gather evidence, apply the smallest fix an…"], ["git-workflow", "Git habits for clean history - branches, small commits, version-prefixed messages, safe pushes, pull requests, changelo…"]]},
 {"g": "UI, Motion & Visuals", "skills": [["ui-ux-pro-max", "Comprehensive design guide for web and mobile applications."], ["baseline-ui", "Quickly deslop UI code by fixing spacing, hierarchy, typography, and small layout issues."], ["scroll-experience", "Scroll-driven web experiences: parallax storytelling, scroll animations, interactive narratives and cinematic pages, us…"], ["css-motion", "Plain CSS and Web Animations motion: transitions, keyframes, scroll-driven animation, FLIP, micro-interactions, easing…"], ["framer-motion", "Motion (formerly Framer Motion) for React projects: motion components, variants, gestures, AnimatePresence exit animati…"], ["gsap", "GSAP (GreenSock) animation: tweens, timelines, easing, ScrollTrigger, stagger, SVG and text effects, React cleanup with…"], ["art-svg-canvas", "Illustrations, icons, patterns, generative art, backgrounds and simple image assets in plain SVG, CSS and Canvas, with…"], ["canvas-design", "Creates original static visual art (poster, cover, art piece) as a single .png or .pdf, guided by a short written desig…"], ["nano-banana", "Generates and edits raster images (hero art, mockups, icons, textures, product shots) with Google's Nano Banana image m…"], ["data-and-charts", "Charts, KPIs and small dashboards for client sites in plain SVG or Canvas - chart choice, scales, labels, accessible co…"], ["accessibility", "WCAG 2.2 AA accessibility checks and fixes for web pages and interactive tools - keyboard, focus, names, contrast, form…"]]},
 {"g": "3D & Simulation", "skills": [["threejs", "Three.js API reference: scenes, cameras, renderer, geometry, materials, textures, lighting, shadows, animation, raycast…"], ["3d-scene-builder", "Process for art-directed, game-like 3D product demos on client websites: brief, art direction, blockout, materials, lig…"], ["web-3d-assets", "Turning CAD or 3D models into fast web assets - glTF export, cleanup, PBR materials, texture sizes, compression, HDRI a…"], ["interactive-simulation", "Model, state, fixed-timestep loop, physics basics, controls and delivery for 2D (Canvas or SVG) simulations, product de…"], ["unity-scene-builder", "Unity scenes for web delivery - scene-as-code editor scripts, orbit camera, hotspots, simulation scripts, WebGL build s…"]]},
 {"g": "Quality & Delivery", "skills": [["testing", "Plans and runs tests for plain HTML, CSS and JavaScript projects - manual browser checklists first, then simple native…"], ["security-review", "Security checklist review for web code and static sites - secrets, input handling and XSS, forms and CSRF, headers, thi…"], ["seo-performance", "Search visibility and page speed for client websites - semantic HTML, titles, metadata, structured data, sitemap, image…"], ["i18n-forms", "Multilingual pages and reliable web forms: lang and RTL, text files, Intl formatting, language switcher, labels, valida…"], ["client-delivery", "Freelance client project flow - discovery brief, scope and acceptance criteria, milestones, change requests, final chec…"]]},
-{"g": "Docs & Memory", "skills": [["project-hub", "Builds and updates the Project Hub, a visually rich HTML page (published as an artifact when the tool exists): project…"], ["doc-writer", "Writes and updates project documentation from the real code - README, setup and run steps, specs, handover notes, chang…"], ["reflect", "End-of-day and end-of-session self-improvement: reviews the session or today for corrections, approvals and token waste…"]]},
+{"g": "Docs & Memory", "skills": [["project-hub", "Builds and updates the Project Hub for the project Forge is working on, generated from the project itself: context, tas…"], ["doc-writer", "Writes and updates project documentation from the real code - README, setup and run steps, specs, handover notes, chang…"], ["reflect", "End-of-day and end-of-session self-improvement: reviews the session or today for corrections, approvals and token waste…"]]},
 {"g": "Mechatronics", "skills": [["cad-firmware", "Mechatronics help: parametric CAD and printable parts, Arduino/ESP32/STM32 C++ habits, pin maps, wiring and BOM docs, h…"]]},
 {"g": "Agents & Skill Authoring", "skills": [["agent-builder", "Builds a complete task-specific AI agent: mission, identity, scope, rules, tools, skills, memory, reports and tests, cr…"], ["writing-skills", "Use when creating, updating, testing or improving agent skills (SKILL.md files)."], ["writing-great-skills", "Reference for writing and editing skills well: the vocabulary and principles that make a skill predictable."], ["writing-guidelines", "Reviews files for compliance with Vercel's Writing Guidelines."]]}
 ]};
@@ -149,7 +168,7 @@ const chips = a => arr(a).length ? arr(a).map(s => `<span class="badge">${esc(s)
 const bullets = (a, empty) => arr(a).length ? `<ul>${arr(a).map(x => `<li>${esc(x)}</li>`).join("")}</ul>` : `<p>${empty || TODO}</p>`;
 
 const P = HUB.project || {}, C = HUB.context || {}, D = HUB.plan || {}, B = HUB.business || {}, I = HUB.identity || {}, A = HUB.agent || {};
-const phases = arr(D.phases), tracks = arr(HUB.tracks), docs = arr(HUB.docs);
+const phases = arr(D.phases), tracks = arr(HUB.tracks), docs = arr(HUB.docs), diagrams = arr(HUB.diagrams), HW = HUB.hardware || {}, SW = HUB.software || {};
 /* every task lives inside a phase: { id, t, owner, est (hours), spent (hours), status todo|doing|blocked|done, due, after: [ids], track, note } */
 const tasks = phases.flatMap((p, pi) => arr(p.tasks).map((t, ti) => ({ ...t, status: t.status || (t.done ? "done" : "todo"), phase: p.name, id: t.id || ("T" + (pi + 1) + "." + (ti + 1)), est: +t.est || 0, spent: +t.spent || 0 })));
 const byId = Object.fromEntries(tasks.map(t => [t.id, t]));
@@ -183,6 +202,7 @@ const AUTO = [
   ["tracks", "Which tracks does the project need (hardware, firmware, backend, frontend) and who owns each?", () => !tracks.length, "important"],
   ["plan", "What are the phases and dates of the dev plan?", () => !phases.length, "important"],
   ["plan", "What are the tasks of the first phase, who owns them and how many hours does each need?", () => !tasks.length, "important"],
+  ["architecture", "Which hardware and software parts make up the system, and how do they connect (block diagram)?", () => !diagrams.length, "important"],
   ["docs", "Which project documents exist or are needed (brief, contract, spec, drawings, test report)?", () => !docs.length, "nice"],
   ["business", "Who pays, for what, and how (revenue model)?", () => !(B.model || B.audience), "important"],
   ["business", "What is the price or budget, and what are the main costs?", () => !arr(B.offer).length || !arr(B.costs).length, "important"],
@@ -210,7 +230,8 @@ async function copy(text, msg = "Copied. Paste it into Forge.") { try { await na
 $("#dlgx").addEventListener("click", () => { try { $("#dlg").close(); } catch (e) { $("#dlg").removeAttribute("open"); } });
 
 /* ---------- views ---------- */
-function vProject() {
+function vProject() { return vProjectBase() + diagCards("Project"); }
+function vProjectBase() {
   const sc = C.scope || {};
   return `
   <div class="grid">
@@ -233,15 +254,98 @@ function vProject() {
 }
 
 const TRACK_DEFAULT = { hardware: "H", firmware: "F", backend: "B", frontend: "UI", other: "+" };
-function vTracks() {
-  if (!tracks.length) return `<div class="card"><h2>Dev tracks</h2><p>${TODO}</p><p class="muted">Hardware, firmware (if applicable), backend and frontend appear here once they are defined. See the Gaps page.</p></div>`;
-  return `<div class="grid">${tracks.map(t => {
+function trackCard(t) {
     const key = x => String(x || "").toLowerCase(), mine = tasks.filter(x => key(x.track) === key(t.key) || key(x.track) === key(t.title)), items = mine.length ? mine.map(i => ({ t: i.t, status: i.status, note: [i.owner, i.est ? i.est + "h" : ""].filter(Boolean).join(", ") })) : arr(t.items), done = items.filter(i => i.status === "done").length, n = items.length ? Math.round(done / items.length * 100) : 0, off = t.applicable === false;
     return `<div class="card tcard ${off ? "off" : ""}"><div class="row"><h2><span class="tracktag">${esc(TRACK_DEFAULT[t.key] || TRACK_DEFAULT.other)}</span>${esc(t.title || t.key)}</h2>${off ? badge("not applicable") : badge(t.status || "todo")}</div>
       ${off ? '<p class="muted">Marked not applicable for this project.</p>' : `<p>${val(t.summary)}</p>${prog(n, t.title)}<p class="muted">${done} of ${items.length} tasks done${mine.length ? " · " + sumH(mine) + " h planned" : ""}${t.owner ? " · owner " + esc(t.owner) : ""}</p>
       <ul class="plain">${items.map(i => `<li><span class="dot ${esc(i.status)}"></span>${esc(i.t)}${i.note ? ` <span class="muted">(${esc(i.note)})</span>` : ""}</li>`).join("")}</ul>
       <p>${chips(t.stack)}</p>`}</div>`;
-  }).join("")}</div>`;
+}
+const homeTab = t => { const k = String(t.key || "").toLowerCase(), h = ["hardware", "firmware"].includes(k) ? "Hardware" : ["backend", "frontend"].includes(k) ? "Software" : "Plan"; return partShown(h) ? h : partShown("Plan") ? "Plan" : "Project"; };
+const trackCards = part => { const ts = tracks.filter(t => homeTab(t) === part); return ts.length ? `<div class="grid">${ts.map(trackCard).join("")}</div>` : ""; };
+
+/* ---------- diagrams (drawn from data: nodes, edges, pins) ---------- */
+const KIND_TAB = { system: "Project", hardware: "Hardware", wiring: "Hardware", software: "Software", dataflow: "Software", state: "Software" };
+const homeOf = d => d.tab || KIND_TAB[d.kind] || "Software";
+const KCOL = { data: "var(--pt)", power: "var(--bad-t)", signal: "var(--sig)", control: "var(--muted)" };
+const LCOL = ["var(--fill)", "var(--accent)", "var(--ok)", "var(--warn)", "var(--bad)", "var(--muted)"];
+const wrapText = (t, n) => { const out = []; let line = ""; String(t ?? "").split(/\s+/).filter(Boolean).forEach(w => { if ((line + " " + w).trim().length > n && line) { out.push(line); line = w; } else line = (line + " " + w).trim(); }); if (line) out.push(line); return out; };
+const cut = (t, n) => { t = String(t ?? ""); return t.length > n ? t.slice(0, n - 1) + "…" : t; };
+function layoutDiagram(d) {
+  const NW = 168, ROW = 17, PADX = 20, TOP0 = 34, GAPY = 26, cols = arr(d.columns);
+  const nodes = arr(d.nodes).map(n => ({ ...n, id: String(n.id), in: arr(n.in), out: arr(n.out) }));
+  const idx = Object.fromEntries(nodes.map(n => [n.id, n]));
+  const E = arr(d.edges).map(e => { const a = String(e.from).split("."), b = String(e.to).split("."); return { ...e, f: a[0], fp: a.slice(1).join("."), t: b[0], tp: b.slice(1).join(".") }; }).filter(e => idx[e.f] && idx[e.t]);
+  nodes.forEach(n => { const i = cols.indexOf(n.group); n.fixed = i >= 0; n.layer = Math.max(i, 0); });
+  const adj = {}, seen = {}, back = new Set();
+  E.forEach(e => (adj[e.f] = adj[e.f] || []).push(e.t));
+  const dfs = u => { seen[u] = 1; (adj[u] || []).forEach(v => { if (seen[v] === 1) back.add(u + ">" + v); else if (!seen[v]) dfs(v); }); seen[u] = 2; };
+  const hasIn = new Set(E.filter(e => e.f !== e.t).map(e => e.t));
+  nodes.filter(n => !hasIn.has(n.id)).forEach(n => { if (!seen[n.id]) dfs(n.id); }); nodes.forEach(n => { if (!seen[n.id]) dfs(n.id); });
+  for (let k = 0; k < nodes.length; k++) { let ch = false; E.forEach(e => { if (e.f === e.t || back.has(e.f + ">" + e.t)) return; const a = idx[e.f], b = idx[e.t]; if (!b.fixed && b.layer < a.layer + 1) { b.layer = a.layer + 1; ch = true; } }); if (!ch) break; }
+  const L = Math.max(0, ...nodes.map(n => n.layer)) + 1, GX = E.some(e => e.label) ? 118 : 80;
+  const skip = E.filter(e => e.f !== e.t && idx[e.t].layer - idx[e.f].layer > 1).length, TOP = TOP0 + skip * 14;
+  nodes.forEach(n => { n.hl = wrapText(n.label, 21).slice(0, 3); n.sl = wrapText(n.sub, 26).slice(0, 2); n.top = n.sl.length ? 44 + (n.hl.length - 1) * 15 + (n.sl.length - 1) * 13 : 30 + (n.hl.length - 1) * 15; const rows = Math.max(n.in.length, n.out.length); n.h = n.top + (rows ? rows * ROW + 6 : 0) + 8; n.w = NW; });
+  const colsN = Array.from({ length: L }, (_, i) => nodes.filter(n => n.layer === i));
+  const colH = colsN.map(c => c.reduce((a, n) => a + n.h, 0) + Math.max(0, c.length - 1) * GAPY), H = Math.max(60, ...colH);
+  colsN.forEach((c, i) => { let y = TOP + (H - colH[i]) / 2; c.forEach(n => { n.x = PADX + i * (NW + GX); n.y = y; y += n.h + GAPY; }); });
+  return { nodes, E, idx, cols, L, NW, GX, PADX, TOP, skip, H, ROW, W: PADX * 2 + L * NW + (L - 1) * GX };
+}
+function renderDiagram(d, uid) {
+  const g = layoutDiagram(d), { nodes, E, idx, ROW } = g;
+  const portY = (n, side, name) => { const i = (side === "r" ? n.out : n.in).indexOf(name); return i < 0 ? null : n.y + n.top + i * ROW + ROW / 2 + 2; };
+  const slots = {};
+  E.forEach((e, i) => { e.py1 = portY(idx[e.f], "r", e.fp); e.py2 = portY(idx[e.t], "l", e.tp); if (e.py1 == null) (slots[e.f + "r"] = slots[e.f + "r"] || []).push(i); if (e.py2 == null) (slots[e.t + "l"] = slots[e.t + "l"] || []).push(i); });
+  const fan = (n, list, i) => n.y + n.h * (list.indexOf(i) + 1) / (list.length + 1);
+  E.forEach((e, i) => { const a = idx[e.f], b = idx[e.t]; e.y1 = e.py1 ?? fan(a, slots[e.f + "r"], i); e.y2 = e.py2 ?? fan(b, slots[e.t + "l"], i); e.x1 = a.x + a.w; e.x2 = b.x; });
+  const bottom = g.TOP + g.H; let lk = 0, tk = 0;
+  const paths = E.map(e => { const a = idx[e.f], b = idx[e.t]; let p, lx, ly;
+    if (e.f === e.t) { const x = a.x + a.w, y = a.y + a.h * .35; p = `M${x},${y} h16 v${a.h * .3} h-16`; lx = x + 22; ly = y + a.h * .15; }
+    else if (b.layer <= a.layer) { const yb = bottom + 16 + (lk++) * 15; p = `M${e.x1},${e.y1} h14 V${yb} H${e.x2 - 14} V${e.y2} h14`; lx = (e.x1 + e.x2) / 2; ly = yb; }
+    else if (b.layer - a.layer > 1) { const yt = 30 + (tk++) * 14; p = `M${e.x1},${e.y1} h14 V${yt} H${e.x2 - 14} V${e.y2} h14`; lx = (e.x1 + e.x2) / 2; ly = yt; }
+    else { const xm = (e.x1 + e.x2) / 2; p = `M${e.x1},${e.y1} C${xm},${e.y1} ${xm},${e.y2} ${e.x2},${e.y2}`; lx = xm; ly = (e.y1 + e.y2) / 2; }
+    return { p, lx, ly, kind: KCOL[e.kind] ? e.kind : "data", label: e.label }; });
+  const Ht = Math.round(bottom + 16 + lk * 15 + 14), kinds = [...new Set(paths.map(x => x.kind))];
+  const defs = kinds.map(k => `<marker id="a-${uid}-${k}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" style="fill:${KCOL[k]}"/></marker>`).join("");
+  const lanes = g.cols.length ? Array.from({ length: g.L }, (_, i) => `<rect class="dg-lane" x="${g.PADX + i * (g.NW + g.GX) - 10}" y="${g.TOP - 8}" width="${g.NW + 20}" height="${Math.round(g.H + 16)}" rx="12"/><text class="dg-lh" x="${g.PADX + i * (g.NW + g.GX) + g.NW / 2}" y="16" text-anchor="middle">${esc(cut(g.cols[i] || "", 22))}</text>`).join("") : "";
+  const nodeSvg = nodes.map(n => { const c = LCOL[n.layer % LCOL.length];
+    return `<g><rect class="dg-box ${n.status === "planned" ? "planned" : ""}" x="${n.x}" y="${n.y}" width="${n.w}" height="${n.h}" rx="10"/><rect x="${n.x}" y="${n.y}" width="6" height="${n.h}" rx="3" style="fill:${c}"/>`
+      + n.hl.map((t, i) => `<text class="dg-t" x="${n.x + 16}" y="${n.y + 20 + i * 15}">${esc(t)}</text>`).join("")
+      + n.sl.map((t, i) => `<text class="dg-s" x="${n.x + 16}" y="${n.y + 36 + (n.hl.length - 1) * 15 + i * 13}">${esc(t)}</text>`).join("")
+      + n.in.map((t, i) => `<circle class="dg-pin" cx="${n.x}" cy="${n.y + n.top + i * ROW + ROW / 2 + 2}" r="3.5"/><text class="dg-p" x="${n.x + 10}" y="${n.y + n.top + i * ROW + ROW / 2 + 6}">${esc(cut(t, 15))}</text>`).join("")
+      + n.out.map((t, i) => `<circle class="dg-pin" cx="${n.x + n.w}" cy="${n.y + n.top + i * ROW + ROW / 2 + 2}" r="3.5"/><text class="dg-p" x="${n.x + n.w - 10}" y="${n.y + n.top + i * ROW + ROW / 2 + 6}" text-anchor="end">${esc(cut(t, 15))}</text>`).join("") + "</g>"; }).join("");
+  const edgeSvg = paths.map(x => `<path class="dg-e ${x.kind}" d="${x.p}" marker-end="url(#a-${uid}-${x.kind})"/>`).join("");
+  const labelSvg = paths.filter(x => x.label).map(x => { const t = cut(x.label, 26), w = Math.round(t.length * 5.7 + 10); return `<rect class="dg-lb" x="${Math.round(x.lx - w / 2)}" y="${Math.round(x.ly - 8)}" width="${w}" height="15" rx="4"/><text class="dg-l" x="${Math.round(x.lx)}" y="${Math.round(x.ly + 3)}" text-anchor="middle">${esc(t)}</text>`; }).join("");
+  const svg = `<svg role="img" aria-labelledby="ti-${uid}" viewBox="0 0 ${g.W} ${Ht}" style="width:100%;min-width:${Math.round(g.W * .72)}px;max-width:${Math.round(g.W * 1.1)}px"><title id="ti-${uid}">${esc(d.title || "Diagram")}</title><defs>${defs}</defs>${lanes}${edgeSvg}${nodeSvg}${labelSvg}</svg>`;
+  const legend = `<div class="dglegend">${kinds.map(k => `<span><i style="border-top-color:${KCOL[k]};${k === "control" ? "border-top-style:dashed" : ""}"></i>${k}</span>`).join("")}${nodes.some(n => n.status === "planned") ? "<span>dashed box: planned, not built yet</span>" : ""}</div>`;
+  const alt = `<details class="alt"><summary>Text version of this diagram</summary><ul>${E.map(e => `<li>${esc(idx[e.f].label)}${e.fp ? " (" + esc(e.fp) + ")" : ""} → ${esc(idx[e.t].label)}${e.tp ? " (" + esc(e.tp) + ")" : ""}${e.label ? ": " + esc(e.label) : ""} <span class="muted">[${esc(e.kind || "data")}]</span></li>`).join("")}</ul></details>`;
+  return svg.length ? `<div class="dgw" tabindex="0" role="group" aria-label="${esc(d.title || "Diagram")}, scrollable">${svg}</div>${legend}${alt}` : "";
+}
+const diagCard = d => `<div class="card" style="margin-top:16px"><div class="row"><h2>${esc(d.title || "Diagram")}</h2>${d.status ? badge(d.status) : ""}</div>${d.note ? `<p class="muted">${esc(d.note)}</p>` : ""}${renderDiagram(d, "d" + diagrams.indexOf(d))}</div>`;
+const diagCards = part => diagrams.filter(d => homeOf(d) === part).map(diagCard).join("");
+
+function vHardware() {
+  const power = arr(HW.power), bom = arr(HW.bom), pins = arr(HW.pins), cur = HW.currency || B.currency;
+  const bomTotal = bom.reduce((a, b) => a + (+b.unit || 0) * (+b.qty || 1), 0), unpriced = bom.filter(b => b.unit == null).length;
+  const m2 = n => n == null || n === "" || isNaN(n) ? TODO : new Intl.NumberFormat(undefined, { style: "currency", currency: cur || "EUR", maximumFractionDigits: 2 }).format(n);
+  const rail = r => { const used = arr(r.loads).reduce((a, l) => a + (+l.mA || 0), 0), cap = +r.capacity || 0, p = cap ? Math.round(used / cap * 100) : 0, cls = p > 100 ? "bad" : p > 80 ? "warn" : "";
+    return `<div style="margin:12px 0"><div class="row"><b>${esc(r.rail)} <span class="muted">${esc(r.source || "")}</span></b><span class="${p > 100 ? "over" : ""}">${used} of ${cap || "?"} mA${cap ? " (" + p + "%)" : ""}</span></div><div class="bar ${cls}" role="progressbar" aria-label="${esc(r.rail)} load" aria-valuenow="${Math.min(p, 100)}" aria-valuemin="0" aria-valuemax="100"><i style="width:${Math.min(100, p)}%"></i></div><div class="muted">${arr(r.loads).map(l => esc(l.name) + " " + esc(l.mA) + " mA").join(" · ")}</div></div>`; };
+  const out = [trackCards("Hardware"), HW.summary ? `<div class="card" style="margin-top:16px"><h2>Hardware summary</h2><p>${esc(HW.summary)}</p>${arr(HW.interfaces).length ? `<p>${chips(HW.interfaces)}</p>` : ""}</div>` : "", diagCards("Hardware"),
+    power.length ? `<div class="card" style="margin-top:16px"><h2>Power budget</h2>${power.map(rail).join("")}<p class="muted">Amber above 80%, red above 100% of the rail capacity. Loads are the figures entered, not measurements.</p></div>` : "",
+    bom.length ? `<div class="card" style="margin-top:16px"><h2>Bill of materials</h2><div class="tw"><table><tr><th>Ref</th><th>Part</th><th class="num">Qty</th><th class="num">Unit</th><th class="num">Line</th><th>Status</th></tr>${bom.map(b => `<tr><td class="m">${esc(b.ref)}</td><td>${esc(b.part)}${b.note ? `<div class="muted">${esc(b.note)}</div>` : ""}</td><td class="num">${esc(b.qty || 1)}</td><td class="num">${m2(b.unit)}</td><td class="num">${b.unit == null ? TODO : m2((+b.unit || 0) * (+b.qty || 1))}</td><td>${b.status ? badge(b.status) : ""}</td></tr>`).join("")}<tr><td></td><td><b>Total</b>${unpriced ? ` <span class="muted">(${unpriced} unpriced)</span>` : ""}</td><td></td><td></td><td class="num"><b>${m2(bomTotal)}</b></td><td></td></tr></table></div></div>` : "",
+    pins.length ? `<div class="card" style="margin-top:16px"><h2>Pin map</h2><div class="tw s"><table><tr><th>Pin</th><th>Signal</th><th>Connects to</th><th>Note</th></tr>${pins.map(x => `<tr><td class="m">${esc(x.pin)}</td><td>${esc(x.signal)}</td><td>${esc(x.connects)}</td><td class="muted">${esc(x.note)}</td></tr>`).join("")}</table></div></div>` : ""].join("");
+  return out.trim() ? out : `<div class="card"><h2>Hardware</h2><p>${TODO}</p><p class="muted">Block-level schematic, power budget, parts list and pin map appear here once the hardware is defined. See the Gaps page.</p></div>`;
+}
+
+function vSoftware() {
+  const layers = arr(SW.layers), mods = arr(SW.modules), eps = arr(SW.endpoints), data = arr(SW.data);
+  const out = [trackCards("Software"), SW.summary ? `<div class="card" style="margin-top:16px"><h2>Software summary</h2><p>${esc(SW.summary)}</p></div>` : "",
+    layers.length ? `<div class="card" style="margin-top:16px"><h2>Architecture layers</h2><div class="layers">${layers.map((l, i) => `<div class="layer" style="--c:${LCOL[i % LCOL.length]}"><div class="lname"><b>${esc(l.name)}</b><span class="muted">${esc(l.tech)}</span></div><div class="litems">${arr(l.items).map(x => `<span class="lit">${esc(x)}</span>`).join("")}</div></div>`).join("")}</div><p class="muted">Top to bottom: what the visitor sees down to the device.</p></div>` : "",
+    diagCards("Software"),
+    mods.length ? `<div class="card" style="margin-top:16px"><h2>Modules</h2><div class="tw"><table><tr><th>Module</th><th>Layer</th><th>Role</th><th>Tech</th><th>Owner</th><th>Status</th></tr>${mods.map(x => `<tr><td><b>${esc(x.name)}</b></td><td>${esc(x.layer)}</td><td>${esc(x.role)}</td><td>${esc(x.tech)}</td><td>${esc(x.owner)}</td><td>${x.status ? badge(x.status) : ""}</td></tr>`).join("")}</table></div></div>` : "",
+    eps.length ? `<div class="card" style="margin-top:16px"><h2>API endpoints</h2><div class="tw"><table><tr><th>Method</th><th>Path</th><th>Purpose</th><th>Access</th></tr>${eps.map(x => `<tr><td class="m"><b>${esc(x.method)}</b></td><td class="m">${esc(x.path)}</td><td>${esc(x.purpose)}</td><td>${esc(x.auth)}</td></tr>`).join("")}</table></div></div>` : "",
+    data.length ? `<div class="card" style="margin-top:16px"><h2>Data model</h2><div class="tw s"><table><tr><th>Entity</th><th>Fields</th><th>Note</th></tr>${data.map(x => `<tr><td><b>${esc(x.entity)}</b></td><td class="m">${esc(x.fields)}</td><td class="muted">${esc(x.note)}</td></tr>`).join("")}</table></div></div>` : ""].join("");
+  return out.trim() ? out : `<div class="card"><h2>Software</h2><p>${TODO}</p><p class="muted">Layers, data flow, modules, endpoints and data model appear here once the software is defined. See the Gaps page.</p></div>`;
 }
 
 function taskRow(t) {
@@ -258,7 +362,8 @@ function vPlan() {
       ${!all.length ? '<p class="tbd" style="margin-top:10px">No tasks yet</p>' : ts.length ? `<div class="tw"><table class="tasks"><tr><th></th><th>ID</th><th>Task</th><th>Owner</th><th>Due</th><th class="num">Est.</th><th class="num">Spent</th><th>Status</th></tr>${ts.map(taskRow).join("")}</table></div>` : '<p class="muted" style="margin-top:10px">No task matches the filter.</p>'}</div>`; };
   const board = ["todo", "doing", "blocked", "done"].map(k => `<div class="col"><h3>${k} (${vis.filter(t => t.status === k).length})</h3>${vis.filter(t => t.status === k).map(t => `<div class="ticket ${t.est > 0 && t.spent > t.est ? "high" : ""}"><b>${esc(t.t)}</b><div class="muted">${[t.id, t.owner, t.est ? t.est + " h" : "", t.due].filter(Boolean).map(esc).join(" · ")}</div></div>`).join("") || '<span class="tbd">empty</span>'}</div>`).join("");
   return `
-  <div class="grid">
+  ${trackCards("Plan")}
+  <div class="grid" style="margin-top:16px">
     <div class="card stat"><h2>Planned</h2><div class="kpi">${totalH}<small> h</small></div><span class="muted">${tasks.length} tasks in ${phases.length} phases</span></div>
     <div class="card stat"><h2>Done</h2><div class="kpi">${doneH}<small> h</small></div>${prog(pct, "Done by hours")}<span class="muted">${pct}% of planned hours</span></div>
     <div class="card stat"><h2>Remaining</h2><div class="kpi">${leftH}<small> h</small></div><span class="muted">estimate minus time spent, open tasks</span></div>
@@ -329,7 +434,7 @@ function vBusiness() {
 
 const FORGE_ROLE = {
   role: "Dev agent of the REF framework. Plans, builds, verifies and documents this project in native HTML, CSS and JavaScript first, and asks before adding anything else.",
-  does: ["Reads the project context file once per session and keeps it current", "Picks one or two skills per step from a routing table instead of loading everything", "Builds with the smallest change that solves the request, then validates it", "Reports every skill used, with the reason, and tokens only when they are shown", "Breaks the plan into tasks with hour estimates, marked as estimates until the team confirms them", "Lists the project documents and their status", "Keeps this hub current: plan, tracks, business plan, agent page and gaps", "Asks before adding frameworks, libraries, paid assets or Unity"],
+  does: ["Reads the project context file once per session and keeps it current", "Picks one or two skills per step from a routing table instead of loading everything", "Builds with the smallest change that solves the request, then validates it", "Reports every skill used, with the reason, and tokens only when they are shown", "Studies the project and builds this hub from it: only the tabs, tracks and diagrams the project needs", "Breaks the plan into tasks with hour estimates, marked as estimates until the team confirms them", "Lists the project documents and their status", "Keeps this hub current: plan, tracks, business plan, agent page and gaps", "Asks before adding frameworks, libraries, paid assets or Unity"],
   wont: ["Invent facts, prices, tests or results", "Add dependencies or switch stack without permission", "Re-read files or skills it already read", "Touch unrelated files or expose secrets"],
   commands: [["/forge:start", "Load the rules, check the context file and the hub"], ["/forge:context", "Create, migrate or update the context file"], ["/forge:hub", "Create or refresh this hub"], ["/forge:report", "Skills used, tokens, plan, improvements"], ["/forge:improve", "End-of-day self-improvement from the session"]]
 };
@@ -383,22 +488,29 @@ function vIdentity() {
   </div>`;
 }
 
-/* ---------- shell ---------- */
-const views = [["Project", vProject], ["Tracks", vTracks], ["Plan", vPlan], ["Business", vBusiness], ["Docs", vDocs], ["Agent", vAgent], ["Gaps", vGaps], ["Identity", vIdentity]];
+/* ---------- shell: the tabs are generated from the project (HUB.ui.tabs overrides) ---------- */
+const PARTS = { Project: vProject, Plan: vPlan, Hardware: vHardware, Software: vSoftware, Business: vBusiness, Docs: vDocs, Agent: vAgent, Gaps: vGaps, Identity: vIdentity };
+const hasKey = ks => tracks.some(t => ks.includes(String(t.key || "").toLowerCase()) && t.applicable !== false);
+const hasHW = !!(Object.keys(HW).length || diagrams.some(d => homeOf(d) === "Hardware") || hasKey(["hardware", "firmware"]));
+const hasSW = !!(Object.keys(SW).length || diagrams.some(d => homeOf(d) === "Software") || hasKey(["backend", "frontend"]));
+const spec = arr((HUB.ui || {}).tabs).length ? HUB.ui.tabs : ["Project", "Plan", hasHW && "Hardware", hasSW && "Software", "Business", "Docs", "Agent", "Gaps", "Identity"].filter(Boolean);
+const views = spec.map(t => typeof t === "string" ? { label: t, parts: [t] } : { label: t.label || arr(t.parts).join(" + "), parts: arr(t.parts) }).map(v => ({ ...v, parts: v.parts.filter(p => PARTS[p]) })).filter(v => v.parts.length);
+if (!views.some(v => v.parts.includes("Gaps"))) views.push({ label: "Gaps", parts: ["Gaps"] });
+const tabOf = part => views.findIndex(v => v.parts.includes(part));
+function partShown(part) { return tabOf(part) >= 0; }
 const openCount = () => gaps.filter(g => !isDecided(g)).length;
-const tabsHtml = () => views.map(([n], i) => `<button role="tab" id="t${i}" aria-selected="${i === cur}" aria-controls="p${i}">${n}${n === "Gaps" && openCount() ? `<span class="n">${openCount()}</span>` : ""}</button>`).join("") + '<button class="theme" id="theme" aria-label="Toggle dark mode">Light / Dark</button>';
 let cur = 0;
-$("#main").innerHTML = views.map(([n, f], i) => `<section class="panel" role="tabpanel" id="p${i}" aria-labelledby="t${i}" ${i ? "hidden" : ""}>${f()}</section>`).join("");
-const gi = views.findIndex(v => v[0] === "Gaps");
-function show(i) { cur = i; $("#tabs").innerHTML = tabsHtml(); views.forEach((_, k) => { $("#p" + k).hidden = k !== i; }); window.scrollTo(0, 0); }
-const pi = views.findIndex(v => v[0] === "Plan");
-function refreshPlan() { const y = window.scrollY; $("#p" + pi).innerHTML = vPlan(); window.scrollTo(0, y); }
-function refreshGaps() { $("#p" + gi).innerHTML = vGaps(); const y = window.scrollY; $("#tabs").innerHTML = tabsHtml(); window.scrollTo(0, y); }
+const tabsHtml = () => views.map((v, i) => `<button role="tab" id="t${i}" aria-selected="${i === cur}" aria-controls="p${i}">${esc(v.label)}${v.parts.includes("Gaps") && openCount() ? `<span class="n">${openCount()}</span>` : ""}</button>`).join("") + '<button class="theme" id="theme" aria-label="Toggle dark mode">Light / Dark</button>';
+const panelHtml = v => v.parts.map(p => `<div class="part">${v.parts.length > 1 ? `<h2 class="ph">${esc(p)}</h2>` : ""}${PARTS[p]()}</div>`).join("");
+$("#main").innerHTML = views.map((v, i) => `<section class="panel" role="tabpanel" id="p${i}" aria-labelledby="t${i}" ${i ? "hidden" : ""}>${panelHtml(v)}</section>`).join("");
+function show(i) { if (i < 0) return; cur = i; $("#tabs").innerHTML = tabsHtml(); views.forEach((_, k) => { $("#p" + k).hidden = k !== i; }); window.scrollTo(0, 0); }
+function refreshPart(part) { const i = tabOf(part); if (i < 0) return; const y = window.scrollY; $("#p" + i).innerHTML = panelHtml(views[i]); if ($("#dq")) { $("#dq").value = docQ; applyDocs(); } $("#tabs").innerHTML = tabsHtml(); window.scrollTo(0, y); }
+const refreshPlan = () => refreshPart("Plan"), refreshGaps = () => refreshPart("Gaps");
 $("#tabs").innerHTML = tabsHtml();
 $("#tabs").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; if (b.id === "theme") { const dark = matchMedia("(prefers-color-scheme:dark)").matches; const c = document.documentElement.dataset.theme || (dark ? "dark" : "light"); document.documentElement.dataset.theme = c === "dark" ? "light" : "dark"; } else if (b.role === "tab" || b.getAttribute("role") === "tab") show(+b.id.slice(1)); });
 $("#main").addEventListener("click", e => {
   const b = e.target.closest("button"); if (!b) return; const d = b.dataset;
-  if (d.go) show(views.findIndex(v => v[0] === d.go));
+  if (d.go) show(tabOf(d.go));
   else if (d.po !== undefined) { planOwner = d.po; try { localStorage.setItem(KEY + ":me", d.po); } catch (e) { } refreshPlan(); }
   else if (d.ps) { planStatus = d.ps; refreshPlan(); }
   else if (d.pv) { planView = d.pv; refreshPlan(); }
@@ -412,7 +524,7 @@ $("#main").addEventListener("click", e => {
 });
 $("#main").addEventListener("change", e => { const t = e.target; if (t.dataset && t.dataset.t) { const s = st[t.dataset.t] || (st[t.dataset.t] = {}); s.text = t.value.trim(); if (s.text) s.choice = null; touched.add(t.dataset.t); save(); refreshGaps(); } });
 $("#main").addEventListener("input", e => { if (e.target.id === "dq") { docQ = e.target.value.toLowerCase(); applyDocs(); } if (e.target.id === "skq") { const q = e.target.value.toLowerCase(); document.querySelectorAll("#skl .sk").forEach(r => { r.hidden = !!q && !r.dataset.t.includes(q); }); } });
-$("#foot").textContent = "Generated by Forge from REF/CONTEXT/001_PROJECT_CONTEXT.md, which stays the source of truth. Empty fields are left empty on purpose.";
+$("#foot").textContent = "Generated by Forge from the project and REF/CONTEXT/001_PROJECT_CONTEXT.md, which stays the source of truth. Diagrams show what the project data says, marked proposed until decided. Empty fields are left empty on purpose.";
 </script>
 </body>
 </html>

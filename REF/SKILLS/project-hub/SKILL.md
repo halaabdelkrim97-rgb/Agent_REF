@@ -1,6 +1,6 @@
 ---
 name: project-hub
-description: Builds and updates the Project Hub, a visually rich HTML page (published as an artifact when the tool exists): project context, dev tracks, a task-by-task work plan with hour estimates and owners, business plan, project documents, the AI agent page, a gap page with decisions, and visual identity. Use at project start, after substantial work, or for /forge:hub.
+description: Builds and updates the Project Hub for the project Forge is working on, generated from the project itself: context, task-by-task work plan with hours, hardware (block schematic, power budget, parts list, pin map), software (layers, data flow, API, data model), system diagrams, business plan, documents, the agent page, a gap page with decisions, and identity. Use at project start, after substantial work, or for /forge:hub.
 metadata:
   source: original (Agent_REF)
   date_added: '2026-10-13'
@@ -14,14 +14,23 @@ Two files in `REF/CONTEXT/hub/`:
 - `index.html`: the static page. Copy it, never edit or re-read it.
 - `hub-data.js`: all project content in one `HUB` object. This is the only file Forge edits (it is small).
 
-Tabs: **Project** (goal, problem, users, scope, constraints, people, next steps, build and completeness rings), **Tracks** (hardware, firmware, backend, frontend, other; `applicable: false` when not used; progress comes from the tasks of that track), **Plan** (hours summary, next-up tasks, workload per person, task-by-task work plan as list or board with person and status filters, risks, decisions), **Business**, **Docs** (all project documents with status, search, open link or copy path, missing documents), **Agent** (Forge role, commands, skills used here, full skill catalog), **Gaps**, **Identity**.
+Tabs are generated from the project (see Analyze the project). Possible tabs: **Project** (goal, problem, users, scope, constraints, people, next steps, build and completeness rings), **Plan** (hours summary, next-up tasks, workload per person, task-by-task work plan as list or board with person and status filters, risks, decisions), **Hardware** (hardware and firmware tracks, block-level schematic with pins, firmware state diagram, power budget, parts list with total, pin map), **Software** (backend and frontend tracks, architecture layers, data flow and structure diagrams, modules, API endpoints, data model), **Business**, **Docs** (all project documents with status, search, open link or copy path, missing documents), **Agent** (Forge role, commands, skills used here, full skill catalog), **Gaps**, **Identity**.
+
+## Analyze the project first
+The hub is built for this project, not from a fixed form.
+1. List what exists with `git ls-files` or `ls`, and read only manifests and the context file. Hardware: `hardware/`, `cad/`, `*.kicad_sch`, `*.step`, `*.stl`. Firmware: `platformio.ini`, `*.ino`, `firmware/`. Backend: `server/`, `api/`, `requirements.txt`, `package.json`. Frontend: `index.html`, `src/`. Do not read source files for this.
+2. Decide the shape: **Hardware tab** only if there is hardware or firmware; **Software tab** only if there is backend or frontend; a **System overview** diagram always (4 to 10 blocks, written to the Project tab); a **block schematic** for the board or wiring; a **state diagram** where firmware or UI logic has states; **layers and a data-flow diagram** for software. Small projects merge sections with `ui.tabs` (for example one "Build" tab with `parts: ["Hardware","Software"]`). Without `ui.tabs` the page picks tabs from the data.
+3. Draw only what the files, the context file or the user show. Parts not built yet get `status: "planned"` (dashed box). A diagram is `proposed` until the user confirms it, then `decided`, then `built`. If the architecture is open, raise a gap with 2 to 4 options (area `architecture`) instead of guessing.
+4. Never invent part numbers, pins, voltages, currents, prices, endpoints or fields. Leave them out and say so. The hardware diagram is block-level: put the real schematic file in `docs` and name it in the diagram `note`.
+5. Diagram format (details in `references/hub-data.example.js`): `nodes` `{id,label,sub,group,status,in,out}` (`in` and `out` are pins drawn on the left and right), `edges` `{from,to,label,kind}` with `kind` one of `data`, `power`, `signal`, `control` and pins named as `"block.pin"`, optional `columns` for lanes. Keep a diagram under 12 nodes and labels short; split instead of cramming. The page lays it out, routes long wires above the diagram and adds a text version.
 
 ## Create (first time)
 1. Make sure the context file exists (`doc-writer`, project context file). Read it once.
 2. `mkdir -p REF/CONTEXT/hub`, then copy `templates/index.html` and `templates/hub-data.js` from this skill folder into it (shell `cp`; do not open them).
 3. Fill `hub-data.js` from the context file. If unsure of a field's shape, read `references/hub-data.example.js` once (fictional example, copy shapes not facts).
    - Agent page: set `agent.usedSkills` from this session's skill-use reports (name and reason). The catalog and Forge version are built into `index.html`.
-   - Tracks: only the ones the project needs; firmware and hardware only if applicable.
+   - Tracks: only the ones the project needs; each task joins a track through its `track` field and the card appears in the matching tab.
+   - `hardware`, `software` and `diagrams` as decided in the analysis; power loads and capacities only from datasheets or the user.
 4. Business plan: use only what the user stated or the files show. Leave unknown fields empty; the page shows "to define". Never invent prices, costs, market sizes or KPIs.
 5. Gaps: the page automatically lists missing basics as "missing info" gaps. Add explicit gaps to `gaps` for real decisions, each with 2 to 4 options (`label`, short `note`, mark at most one `recommended`) and a `why`. Priorities: `blocker` (stops work), `important`, `nice`. Do not write option notes you cannot justify.
 6. Open `index.html` in a headless browser or the browser pane and fix console errors. Say what you could not check.
@@ -55,4 +64,4 @@ The user picks an option or types an answer on the Gaps tab. "Ask Forge about th
 - All data is escaped by the page. Never put raw HTML in `hub-data.js`.
 - No secrets, tokens, personal data or client data the user did not agree to show. For a client-facing hub, leave out internal costs and margin unless told otherwise.
 - Brand colors: the page darkens fills automatically when white text on the primary color would be under 4.5:1; still warn the user if a palette color is very light.
-- Keep the eight tabs. Add a tab only when the user asks.
+- Tabs follow the project (`ui.tabs` overrides). Gaps is always present. Add a tab only when the user asks.

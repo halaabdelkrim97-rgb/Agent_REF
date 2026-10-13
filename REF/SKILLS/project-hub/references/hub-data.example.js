@@ -70,12 +70,56 @@ const HUB = {
     { group: "Delivery", title: "Handover checklist", type: "MD", status: "draft", path: "docs/handover-checklist.md", owner: "Alex" },
     { group: "Delivery", title: "User guide", type: "MD", status: "missing", owner: "Alex", note: "after the demo is online" }
   ],
+  // Optional. Without it the tabs are generated from the project: Hardware only if there is hardware or firmware, Software only if there is backend or frontend.
+  // To merge sections: ui: { tabs: ["Project", "Plan", { label: "Build", parts: ["Hardware", "Software"] }, "Business", "Docs", "Agent", "Gaps", "Identity"] }
+  // ui: { tabs: [...] },
+  diagrams: [  // kind: system (Project tab) | hardware, wiring (Hardware tab) | software, dataflow, state (Software tab). Set "tab" to override. status: proposed | decided | built
+    { id: "sys", kind: "system", status: "decided", title: "System overview", note: "Who talks to whom. Dashed boxes are planned.",
+      columns: ["Power", "Sensing", "Device", "Demo", "Visitor"],   // optional lanes, left to right; without it the layout follows the arrows
+      nodes: [{ id: "usb", label: "USB 5 V supply", group: "Power" }, { id: "soil", label: "Soil moisture sensor", sub: "capacitive", group: "Sensing" },
+              { id: "mcu", label: "ESP32 controller", sub: "firmware v0.1", group: "Device" }, { id: "pump", label: "Water pump and driver", group: "Device" },
+              { id: "api", label: "Mock API", sub: "readings, pump commands", group: "Demo", status: "planned" }, { id: "web", label: "Web demo", sub: "3D scene and dashboard", group: "Visitor" }],
+      edges: [{ from: "usb", to: "mcu", label: "5 V", kind: "power" }, { from: "soil", to: "mcu", label: "analog level", kind: "signal" }, { from: "mcu", to: "pump", label: "on / off", kind: "control" },
+              { from: "mcu", to: "api", label: "readings (Wi-Fi)", kind: "data" }, { from: "api", to: "web", label: "JSON", kind: "data" }] },
+    { id: "hw", kind: "hardware", status: "proposed", title: "Block-level schematic: controller board", note: "Drawn from the project data to agree the design. The electrical design is hardware/schematic-v2.pdf.",
+      columns: ["Power", "Sensing", "Controller", "Driver", "Load"],   // in / out are the pins drawn on the left and right of a block; edges can name a pin as "block.pin"
+      nodes: [{ id: "pwr", label: "Power supply", sub: "USB-C and 3V3 regulator", group: "Power", out: ["5V", "3V3"] },
+              { id: "snr", label: "Moisture sensor", group: "Sensing", in: ["VCC"], out: ["AOUT"] },
+              { id: "mcu", label: "ESP32-C3", sub: "module", group: "Controller", in: ["3V3", "GPIO2 ADC"], out: ["GPIO5"] },
+              { id: "drv", label: "MOSFET driver", group: "Driver", in: ["VMOT", "GATE"], out: ["DRAIN"] }, { id: "pmp", label: "Mini pump 5 V", group: "Load", in: ["PLUS"] }],
+      edges: [{ from: "pwr.3V3", to: "snr.VCC", kind: "power" }, { from: "pwr.3V3", to: "mcu.3V3", kind: "power" }, { from: "pwr.5V", to: "drv.VMOT", label: "pump supply", kind: "power" },
+              { from: "snr.AOUT", to: "mcu.GPIO2 ADC", label: "0 to 3.3 V", kind: "signal" }, { from: "mcu.GPIO5", to: "drv.GATE", label: "pump enable", kind: "control" }, { from: "drv.DRAIN", to: "pmp.PLUS", kind: "power" }] },
+    { id: "fsm", kind: "state", tab: "Hardware", status: "decided", title: "Firmware states", note: "Watering logic from the approved state machine document.",
+      nodes: [{ id: "idle", label: "Idle", sub: "sleep between reads" }, { id: "read", label: "Reading", sub: "average 8 samples" }, { id: "water", label: "Watering", sub: "pump on" }, { id: "cool", label: "Cooldown" }, { id: "fault", label: "Fault", sub: "pump off, LED blinks" }],
+      edges: [{ from: "idle", to: "read", label: "timer 10 s", kind: "control" }, { from: "read", to: "idle", label: "moisture OK", kind: "control" }, { from: "read", to: "water", label: "below 30%", kind: "control" },
+              { from: "water", to: "cool", label: "after 5 s", kind: "control" }, { from: "cool", to: "idle", label: "after 60 s", kind: "control" }, { from: "water", to: "fault", label: "overcurrent", kind: "control" }, { from: "fault", to: "idle", label: "reset", kind: "control" }] },
+    { id: "flow", kind: "dataflow", status: "proposed", title: "Data flow: from sensor to screen", note: "Without columns the layout follows the arrows.",
+      nodes: [{ id: "fw", label: "ESP32 firmware", sub: "reads sensor" }, { id: "sim", label: "Simulation model", sub: "demo mode, JavaScript" }, { id: "api", label: "Mock API", status: "planned" },
+              { id: "store", label: "Readings store", sub: "in memory", status: "planned" }, { id: "ui", label: "Dashboard and 3D scene", sub: "Three.js" }],
+      edges: [{ from: "fw", to: "api", label: "POST readings", kind: "data" }, { from: "api", to: "store", label: "save", kind: "data" }, { from: "store", to: "ui", label: "GET readings", kind: "data" }, { from: "sim", to: "ui", label: "simulated readings", kind: "data" }] }
+  ],
+  hardware: { summary: "One ESP32-C3 board reads a capacitive moisture sensor and switches a 5 V pump through a MOSFET.", interfaces: ["ADC", "GPIO", "UART debug", "Wi-Fi"], currency: "EUR",
+    power: [{ rail: "5 V USB", source: "USB-C", capacity: 500, loads: [{ name: "Pump", mA: 380 }, { name: "3V3 regulator", mA: 90 }] },
+            { rail: "3V3", source: "regulator", capacity: 600, loads: [{ name: "ESP32-C3 with Wi-Fi", mA: 260 }, { name: "Moisture sensor", mA: 5 }] }],   // capacity and mA are numbers you entered
+    bom: [{ ref: "U1", part: "ESP32-C3 module", qty: 1, unit: 3.2, status: "approved" }, { ref: "S1", part: "Capacitive moisture sensor", qty: 1, unit: 1.8, status: "approved" }, { ref: "Q1", part: "Logic-level MOSFET", qty: 1, unit: 0.4, status: "review" },
+          { ref: "D1", part: "Flyback diode", qty: 1, unit: 0.1 }, { ref: "M1", part: "Mini pump 5 V", qty: 1, unit: 4.5, status: "approved" }, { ref: "U2", part: "3V3 regulator", qty: 1, unit: 0.3 },
+          { ref: "J1", part: "USB-C connector", qty: 1, unit: 0.5 }, { ref: "T1", part: "Silicone tube 1 m", qty: 1, unit: null, note: "supplier not chosen", status: "draft" }],
+    pins: [{ pin: "GPIO2", signal: "Moisture (ADC)", connects: "S1 AOUT", note: "ADC1 channel, keep Wi-Fi-safe" }, { pin: "GPIO5", signal: "Pump enable", connects: "Q1 gate", note: "10 k pulldown" }, { pin: "GPIO8", signal: "Status LED", connects: "LED1", note: "onboard" }, { pin: "GPIO20 / 21", signal: "UART debug", connects: "header J2", note: "115200 baud" }] },
+  software: { summary: "A static web demo with a small simulation model. A mock API stands in for the board until the live link is decided.",
+    layers: [{ name: "Presentation", tech: "HTML, CSS, JS, Three.js", items: ["3D planter scene", "Moisture dashboard", "Controls"] }, { name: "Logic", tech: "JavaScript", items: ["Simulation model", "Pump rules"] },
+             { name: "Data access", tech: "fetch, JSON", items: ["Readings client", "Demo mode switch"] }, { name: "Service", tech: "Small REST API", items: ["Readings", "Pump command"] }, { name: "Device", tech: "ESP32 firmware, C++", items: ["Sensor read", "State machine", "HTTP client"] }],
+    modules: [{ name: "scene.js", layer: "Presentation", role: "planter model, lighting, camera", tech: "Three.js", owner: "Sara", status: "doing" }, { name: "sim.js", layer: "Logic", role: "soil moisture and pump model", tech: "JavaScript", owner: "Sara", status: "todo" },
+              { name: "api/readings", layer: "Service", role: "store and return readings", tech: "REST", owner: "Omar", status: "draft" }, { name: "main.cpp", layer: "Device", role: "state machine and pump control", tech: "C++", owner: "Omar", status: "todo" }],
+    endpoints: [{ method: "GET", path: "/api/readings", purpose: "latest 100 readings", auth: "none (demo)" }, { method: "POST", path: "/api/readings", purpose: "device sends a reading", auth: "device token" }, { method: "POST", path: "/api/pump", purpose: "start pump for N seconds", auth: "demo token" }],
+    data: [{ entity: "Reading", fields: "id, soil_pct, ts", note: "one row per sample" }, { entity: "PumpEvent", fields: "id, started, seconds", note: "written by the device" }] },
   agent: { name: "Forge", usedSkills: [{ name: "brainstorming", why: "chose the simulation approach" }, { name: "writing-plans", why: "split the work into tasks with hours" }, { name: "project-hub", why: "built this hub" }, "3d-scene-builder"], notes: "" },
   gaps: [  // priority: blocker | important | nice. status: open | decided (decision = text). Options need label; note and recommended are optional.
     { id: "G1", area: "plan", priority: "blocker", question: "Are the hour estimates right?", why: "They set the delivery date and the price margin. All estimates are first guesses.",
       options: [{ label: "Confirm as they are", note: "team has seen them" }, { label: "Review in a planning call first", note: "adds one meeting", recommended: true }], status: "open" },
     { id: "G2", area: "tracks", priority: "important", question: "How realistic must the soil simulation be?", why: "It decides the effort of task T3.2 and how it behaves on phones.",
       options: [{ label: "Simple model", note: "fast, light, easy to explain", recommended: true }, { label: "Physics-based model", note: "more realistic, about 2x the hours" }, { label: "Replay of real sensor data", note: "needs a recorded data set from the board" }], status: "open" },
+    { id: "G4", area: "architecture", priority: "important", question: "Should the demo talk to a real board or only to the simulation?", why: "It decides whether the mock API and the Wi-Fi link are built at all.",
+      options: [{ label: "Simulation only", note: "no hardware needed on the client site", recommended: true }, { label: "Live board over Wi-Fi", note: "impressive, needs power and Wi-Fi on site" }, { label: "Both, with a switch", note: "most work, safest for demos" }], status: "open" },
     { id: "G3", area: "business", priority: "important", question: "Who hosts the demo after handover?", options: [{ label: "Client's own server" }, { label: "Our hosting, monthly fee", recommended: true }, { label: "Static host, client pays directly" }], status: "decided", decision: "Our hosting, monthly fee" }
   ],
   identity: { palette: [{ name: "Leaf", hex: "#2f9e5a", role: "primary" }, { name: "Sun", hex: "#f2b138", role: "accent" }, { name: "Soil", hex: "#3b2f2a", role: "text" }],
