@@ -73,7 +73,7 @@ const HUB = {
   // Optional. Without it the tabs are generated from the project: Hardware only if there is hardware or firmware, Software only if there is backend or frontend.
   // To merge sections: ui: { tabs: ["Project", "Plan", { label: "Build", parts: ["Hardware", "Software"] }, "Business", "Docs", "Agent", "Gaps", "Identity"] }
   // ui: { tabs: [...] },
-  diagrams: [  // kind: system (Project tab) | hardware, wiring (Hardware tab) | software, dataflow, state (Software tab). Set "tab" to override. status: proposed | decided | built
+  diagrams: [  // kind: system (Project tab) | schematic (first on Hardware) | hardware, wiring (Hardware tab) | software, dataflow, state (Software tab). Set "tab" to override. status: proposed | decided | built
     { id: "sys", kind: "system", status: "decided", title: "System overview", note: "Who talks to whom. Dashed boxes are planned.",
       columns: ["Power", "Sensing", "Device", "Demo", "Visitor"],   // optional lanes, left to right; without it the layout follows the arrows
       nodes: [{ id: "usb", label: "USB 5 V supply", group: "Power" }, { id: "soil", label: "Soil moisture sensor", sub: "capacitive", group: "Sensing" },
@@ -81,7 +81,7 @@ const HUB = {
               { id: "api", label: "Mock API", sub: "readings, pump commands", group: "Demo", status: "planned" }, { id: "web", label: "Web demo", sub: "3D scene and dashboard", group: "Visitor" }],
       edges: [{ from: "usb", to: "mcu", label: "5 V", kind: "power" }, { from: "soil", to: "mcu", label: "analog level", kind: "signal" }, { from: "mcu", to: "pump", label: "on / off", kind: "control" },
               { from: "mcu", to: "api", label: "readings (Wi-Fi)", kind: "data" }, { from: "api", to: "web", label: "JSON", kind: "data" }] },
-    { id: "hw", kind: "hardware", status: "proposed", title: "Block-level schematic: controller board", note: "Drawn from the project data to agree the design. The electrical design is hardware/schematic-v2.pdf.",
+    { id: "hw", kind: "schematic", status: "proposed", title: "Wiring schematic: controller board", note: "Every part and connection. All parts share GND. The detailed EDA drawing is hardware/schematic-v2.pdf.",
       columns: ["Power", "Sensing", "Controller", "Driver", "Load"],   // in / out are the pins drawn on the left and right of a block; edges can name a pin as "block.pin"
       nodes: [{ id: "pwr", label: "Power supply", sub: "USB-C and 3V3 regulator", group: "Power", out: ["5V", "3V3"] },
               { id: "snr", label: "Moisture sensor", group: "Sensing", in: ["VCC"], out: ["AOUT"] },

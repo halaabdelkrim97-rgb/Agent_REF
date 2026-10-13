@@ -209,7 +209,7 @@ const AUTO = [
   ["business", "What is the price or budget, and what are the main costs?", () => !arr(B.offer).length || !arr(B.costs).length, "important"],
   ["business", "How is success measured (KPIs)?", () => !arr(B.kpis).length, "nice"],
   ["identity", "What are the brand colors, fonts and tone (or reference sites)?", () => !arr(I.palette).length, "nice"],
-  ["hardware", "Where is the electrical schematic (components, pins, nets), as an export from the EDA file?", () => !!(Object.keys(HW).length || tracks.some(t => ["hardware", "firmware"].includes(String(t.key || "").toLowerCase()) && t.applicable !== false)) && !arr(HW.schematics).length, "important"]
+  ["hardware", "Where is the electrical schematic (components, pins, nets), as an export from the EDA file?", () => !!(Object.keys(HW).length || tracks.some(t => ["hardware", "firmware"].includes(String(t.key || "").toLowerCase()) && t.applicable !== false)) && !arr(HW.schematics).length && !diagrams.some(d => d.kind === "schematic"), "important"]
 ];
 const autoOpen = AUTO.map((g, i) => ({ id: "M" + (i + 1), area: g[0], question: g[1], priority: g[3], auto: true, open: g[2]() })).filter(g => g.open);
 const gaps = [...arr(HUB.gaps), ...autoOpen];
@@ -267,7 +267,7 @@ const homeTab = t => { const k = String(t.key || "").toLowerCase(), h = ["hardwa
 const trackCards = part => { const ts = tracks.filter(t => homeTab(t) === part); return ts.length ? `<div class="grid">${ts.map(trackCard).join("")}</div>` : ""; };
 
 /* ---------- diagrams (drawn from data: nodes, edges, pins) ---------- */
-const KIND_TAB = { system: "Project", hardware: "Hardware", wiring: "Hardware", software: "Software", dataflow: "Software", state: "Software" };
+const KIND_TAB = { system: "Project", schematic: "Hardware", hardware: "Hardware", wiring: "Hardware", software: "Software", dataflow: "Software", state: "Software" };
 const homeOf = d => d.tab || KIND_TAB[d.kind] || "Software";
 const KCOL = { data: "var(--pt)", power: "var(--bad-t)", signal: "var(--sig)", control: "var(--muted)" };
 const LCOL = ["var(--fill)", "var(--accent)", "var(--ok)", "var(--warn)", "var(--bad)", "var(--muted)"];
@@ -324,7 +324,7 @@ function renderDiagram(d, uid) {
   return svg.length ? `<div class="dgw" tabindex="0" role="group" aria-label="${esc(d.title || "Diagram")}, scrollable">${svg}</div>${legend}${alt}` : "";
 }
 const diagCard = d => `<div class="card" style="margin-top:16px"><div class="row"><h2>${esc(d.title || "Diagram")}</h2>${d.status ? badge(d.status) : ""}</div>${d.note ? `<p class="muted">${esc(d.note)}</p>` : ""}${renderDiagram(d, "d" + diagrams.indexOf(d))}</div>`;
-const diagCards = part => diagrams.filter(d => homeOf(d) === part).map(diagCard).join("");
+const diagCards = (part, kind) => diagrams.filter(d => homeOf(d) === part && (kind ? d.kind === kind : d.kind !== "schematic")).map(diagCard).join("");
 
 function vHardware() {
   const power = arr(HW.power), bom = arr(HW.bom), pins = arr(HW.pins), cur = HW.currency || B.currency;
@@ -335,7 +335,7 @@ function vHardware() {
   const sheets = arr(HW.schematics), FILES = window.HUB_FILES || {}, srcOf = f => FILES[f] || (/^[\w][\w.\-\/]*\.(svg|png|jpe?g|webp)$/i.test(f || "") && !/\.\./.test(f) ? f : "");
   const sheet = (x, i) => { const src = srcOf(x.src); return `<div class="card" style="margin-bottom:16px"><div class="row"><h2>${esc(x.title || "Electrical schematic")}${x.sheet ? ` <span class="muted">sheet ${esc(x.sheet)}</span>` : ""}</h2>${x.status ? badge(x.status) : ""}</div>${x.note ? `<p class="muted">${esc(x.note)}</p>` : ""}
     ${src ? `<div class="sch" id="sch${i}"><img src="${esc(src)}" alt="${esc(x.title || "Electrical schematic")}"></div><p class="muted" style="margin-top:8px"><button class="btn sm" data-zoom="sch${i}">Zoom</button>${x.revision ? " Revision " + esc(x.revision) + "." : ""}${x.source ? ` Source: <span class="m">${esc(x.source)}</span>` : ""}</p>` : `<p>${TODO}</p>`}</div>`; };
-  const out = [sheets.map(sheet).join(""), trackCards("Hardware"), HW.summary ? `<div class="card" style="margin-top:16px"><h2>Hardware summary</h2><p>${esc(HW.summary)}</p>${arr(HW.interfaces).length ? `<p>${chips(HW.interfaces)}</p>` : ""}</div>` : "", diagCards("Hardware"),
+  const out = [diagCards("Hardware", "schematic"), sheets.map(sheet).join(""), trackCards("Hardware"), HW.summary ? `<div class="card" style="margin-top:16px"><h2>Hardware summary</h2><p>${esc(HW.summary)}</p>${arr(HW.interfaces).length ? `<p>${chips(HW.interfaces)}</p>` : ""}</div>` : "", diagCards("Hardware"),
     power.length ? `<div class="card" style="margin-top:16px"><h2>Power budget</h2>${power.map(rail).join("")}<p class="muted">Amber above 80%, red above 100% of the rail capacity. Loads are the figures entered, not measurements.</p></div>` : "",
     bom.length ? `<div class="card" style="margin-top:16px"><h2>Bill of materials</h2><div class="tw"><table><tr><th>Ref</th><th>Part</th><th class="num">Qty</th><th class="num">Unit</th><th class="num">Line</th><th>Status</th></tr>${bom.map(b => `<tr><td class="m">${esc(b.ref)}</td><td>${esc(b.part)}${b.note ? `<div class="muted">${esc(b.note)}</div>` : ""}</td><td class="num">${esc(b.qty || 1)}</td><td class="num">${m2(b.unit)}</td><td class="num">${b.unit == null ? TODO : m2((+b.unit || 0) * (+b.qty || 1))}</td><td>${b.status ? badge(b.status) : ""}</td></tr>`).join("")}<tr><td></td><td><b>Total</b>${unpriced ? ` <span class="muted">(${unpriced} unpriced)</span>` : ""}</td><td></td><td></td><td class="num"><b>${m2(bomTotal)}</b></td><td></td></tr></table></div></div>` : "",
     pins.length ? `<div class="card" style="margin-top:16px"><h2>Pin map</h2><div class="tw s"><table><tr><th>Pin</th><th>Signal</th><th>Connects to</th><th>Note</th></tr>${pins.map(x => `<tr><td class="m">${esc(x.pin)}</td><td>${esc(x.signal)}</td><td>${esc(x.connects)}</td><td class="muted">${esc(x.note)}</td></tr>`).join("")}</table></div></div>` : ""].join("");
