@@ -13,7 +13,7 @@ Goal: a later session reads one small file instead of the whole project. The sum
 3. Update section 9 with: **Done** (what works now), **In progress**, **Next** (ordered, max 5), **Open questions / blockers**, **How to resume** (exact command or file to open first).
 4. Move settled decisions to section 7 as one line each: decision, reason, date. Move new constraints to section 6.
 5. Show the user the diff of the context file and wait for approval before saving it, unless they asked you to save directly.
-6. Then refresh the Project Hub (`project-hub`): edit only the changed fields.
+6. Then refresh the Project Hub (`project-hub`): edit only the changed fields in `REF/CONTEXT/hub/hub-data.js`.
 
 ## Handoff note (when the session ends or the user switches tool)
 Add a short block at the end of section 9, replaced each time: **Goal of this session**, **State** (what is done and verified), **Decisions** made and why, **Next action** (one concrete step), **Do not redo** (things already tried or rejected). Under 12 lines. A new session reads it first and continues from "Next action".
