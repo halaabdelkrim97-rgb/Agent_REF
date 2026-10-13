@@ -98,7 +98,11 @@ const HUB = {
               { id: "store", label: "Readings store", sub: "in memory", status: "planned" }, { id: "ui", label: "Dashboard and 3D scene", sub: "Three.js" }],
       edges: [{ from: "fw", to: "api", label: "POST readings", kind: "data" }, { from: "api", to: "store", label: "save", kind: "data" }, { from: "store", to: "ui", label: "GET readings", kind: "data" }, { from: "sim", to: "ui", label: "simulated readings", kind: "data" }] }
   ],
-  hardware: { summary: "One ESP32-C3 board reads a capacitive moisture sensor and switches a 5 V pump through a MOSFET.", interfaces: ["ADC", "GPIO", "UART debug", "Wi-Fi"], currency: "EUR",
+  hardware: {
+    // Real electrical schematic sheets, shown first on the Hardware tab. src: image next to index.html (exported from the EDA file).
+    // schematics: [{ title: "Electrical schematic: sensor board", sheet: "1 of 1", src: "schematic-sensor.svg", status: "review", revision: "B", source: "hardware/sensor.kicad_sch", note: "Exported with kicad-cli." }],
+    schematics: [],
+    summary: "One ESP32-C3 board reads a capacitive moisture sensor and switches a 5 V pump through a MOSFET.", interfaces: ["ADC", "GPIO", "UART debug", "Wi-Fi"], currency: "EUR",
     power: [{ rail: "5 V USB", source: "USB-C", capacity: 500, loads: [{ name: "Pump", mA: 380 }, { name: "3V3 regulator", mA: 90 }] },
             { rail: "3V3", source: "regulator", capacity: 600, loads: [{ name: "ESP32-C3 with Wi-Fi", mA: 260 }, { name: "Moisture sensor", mA: 5 }] }],   // capacity and mA are numbers you entered
     bom: [{ ref: "U1", part: "ESP32-C3 module", qty: 1, unit: 3.2, status: "approved" }, { ref: "S1", part: "Capacitive moisture sensor", qty: 1, unit: 1.8, status: "approved" }, { ref: "Q1", part: "Logic-level MOSFET", qty: 1, unit: 0.4, status: "review" },

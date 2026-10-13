@@ -5,7 +5,10 @@ Usage: python3 scripts/hub_inline.py <hub folder> <output.html> [--bare] [--titl
 The folder holds index.html and hub-data.js (default location in a project: REF/CONTEXT/hub).
 --bare drops the <!DOCTYPE>, <html>, <head> and <body> wrapper, as the Artifact tool adds its own.
 --title sets the page <title> (the artifact name); keep it stable across republishes.
+Images in the folder (schematic sheets: .svg, .png, .jpg, .webp) are embedded as data URIs in HUB_FILES.
 """
+import base64
+import json
 import re
 import sys
 from pathlib import Path
@@ -26,7 +29,13 @@ data = (folder / "hub-data.js").read_text(encoding="utf-8").replace("</script", 
 tag = '<script src="hub-data.js"></script>'
 if tag not in page:
     sys.exit("index.html does not contain the hub-data.js script tag")
-page = page.replace(tag, "<script>\n" + data + "\n</script>")
+MIME = {".svg": "image/svg+xml", ".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".webp": "image/webp"}
+files = {}
+for f in sorted(folder.rglob("*")):
+    if f.is_file() and f.suffix.lower() in MIME:
+        files[f.relative_to(folder).as_posix()] = "data:" + MIME[f.suffix.lower()] + ";base64," + base64.b64encode(f.read_bytes()).decode()
+embed = ("window.HUB_FILES = " + json.dumps(files) + ";\n") if files else ""
+page = page.replace(tag, "<script>\n" + embed + data + "\n</script>")
 if title:
     page = re.sub(r"<title>.*?</title>", lambda m: "<title>" + title.replace("&", "&amp;").replace("<", "&lt;") + "</title>", page, count=1)
 if bare:

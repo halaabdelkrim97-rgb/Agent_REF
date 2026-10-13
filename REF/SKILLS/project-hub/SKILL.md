@@ -1,6 +1,6 @@
 ---
 name: project-hub
-description: Builds and updates the Project Hub for the project Forge is working on, generated from the project itself: context, task-by-task work plan with hours, hardware (block schematic, power budget, parts list, pin map), software (layers, data flow, API, data model), system diagrams, business plan, documents, the agent page, a gap page with decisions, and identity. Use at project start, after substantial work, or for /forge:hub.
+description: Builds and updates the Project Hub for the project Forge is working on, generated from the project itself: context, plan summary, a Work plan tab with every task and its hours, hardware (real electrical schematic, block diagram, power budget, parts list, pin map), software (layers, data flow, API, data model), system diagrams, business plan, documents, the agent page, a gap page with decisions, and identity. Use at project start, after substantial work, or for /forge:hub.
 metadata:
   source: original (Agent_REF)
   date_added: '2026-10-13'
@@ -14,14 +14,14 @@ Two files in `REF/CONTEXT/hub/`:
 - `index.html`: the static page. Copy it, never edit or re-read it.
 - `hub-data.js`: all project content in one `HUB` object. This is the only file Forge edits (it is small).
 
-Tabs are generated from the project (see Analyze the project). Possible tabs: **Project** (goal, problem, users, scope, constraints, people, next steps, build and completeness rings), **Plan** (hours summary, next-up tasks, workload per person, task-by-task work plan as list or board with person and status filters, risks, decisions), **Hardware** (hardware and firmware tracks, block-level schematic with pins, firmware state diagram, power budget, parts list with total, pin map), **Software** (backend and frontend tracks, architecture layers, data flow and structure diagrams, modules, API endpoints, data model), **Business**, **Docs** (all project documents with status, search, open link or copy path, missing documents), **Agent** (Forge role, commands, skills used here, full skill catalog), **Gaps**, **Identity**.
+Tabs are generated from the project (see Analyze the project). Possible tabs: **Project** (goal, problem, users, scope, constraints, people, next steps, build and completeness rings), **Plan** (hours summary, next-up tasks, workload per person, risks, decisions), **Work plan** (every task by phase, as list or board with person and status filters; its own tab whenever there are tasks), **Hardware** (electrical schematic sheets first, hardware and firmware tracks, block diagram with pins, firmware state diagram, power budget, parts list with total, pin map), **Software** (backend and frontend tracks, architecture layers, data flow and structure diagrams, modules, API endpoints, data model), **Business**, **Docs** (all project documents with status, search, open link or copy path, missing documents), **Agent** (Forge role, commands, skills used here, full skill catalog), **Gaps**, **Identity**.
 
 ## Analyze the project first
 The hub is built for this project, not from a fixed form.
 1. List what exists with `git ls-files` or `ls`, and read only manifests and the context file. Hardware: `hardware/`, `cad/`, `*.kicad_sch`, `*.step`, `*.stl`. Firmware: `platformio.ini`, `*.ino`, `firmware/`. Backend: `server/`, `api/`, `requirements.txt`, `package.json`. Frontend: `index.html`, `src/`. Do not read source files for this.
-2. Decide the shape: **Hardware tab** only if there is hardware or firmware; **Software tab** only if there is backend or frontend; a **System overview** diagram always (4 to 10 blocks, written to the Project tab); a **block schematic** for the board or wiring; a **state diagram** where firmware or UI logic has states; **layers and a data-flow diagram** for software. Small projects merge sections with `ui.tabs` (for example one "Build" tab with `parts: ["Hardware","Software"]`). Without `ui.tabs` the page picks tabs from the data.
+2. Decide the shape: **Hardware tab** only if there is hardware or firmware; **Software tab** only if there is backend or frontend; a **System overview** diagram always (4 to 10 blocks, written to the Project tab); a real **electrical schematic** for any hardware (see Electrical schematic), plus a block diagram as an overview; a **state diagram** where firmware or UI logic has states; **layers and a data-flow diagram** for software. Small projects merge sections with `ui.tabs` (for example one "Build" tab with `parts: ["Hardware","Software"]`). Without `ui.tabs` the page picks tabs from the data.
 3. Draw only what the files, the context file or the user show. Parts not built yet get `status: "planned"` (dashed box). A diagram is `proposed` until the user confirms it, then `decided`, then `built`. If the architecture is open, raise a gap with 2 to 4 options (area `architecture`) instead of guessing.
-4. Never invent part numbers, pins, voltages, currents, prices, endpoints or fields. Leave them out and say so. The hardware diagram is block-level: put the real schematic file in `docs` and name it in the diagram `note`.
+4. Never invent part numbers, pins, voltages, currents, prices, endpoints or fields. Leave them out and say so. A block diagram never replaces the electrical schematic.
 5. Diagram format (details in `references/hub-data.example.js`): `nodes` `{id,label,sub,group,status,in,out}` (`in` and `out` are pins drawn on the left and right), `edges` `{from,to,label,kind}` with `kind` one of `data`, `power`, `signal`, `control` and pins named as `"block.pin"`, optional `columns` for lanes. Keep a diagram under 12 nodes and labels short; split instead of cramming. The page lays it out, routes long wires above the diagram and adds a text version.
 
 ## Create (first time)
@@ -35,10 +35,18 @@ The hub is built for this project, not from a fixed form.
 5. Gaps: the page automatically lists missing basics as "missing info" gaps. Add explicit gaps to `gaps` for real decisions, each with 2 to 4 options (`label`, short `note`, mark at most one `recommended`) and a `why`. Priorities: `blocker` (stops work), `important`, `nice`. Do not write option notes you cannot justify.
 6. Open `index.html` in a headless browser or the browser pane and fix console errors. Say what you could not check.
 
+## Electrical schematic (hardware projects)
+A hardware project needs a real electrical schematic in `hardware.schematics`, shown first on the Hardware tab: every part with its reference designator (U1, R1, SW1...) and value, every pin by name, every net (wires or net labels), power rails and ground symbols, passives (pull-ups, dividers, LED resistors), and a title block (project, sheet, revision, date). The block diagram is an extra overview, never the schematic.
+- Source, in order: (1) export the project's EDA file (KiCad: `kicad-cli sch export svg`) into `REF/CONTEXT/hub/`; (2) if no EDA file exists yet, draw a draft sheet as SVG from decided parts and the pin map only (a small standard-library script kept in the project, for example `hardware/schematic/gen_schematic.py`, so it can be regenerated), with status `proposed` and a note that the EDA capture is still to do.
+- Entry: `{ title, sheet, src, status, revision, source, note }`. `src` is an image file next to `index.html` (`.svg`, `.png`, `.jpg`, `.webp`); `hub_inline.py` embeds it in the single-file hub. List the sheet in `docs` too.
+- Never invent values or pins. Connect modules by pin name and say so on the sheet when header order varies by maker; anything assumed (protection, pull-ups) goes in a note as "to check".
+- Without a sheet, the Gaps tab shows an automatic "Where is the electrical schematic?" gap.
+
 ## Work plan (tasks and hours)
 - Every task lives in a phase of `plan.phases`: `{ id, t, owner, est, spent, status, due, after, track, note }`. `est` and `spent` are hours; `status` is `todo`, `doing`, `blocked` or `done`; `after` lists task ids that must finish first; `track` is `hardware`, `firmware`, `backend`, `frontend` or `project`.
 - Keep tasks small (1 to 8 hours; split bigger ones), one owner each, ordered so a person can take the next one. Put the reason for `blocked` in `note`.
 - Hours come from the user or the team. When Forge proposes them, set `plan.estimateNote` ("First estimates by Forge from the brief, not yet confirmed by the team") and add a blocker gap "Are the hour estimates right?". Never present estimates as commitments. `spent` is only what the user reports.
+- Statuses and `spent` hours are updated by Forge from real progress (what the user reports, commits, files, test results), never edited on the page. The page shows them read-only.
 - The page computes totals, remaining hours, workload per person, next-up tasks (not blocked, dependencies done) and phase progress. Do not write those numbers by hand.
 
 ## Documents
@@ -51,6 +59,7 @@ The hub is built for this project, not from a fixed form.
 The user picks an option or types an answer on the Gaps tab. "Ask Forge about this" copies a ready prompt; "Copy all decisions for Forge" copies a block to paste into chat. The page cannot write files, and picks live only in that browser. When the user pastes decisions: set the gap to `status: "decided"` with `decision`, record each in context file section 7 (one line: decision, reason, date), update the plan, tracks or business fields it affects, then refresh the hub.
 
 ## Publish
+- Images in the hub folder (schematic sheets) are embedded by `hub_inline.py`; keep them next to `index.html`.
 - With the Artifact tool: build one wrapper-less file with the REF repo script `python3 scripts/hub_inline.py REF/CONTEXT/hub <out.html> --bare --title "<Project> Hub"` (the tool adds its own document wrapper) and publish that; keep the title stable on republishes. Use `hub_inline.py` without `--bare` for a single file to send by hand. It is private until the user shares it; record the link in section 9 of the context file and update the same artifact later by its URL.
 - Without it, the folder is the hub; tell the user to open `index.html` in a browser (keep both files together). Never say a page was published unless the tool confirmed it.
 

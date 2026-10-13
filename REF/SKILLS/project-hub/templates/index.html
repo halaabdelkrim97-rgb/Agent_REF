@@ -72,6 +72,7 @@ a{color:var(--pt)}
 .dg-pin{fill:var(--card);stroke:var(--muted);stroke-width:1.4}
 .dg-e{fill:none;stroke-width:1.8}.dg-e.data{stroke:var(--pt)}.dg-e.power{stroke:var(--bad-t)}.dg-e.signal{stroke:var(--sig)}.dg-e.control{stroke:var(--muted);stroke-dasharray:5 4}
 .dg-l{fill:var(--text);font-size:10.5px}.dg-lb{fill:var(--card);stroke:var(--line)}
+.sch{overflow:auto;border:1px solid var(--line);border-radius:12px;background:#fff;padding:8px;max-height:80vh}.sch img{display:block;width:100%;height:auto;min-width:720px}.sch.zoom img{width:auto;max-width:none}
 .dglegend{display:flex;gap:14px;flex-wrap:wrap;margin:10px 0 0;font-size:.85rem;color:var(--muted)}
 .dglegend i{display:inline-block;width:26px;height:0;border-top:3px solid;vertical-align:middle;margin-right:6px}
 details.alt{margin-top:8px}details.alt summary{cursor:pointer;color:var(--pt);font-weight:600}
@@ -141,13 +142,13 @@ footer{margin-top:28px;color:var(--muted);font-size:.85rem}
 <script src="hub-data.js"></script>
 <script>
 /*SKILLS:BEGIN*/
-const FORGE = {"version": "v2.6.0", "groups": [
+const FORGE = {"version": "v2.7.0", "groups": [
 {"g": "Planning & Process", "skills": [["brainstorming", "You MUST use this before any creative work - creating features, building components, adding functionality, or modifying…"], ["writing-plans", "Use when you have an approved spec or requirements for a multi-step task, before touching code."]]},
 {"g": "Engineering", "skills": [["backend-architect", "Backend and API architecture: REST, GraphQL and gRPC design, service boundaries, event-driven patterns, resilience and…"], ["frontend-developer", "Frontend component, responsive layout, client-side state, performance and accessibility guidance."], ["ui-components-21st", "Use 21st.dev (Magic MCP and 21st-dev CLI) to find or generate UI components from a prompt."], ["coding-standards", "Coding standards and best practices for JavaScript, plus TypeScript, React and Node.js where the project already uses t…"], ["debugging", "Root-cause debugging procedure - reproduce, isolate, form ranked hypotheses, gather evidence, apply the smallest fix an…"], ["git-workflow", "Git habits for clean history - branches, small commits, version-prefixed messages, safe pushes, pull requests, changelo…"]]},
 {"g": "UI, Motion & Visuals", "skills": [["ui-ux-pro-max", "Comprehensive design guide for web and mobile applications."], ["baseline-ui", "Quickly deslop UI code by fixing spacing, hierarchy, typography, and small layout issues."], ["scroll-experience", "Scroll-driven web experiences: parallax storytelling, scroll animations, interactive narratives and cinematic pages, us…"], ["css-motion", "Plain CSS and Web Animations motion: transitions, keyframes, scroll-driven animation, FLIP, micro-interactions, easing…"], ["framer-motion", "Motion (formerly Framer Motion) for React projects: motion components, variants, gestures, AnimatePresence exit animati…"], ["gsap", "GSAP (GreenSock) animation: tweens, timelines, easing, ScrollTrigger, stagger, SVG and text effects, React cleanup with…"], ["art-svg-canvas", "Illustrations, icons, patterns, generative art, backgrounds and simple image assets in plain SVG, CSS and Canvas, with…"], ["canvas-design", "Creates original static visual art (poster, cover, art piece) as a single .png or .pdf, guided by a short written desig…"], ["nano-banana", "Generates and edits raster images (hero art, mockups, icons, textures, product shots) with Google's Nano Banana image m…"], ["data-and-charts", "Charts, KPIs and small dashboards for client sites in plain SVG or Canvas - chart choice, scales, labels, accessible co…"], ["accessibility", "WCAG 2.2 AA accessibility checks and fixes for web pages and interactive tools - keyboard, focus, names, contrast, form…"]]},
 {"g": "3D & Simulation", "skills": [["threejs", "Three.js API reference: scenes, cameras, renderer, geometry, materials, textures, lighting, shadows, animation, raycast…"], ["3d-scene-builder", "Process for art-directed, game-like 3D product demos on client websites: brief, art direction, blockout, materials, lig…"], ["web-3d-assets", "Turning CAD or 3D models into fast web assets - glTF export, cleanup, PBR materials, texture sizes, compression, HDRI a…"], ["interactive-simulation", "Model, state, fixed-timestep loop, physics basics, controls and delivery for 2D (Canvas or SVG) simulations, product de…"], ["unity-scene-builder", "Unity scenes for web delivery - scene-as-code editor scripts, orbit camera, hotspots, simulation scripts, WebGL build s…"]]},
 {"g": "Quality & Delivery", "skills": [["testing", "Plans and runs tests for plain HTML, CSS and JavaScript projects - manual browser checklists first, then simple native…"], ["security-review", "Security checklist review for web code and static sites - secrets, input handling and XSS, forms and CSRF, headers, thi…"], ["seo-performance", "Search visibility and page speed for client websites - semantic HTML, titles, metadata, structured data, sitemap, image…"], ["i18n-forms", "Multilingual pages and reliable web forms: lang and RTL, text files, Intl formatting, language switcher, labels, valida…"], ["client-delivery", "Freelance client project flow - discovery brief, scope and acceptance criteria, milestones, change requests, final chec…"]]},
-{"g": "Docs & Memory", "skills": [["project-hub", "Builds and updates the Project Hub for the project Forge is working on, generated from the project itself: context, tas…"], ["doc-writer", "Writes and updates project documentation from the real code - README, setup and run steps, specs, handover notes, chang…"], ["reflect", "End-of-day and end-of-session self-improvement: reviews the session or today for corrections, approvals and token waste…"]]},
+{"g": "Docs & Memory", "skills": [["project-hub", "Builds and updates the Project Hub for the project Forge is working on, generated from the project itself: context, pla…"], ["doc-writer", "Writes and updates project documentation from the real code - README, setup and run steps, specs, handover notes, chang…"], ["reflect", "End-of-day and end-of-session self-improvement: reviews the session or today for corrections, approvals and token waste…"]]},
 {"g": "Mechatronics", "skills": [["cad-firmware", "Mechatronics help: parametric CAD and printable parts, Arduino/ESP32/STM32 C++ habits, pin maps, wiring and BOM docs, h…"]]},
 {"g": "Agents & Skill Authoring", "skills": [["agent-builder", "Builds a complete task-specific AI agent: mission, identity, scope, rules, tools, skills, memory, reports and tests, cr…"], ["writing-skills", "Use when creating, updating, testing or improving agent skills (SKILL.md files)."], ["writing-great-skills", "Reference for writing and editing skills well: the vocabulary and principles that make a skill predictable."], ["writing-guidelines", "Reviews files for compliance with Vercel's Writing Guidelines."]]}
 ]};
@@ -207,7 +208,8 @@ const AUTO = [
   ["business", "Who pays, for what, and how (revenue model)?", () => !(B.model || B.audience), "important"],
   ["business", "What is the price or budget, and what are the main costs?", () => !arr(B.offer).length || !arr(B.costs).length, "important"],
   ["business", "How is success measured (KPIs)?", () => !arr(B.kpis).length, "nice"],
-  ["identity", "What are the brand colors, fonts and tone (or reference sites)?", () => !arr(I.palette).length, "nice"]
+  ["identity", "What are the brand colors, fonts and tone (or reference sites)?", () => !arr(I.palette).length, "nice"],
+  ["hardware", "Where is the electrical schematic (components, pins, nets), as an export from the EDA file?", () => !!(Object.keys(HW).length || tracks.some(t => ["hardware", "firmware"].includes(String(t.key || "").toLowerCase()) && t.applicable !== false)) && !arr(HW.schematics).length, "important"]
 ];
 const autoOpen = AUTO.map((g, i) => ({ id: "M" + (i + 1), area: g[0], question: g[1], priority: g[3], auto: true, open: g[2]() })).filter(g => g.open);
 const gaps = [...arr(HUB.gaps), ...autoOpen];
@@ -330,11 +332,14 @@ function vHardware() {
   const m2 = n => n == null || n === "" || isNaN(n) ? TODO : new Intl.NumberFormat(undefined, { style: "currency", currency: cur || "EUR", maximumFractionDigits: 2 }).format(n);
   const rail = r => { const used = arr(r.loads).reduce((a, l) => a + (+l.mA || 0), 0), cap = +r.capacity || 0, p = cap ? Math.round(used / cap * 100) : 0, cls = p > 100 ? "bad" : p > 80 ? "warn" : "";
     return `<div style="margin:12px 0"><div class="row"><b>${esc(r.rail)} <span class="muted">${esc(r.source || "")}</span></b><span class="${p > 100 ? "over" : ""}">${used} of ${cap || "?"} mA${cap ? " (" + p + "%)" : ""}</span></div><div class="bar ${cls}" role="progressbar" aria-label="${esc(r.rail)} load" aria-valuenow="${Math.min(p, 100)}" aria-valuemin="0" aria-valuemax="100"><i style="width:${Math.min(100, p)}%"></i></div><div class="muted">${arr(r.loads).map(l => esc(l.name) + " " + esc(l.mA) + " mA").join(" · ")}</div></div>`; };
-  const out = [trackCards("Hardware"), HW.summary ? `<div class="card" style="margin-top:16px"><h2>Hardware summary</h2><p>${esc(HW.summary)}</p>${arr(HW.interfaces).length ? `<p>${chips(HW.interfaces)}</p>` : ""}</div>` : "", diagCards("Hardware"),
+  const sheets = arr(HW.schematics), FILES = window.HUB_FILES || {}, srcOf = f => FILES[f] || (/^[\w][\w.\-\/]*\.(svg|png|jpe?g|webp)$/i.test(f || "") && !/\.\./.test(f) ? f : "");
+  const sheet = (x, i) => { const src = srcOf(x.src); return `<div class="card" style="margin-bottom:16px"><div class="row"><h2>${esc(x.title || "Electrical schematic")}${x.sheet ? ` <span class="muted">sheet ${esc(x.sheet)}</span>` : ""}</h2>${x.status ? badge(x.status) : ""}</div>${x.note ? `<p class="muted">${esc(x.note)}</p>` : ""}
+    ${src ? `<div class="sch" id="sch${i}"><img src="${esc(src)}" alt="${esc(x.title || "Electrical schematic")}"></div><p class="muted" style="margin-top:8px"><button class="btn sm" data-zoom="sch${i}">Zoom</button>${x.revision ? " Revision " + esc(x.revision) + "." : ""}${x.source ? ` Source: <span class="m">${esc(x.source)}</span>` : ""}</p>` : `<p>${TODO}</p>`}</div>`; };
+  const out = [sheets.map(sheet).join(""), trackCards("Hardware"), HW.summary ? `<div class="card" style="margin-top:16px"><h2>Hardware summary</h2><p>${esc(HW.summary)}</p>${arr(HW.interfaces).length ? `<p>${chips(HW.interfaces)}</p>` : ""}</div>` : "", diagCards("Hardware"),
     power.length ? `<div class="card" style="margin-top:16px"><h2>Power budget</h2>${power.map(rail).join("")}<p class="muted">Amber above 80%, red above 100% of the rail capacity. Loads are the figures entered, not measurements.</p></div>` : "",
     bom.length ? `<div class="card" style="margin-top:16px"><h2>Bill of materials</h2><div class="tw"><table><tr><th>Ref</th><th>Part</th><th class="num">Qty</th><th class="num">Unit</th><th class="num">Line</th><th>Status</th></tr>${bom.map(b => `<tr><td class="m">${esc(b.ref)}</td><td>${esc(b.part)}${b.note ? `<div class="muted">${esc(b.note)}</div>` : ""}</td><td class="num">${esc(b.qty || 1)}</td><td class="num">${m2(b.unit)}</td><td class="num">${b.unit == null ? TODO : m2((+b.unit || 0) * (+b.qty || 1))}</td><td>${b.status ? badge(b.status) : ""}</td></tr>`).join("")}<tr><td></td><td><b>Total</b>${unpriced ? ` <span class="muted">(${unpriced} unpriced)</span>` : ""}</td><td></td><td></td><td class="num"><b>${m2(bomTotal)}</b></td><td></td></tr></table></div></div>` : "",
     pins.length ? `<div class="card" style="margin-top:16px"><h2>Pin map</h2><div class="tw s"><table><tr><th>Pin</th><th>Signal</th><th>Connects to</th><th>Note</th></tr>${pins.map(x => `<tr><td class="m">${esc(x.pin)}</td><td>${esc(x.signal)}</td><td>${esc(x.connects)}</td><td class="muted">${esc(x.note)}</td></tr>`).join("")}</table></div></div>` : ""].join("");
-  return out.trim() ? out : `<div class="card"><h2>Hardware</h2><p>${TODO}</p><p class="muted">Block-level schematic, power budget, parts list and pin map appear here once the hardware is defined. See the Gaps page.</p></div>`;
+  return out.trim() ? out : `<div class="card"><h2>Hardware</h2><p>${TODO}</p><p class="muted">Electrical schematic, block diagram, power budget, parts list and pin map appear here once the hardware is defined. See the Gaps page.</p></div>`;
 }
 
 function vSoftware() {
@@ -353,14 +358,8 @@ function taskRow(t) {
   return `<tr class="s-${esc(t.status)}"><td class="c-dot"><span class="dot ${esc(t.status)}" title="${esc(t.status)}"></span></td><td class="num c-id">${esc(t.id)}</td><td class="c-task"><b>${esc(t.t)}</b>${t.note ? `<div class="muted">${esc(t.note)}</div>` : ""}${arr(t.after).length ? `<div class="muted">after ${esc(t.after.join(", "))}${ready(t) || t.status === "done" ? "" : " (waiting)"}</div>` : ""}<div class="meta">${[t.id, t.owner || "unassigned", t.due, t.est ? "est. " + t.est + " h" : "est. ?"].filter(Boolean).map(esc).join(" · ")}${t.spent ? ` · <span class="${over ? "over" : ""}">spent ${esc(t.spent)} h</span>` : ""}</div></td><td class="c-own">${t.owner ? esc(t.owner) : '<span class="tbd">unassigned</span>'}</td><td class="c-due">${esc(t.due)}</td><td class="num c-est">${t.est ? t.est + " h" : "?"}</td><td class="num c-sp ${over ? "over" : ""}">${t.spent ? t.spent + " h" : "-"}</td><td class="c-st">${badge(t.status)}</td></tr>`;
 }
 function vPlan() {
-  const vis = tasks.filter(t => (!planOwner || t.owner === planOwner) && (planStatus === "all" || t.status === planStatus));
-  const seg = (attr, k, label, on) => `<button class="btn sm" data-${attr}="${esc(k)}" aria-pressed="${on}">${esc(label)}</button>`;
   const maxH = Math.max(1, ...owners.map(o => sumH(tasks.filter(t => t.owner === o))));
   const bar = o => { const ts = tasks.filter(t => t.owner === o), h = sumH(ts), d = sumH(ts.filter(t => t.status === "done")); return `<div class="wl"><span>${esc(o)}</span><div class="wlb" style="width:${Math.round(h / maxH * 100)}%" title="${d} of ${h} h done"><i style="width:${h ? Math.round(d / h * 100) : 0}%"></i></div><b>${h} h</b></div>`; };
-  const phaseBlock = p => { const ts = vis.filter(t => t.phase === p.name), all = tasks.filter(t => t.phase === p.name);
-    return `<div class="card" style="margin-top:16px"><div class="row"><h3>${esc(p.name)}</h3>${badge(p.status || "todo")}</div><div class="muted">${esc([p.start, p.end].filter(Boolean).join(" to "))}${all.length ? " · " + sumH(all) + " h · " + all.filter(t => t.status === "done").length + " of " + all.length + " tasks done" : ""}</div>${prog(phasePct(p), p.name)}
-      ${!all.length ? '<p class="tbd" style="margin-top:10px">No tasks yet</p>' : ts.length ? `<div class="tw"><table class="tasks"><tr><th></th><th>ID</th><th>Task</th><th>Owner</th><th>Due</th><th class="num">Est.</th><th class="num">Spent</th><th>Status</th></tr>${ts.map(taskRow).join("")}</table></div>` : '<p class="muted" style="margin-top:10px">No task matches the filter.</p>'}</div>`; };
-  const board = ["todo", "doing", "blocked", "done"].map(k => `<div class="col"><h3>${k} (${vis.filter(t => t.status === k).length})</h3>${vis.filter(t => t.status === k).map(t => `<div class="ticket ${t.est > 0 && t.spent > t.est ? "high" : ""}"><b>${esc(t.t)}</b><div class="muted">${[t.id, t.owner, t.est ? t.est + " h" : "", t.due].filter(Boolean).map(esc).join(" · ")}</div></div>`).join("") || '<span class="tbd">empty</span>'}</div>`).join("");
   return `
   ${trackCards("Plan")}
   <div class="grid" style="margin-top:16px">
@@ -374,16 +373,25 @@ function vPlan() {
     <div class="card"><h2>Next up</h2>${nextUp.length ? `<ol class="next plain">${nextUp.map(t => `<li><b>${esc(t.t)}</b> <span class="muted">${[t.id, t.owner, t.est ? t.est + " h" : "", t.due].filter(Boolean).map(esc).join(" · ")}</span></li>`).join("")}</ol>` : `<p>${tasks.length ? "Nothing ready. Check blocked tasks and dependencies." : TODO}</p>`}${tasks.filter(t => t.status === "blocked").length ? `<p class="over">Blocked: ${tasks.filter(t => t.status === "blocked").map(t => esc(t.id)).join(", ")}</p>` : ""}</div>
     <div class="card"><h2>Team workload</h2>${owners.length ? owners.map(bar).join("") + '<p class="muted">Bar length: planned hours. Dark part: done.</p>' : `<p>${TODO}</p>`}</div>
   </div>
-  ${tasks.length ? `<div class="card" style="margin-top:16px"><h2>Work plan, task by task</h2>
-    <div class="seg" role="group" aria-label="View">${seg("pv", "list", "List", planView === "list")}${seg("pv", "board", "Board", planView === "board")}</div>
-    <div class="seg" role="group" aria-label="Filter by person"><label>Person</label>${seg("po", "", "Everyone", !planOwner)}${owners.map(o => seg("po", o, o, planOwner === o)).join("")}</div>
-    <div class="seg" role="group" aria-label="Filter by status"><label>Status</label>${["all", "todo", "doing", "blocked", "done"].map(k => seg("ps", k, k === "all" ? "All" : k, planStatus === k)).join("")}</div>
-    <p class="muted">${vis.length} tasks shown · ${sumH(vis)} h estimated</p></div>
-  ${planView === "board" ? `<div class="board" style="margin-top:16px">${board}</div>` : phases.map(phaseBlock).join("")}` : `<div class="card" style="margin-top:16px"><h2>Work plan</h2><p>${TODO}</p></div>`}
+  ${partShown("Work plan") ? `<p class="muted" style="margin-top:16px">The task-by-task plan is on the <button class="btn sm" data-go="Work plan">Work plan</button> tab.</p>` : vWorkPlan()}
   <div class="grid" style="margin-top:16px">
     <div class="card"><h2>Risks</h2>${arr(D.risks).length ? `<div class="tw s"><table><tr><th>Risk</th><th>Level</th><th>Mitigation</th></tr>${D.risks.map(r => `<tr><td>${esc(r.r)}</td><td>${badge(r.level || "medium")}</td><td>${esc(r.mitigation)}</td></tr>`).join("")}</table></div>` : `<p>${TODO}</p>`}</div>
     <div class="card"><h2>Decisions</h2>${arr(D.decisions).length ? `<div class="tw s"><table><tr><th>Decision</th><th>Why</th><th>Date</th></tr>${D.decisions.map(d => `<tr><td>${esc(d.d)}</td><td>${esc(d.why)}</td><td class="num">${esc(d.date)}</td></tr>`).join("")}</table></div>` : `<p>${TODO}</p>`}</div>
   </div>`;
+}
+function vWorkPlan() {
+  const vis = tasks.filter(t => (!planOwner || t.owner === planOwner) && (planStatus === "all" || t.status === planStatus));
+  const seg = (attr, k, label, on) => `<button class="btn sm" data-${attr}="${esc(k)}" aria-pressed="${on}">${esc(label)}</button>`;
+  const phaseBlock = p => { const ts = vis.filter(t => t.phase === p.name), all = tasks.filter(t => t.phase === p.name);
+    return `<div class="card" style="margin-top:16px"><div class="row"><h3>${esc(p.name)}</h3>${badge(p.status || "todo")}</div><div class="muted">${esc([p.start, p.end].filter(Boolean).join(" to "))}${all.length ? " · " + sumH(all) + " h · " + all.filter(t => t.status === "done").length + " of " + all.length + " tasks done" : ""}</div>${prog(phasePct(p), p.name)}
+      ${!all.length ? '<p class="tbd" style="margin-top:10px">No tasks yet</p>' : ts.length ? `<div class="tw"><table class="tasks"><tr><th></th><th>ID</th><th>Task</th><th>Owner</th><th>Due</th><th class="num">Est.</th><th class="num">Spent</th><th>Status</th></tr>${ts.map(taskRow).join("")}</table></div>` : '<p class="muted" style="margin-top:10px">No task matches the filter.</p>'}</div>`; };
+  const board = ["todo", "doing", "blocked", "done"].map(k => `<div class="col"><h3>${k} (${vis.filter(t => t.status === k).length})</h3>${vis.filter(t => t.status === k).map(t => `<div class="ticket ${t.est > 0 && t.spent > t.est ? "high" : ""}"><b>${esc(t.t)}</b><div class="muted">${[t.id, t.owner, t.est ? t.est + " h" : "", t.due].filter(Boolean).map(esc).join(" · ")}</div></div>`).join("") || '<span class="tbd">empty</span>'}</div>`).join("");
+  return tasks.length ? `<div class="card" style="margin-top:16px"><h2>Work plan, task by task</h2>
+    <div class="seg" role="group" aria-label="View">${seg("pv", "list", "List", planView === "list")}${seg("pv", "board", "Board", planView === "board")}</div>
+    <div class="seg" role="group" aria-label="Filter by person"><label>Person</label>${seg("po", "", "Everyone", !planOwner)}${owners.map(o => seg("po", o, o, planOwner === o)).join("")}</div>
+    <div class="seg" role="group" aria-label="Filter by status"><label>Status</label>${["all", "todo", "doing", "blocked", "done"].map(k => seg("ps", k, k === "all" ? "All" : k, planStatus === k)).join("")}</div>
+    <p class="muted">${vis.length} tasks shown · ${sumH(vis)} h estimated. Statuses and spent hours are updated by Forge from real progress.</p></div>
+  ${planView === "board" ? `<div class="board" style="margin-top:16px">${board}</div>` : phases.map(phaseBlock).join("")}` : `<div class="card" style="margin-top:16px"><h2>Work plan</h2><p>${TODO}</p></div>`;
 }
 
 const DOC_STATUS = ["draft", "review", "approved", "outdated", "missing"];
@@ -489,13 +497,14 @@ function vIdentity() {
 }
 
 /* ---------- shell: the tabs are generated from the project (HUB.ui.tabs overrides) ---------- */
-const PARTS = { Project: vProject, Plan: vPlan, Hardware: vHardware, Software: vSoftware, Business: vBusiness, Docs: vDocs, Agent: vAgent, Gaps: vGaps, Identity: vIdentity };
+const PARTS = { Project: vProject, Plan: vPlan, "Work plan": vWorkPlan, Hardware: vHardware, Software: vSoftware, Business: vBusiness, Docs: vDocs, Agent: vAgent, Gaps: vGaps, Identity: vIdentity };
 const hasKey = ks => tracks.some(t => ks.includes(String(t.key || "").toLowerCase()) && t.applicable !== false);
 const hasHW = !!(Object.keys(HW).length || diagrams.some(d => homeOf(d) === "Hardware") || hasKey(["hardware", "firmware"]));
 const hasSW = !!(Object.keys(SW).length || diagrams.some(d => homeOf(d) === "Software") || hasKey(["backend", "frontend"]));
-const spec = arr((HUB.ui || {}).tabs).length ? HUB.ui.tabs : ["Project", "Plan", hasHW && "Hardware", hasSW && "Software", "Business", "Docs", "Agent", "Gaps", "Identity"].filter(Boolean);
+const spec = arr((HUB.ui || {}).tabs).length ? HUB.ui.tabs : ["Project", "Plan", tasks.length && "Work plan", hasHW && "Hardware", hasSW && "Software", "Business", "Docs", "Agent", "Gaps", "Identity"].filter(Boolean);
 const views = spec.map(t => typeof t === "string" ? { label: t, parts: [t] } : { label: t.label || arr(t.parts).join(" + "), parts: arr(t.parts) }).map(v => ({ ...v, parts: v.parts.filter(p => PARTS[p]) })).filter(v => v.parts.length);
 if (!views.some(v => v.parts.includes("Gaps"))) views.push({ label: "Gaps", parts: ["Gaps"] });
+if (tasks.length && !views.some(v => v.parts.includes("Work plan"))) { const at = views.findIndex(v => v.parts.includes("Plan")); views.splice(at + 1, 0, { label: "Work plan", parts: ["Work plan"] }); }
 const tabOf = part => views.findIndex(v => v.parts.includes(part));
 function partShown(part) { return tabOf(part) >= 0; }
 const openCount = () => gaps.filter(g => !isDecided(g)).length;
@@ -505,7 +514,7 @@ const panelHtml = v => v.parts.map(p => `<div class="part">${v.parts.length > 1 
 $("#main").innerHTML = views.map((v, i) => `<section class="panel" role="tabpanel" id="p${i}" aria-labelledby="t${i}" ${i ? "hidden" : ""}>${panelHtml(v)}</section>`).join("");
 function show(i) { if (i < 0) return; cur = i; $("#tabs").innerHTML = tabsHtml(); views.forEach((_, k) => { $("#p" + k).hidden = k !== i; }); window.scrollTo(0, 0); }
 function refreshPart(part) { const i = tabOf(part); if (i < 0) return; const y = window.scrollY; $("#p" + i).innerHTML = panelHtml(views[i]); if ($("#dq")) { $("#dq").value = docQ; applyDocs(); } $("#tabs").innerHTML = tabsHtml(); window.scrollTo(0, y); }
-const refreshPlan = () => refreshPart("Plan"), refreshGaps = () => refreshPart("Gaps");
+const refreshPlan = () => refreshPart("Work plan"), refreshGaps = () => refreshPart("Gaps");
 $("#tabs").innerHTML = tabsHtml();
 $("#tabs").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; if (b.id === "theme") { const dark = matchMedia("(prefers-color-scheme:dark)").matches; const c = document.documentElement.dataset.theme || (dark ? "dark" : "light"); document.documentElement.dataset.theme = c === "dark" ? "light" : "dark"; } else if (b.role === "tab" || b.getAttribute("role") === "tab") show(+b.id.slice(1)); });
 $("#main").addEventListener("click", e => {
@@ -515,6 +524,7 @@ $("#main").addEventListener("click", e => {
   else if (d.ps) { planStatus = d.ps; refreshPlan(); }
   else if (d.pv) { planView = d.pv; refreshPlan(); }
   else if (d.cp) copy(d.cp, "Path copied.");
+  else if (d.zoom) { const z = $("#" + d.zoom); if (z) { z.classList.toggle("zoom"); b.textContent = z.classList.contains("zoom") ? "Fit to width" : "Zoom"; } }
   else if (d.ds) { docS = d.ds; document.querySelectorAll("[data-ds]").forEach(x => x.setAttribute("aria-pressed", x.dataset.ds === docS)); applyDocs(); }
   else if (d.f) { gapFilter = d.f; touched.clear(); refreshGaps(); }
   else if (d.g != null && d.i != null) { const s = st[d.g] || (st[d.g] = {}); s.choice = s.choice === +d.i ? null : +d.i; s.text = ""; touched.add(d.g); save(); refreshGaps(); }
