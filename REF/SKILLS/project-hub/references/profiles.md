@@ -59,5 +59,6 @@ A diagram can look like a real system drawing. All fields are optional; the page
 ```
 - Wire `kind`: `data`, `power`, `signal`, `control` or one you define in `kinds`; the legend is built from the kinds used.
 - A zone is an outlined area for an enclosure or a location (`style: "dashed"` for field or planned areas). List its blocks together; blocks of one zone are kept next to each other. With zones the column lanes are not drawn.
+- Routing: blocks are reordered inside each column to cut crossings (zone first), every wire between neighbouring columns gets its own vertical channel with square corners, the gap widens when many wires share it, and labels move along the wire (or just above or below it) to avoid each other and never sit on a block.
 - Wires between blocks in the same column loop out on the right. A rail shared by many blocks is shown as one labelled power wire per consumer.
 - Facts only: baud rates, pins, voltages and test dates come from the user or the files; a block not built yet gets `status: "planned"`.

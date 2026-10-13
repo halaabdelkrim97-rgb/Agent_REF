@@ -3,6 +3,11 @@
 Versions follow `vMAJOR.MINOR.PATCH`. Every commit on `main` starts with the version it belongs to, for example `v1.2.0: summary`.
 Git tags cannot be pushed from the environment these updates were made in, so the commit prefix and this file are the version record.
 
+## v2.7.1 (Clearer wires)
+
+- **Block diagrams route wires to overlap less.** Blocks are reordered inside each column to reduce crossings (zones stay together), each wire between neighbouring columns gets its own vertical channel with square corners (ordered so wires do not cross each other needlessly), the gap between columns widens with the number of wires, and wire labels, baud rates and pin labels are placed so they do not cover each other or the blocks (they move along the wire, or just above or below it).
+- **Tested** (headless Chrome, 1200 and 360 px): all test hubs and the full example render, no console errors, no horizontal scroll, no overlapping blocks; the irrigation-controller style drawing (3 UART wires, 2 RS-485 buses, Ethernet, LoRa, I2C) is visibly clearer than v2.7.0. **Not tested:** drawings with more than about 12 blocks or more than about 8 wires in one gap, where some crossings and label overlaps remain.
+
 ## v2.7.0 (Hub follows the project type)
 
 - **The hub now depends on the project type** (`HUB.profile.type`: `web`, `mechatronics`, `game`). Always present: Project (context), Plan (work plan with hour estimates), Business, Docs and quality, Agent, Gaps (open points with Q&A). Web adds Frontend, Backend, Database and Design (palette, techs, assets, references, libraries). Mechatronics adds Firmware, Hardware (system drawing, schematic, parts list, power, pins, structure) and App, web app or HMI when present. Game adds UI, Code (for example Unity), Structure and Assets (by type, libraries, license flags). Each type page holds details, a project structure tree (collapsible, `path | note`), items, endpoints or tables, diagrams and its own tasks and progress. Projects without a type keep the old tab logic.
