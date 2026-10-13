@@ -1,6 +1,7 @@
 /* EXAMPLE with fictional content (team, client and figures are invented). Shows every field and its allowed values.
    Copy shapes, not facts. */
 const HUB = {
+  profile: { type: "mechatronics", apps: ["webapp"] },   // type: web | mechatronics | game (see references/profiles.md); apps: webapp | mobile | hmi
   project: { name: "Smart Planter Demo", tagline: "Interactive web demo of a self-watering planter", client: "Greenleaf Co (fictional)", status: "design", version: "v0.2", updated: "2026-10-13",
     goal: "Let garden-shop visitors see how the planter reads soil moisture and waters by itself, on a simulated device.",
     stack: ["HTML", "CSS", "JavaScript", "Three.js (approved)", "ESP32 firmware (C++)", "Small REST API"],
@@ -96,9 +97,20 @@ const HUB = {
     { id: "flow", kind: "dataflow", status: "proposed", title: "Data flow: from sensor to screen", note: "Without columns the layout follows the arrows.",
       nodes: [{ id: "fw", label: "ESP32 firmware", sub: "reads sensor" }, { id: "sim", label: "Simulation model", sub: "demo mode, JavaScript" }, { id: "api", label: "Mock API", status: "planned" },
               { id: "store", label: "Readings store", sub: "in memory", status: "planned" }, { id: "ui", label: "Dashboard and 3D scene", sub: "Three.js" }],
-      edges: [{ from: "fw", to: "api", label: "POST readings", kind: "data" }, { from: "api", to: "store", label: "save", kind: "data" }, { from: "store", to: "ui", label: "GET readings", kind: "data" }, { from: "sim", to: "ui", label: "simulated readings", kind: "data" }] }
+      edges: [{ from: "fw", to: "api", label: "POST readings", kind: "data" }, { from: "api", to: "store", label: "save", kind: "data" }, { from: "store", to: "ui", label: "GET readings", kind: "data" }, { from: "sim", to: "ui", label: "simulated readings", kind: "data" }] },
+    { kind: "wiring", title: "System drawing", status: "proposed", nodeWidth: 200,   // nodeWidth 140 to 280. kinds: your own wire types. zones: outlined areas (enclosure, location; style "dashed" for field or planned areas; list a zone's blocks together). Blocks may carry lines (mono text) and a tag.
+      note: "Fictional example of the full system-drawing style.",
+      kinds: [{ key: "power", label: "Power 5 V", color: "#f59a3c" }, { key: "uart", label: "UART 3.3 V", color: "#4ade80" }, { key: "wifi", label: "Wi-Fi (planned)", color: "#a78bfa", dash: true }],
+      zones: [{ id: "box", label: "Planter electronics", nodes: ["usb", "mcu", "drv"] }],
+      nodes: [{ id: "usb", label: "USB-C supply", sub: "5 V, 2 A" },
+              { id: "mcu", label: "ESP32-C3 module", sub: "firmware: state machine", in: ["ADC in"], out: ["GPIO5", "UART TX"], lines: ["Wi-Fi: planned", "Do not use: GPIO18/19 (USB)"] },
+              { id: "drv", label: "Pump driver", sub: "MOSFET + flyback diode", in: ["gate"], tag: { text: "bench test pending", tone: "warn" } },
+              { id: "sens", label: "Moisture sensor", sub: "capacitive, analog", tag: { text: "tested", tone: "ok" } },
+              { id: "pump", label: "Mini pump", sub: "5 V, 380 mA" },
+              { id: "app", label: "Phone app", sub: "optional", status: "planned" }],
+      edges: [{ from: "usb", to: "mcu", kind: "power", label: "5 V rail" }, { from: "mcu.GPIO5", to: "drv.gate", kind: "uart", start: "PWM 1 kHz" }, { from: "sens", to: "mcu.ADC in", kind: "signal", end: "ADC1" }, { from: "drv", to: "pump", kind: "power" }, { from: "mcu", to: "app", kind: "wifi", status: "planned" }] }
   ],
-  hardware: { summary: "One ESP32-C3 board reads a capacitive moisture sensor and switches a 5 V pump through a MOSFET.", interfaces: ["ADC", "GPIO", "UART debug", "Wi-Fi"], currency: "EUR",
+  hardware: { tree: ["hardware/ | design files", "hardware/schematic.pdf | planned", "hardware/bom.csv | planned", "hardware/enclosure.step | planned"], summary: "One ESP32-C3 board reads a capacitive moisture sensor and switches a 5 V pump through a MOSFET.", interfaces: ["ADC", "GPIO", "UART debug", "Wi-Fi"], currency: "EUR",
     power: [{ rail: "5 V USB", source: "USB-C", capacity: 500, loads: [{ name: "Pump", mA: 380 }, { name: "3V3 regulator", mA: 90 }] },
             { rail: "3V3", source: "regulator", capacity: 600, loads: [{ name: "ESP32-C3 with Wi-Fi", mA: 260 }, { name: "Moisture sensor", mA: 5 }] }],   // capacity and mA are numbers you entered
     bom: [{ ref: "U1", part: "ESP32-C3 module", qty: 1, unit: 3.2, status: "approved" }, { ref: "S1", part: "Capacitive moisture sensor", qty: 1, unit: 1.8, status: "approved" }, { ref: "Q1", part: "Logic-level MOSFET", qty: 1, unit: 0.4, status: "review" },
@@ -112,7 +124,19 @@ const HUB = {
               { name: "api/readings", layer: "Service", role: "store and return readings", tech: "REST", owner: "Omar", status: "draft" }, { name: "main.cpp", layer: "Device", role: "state machine and pump control", tech: "C++", owner: "Omar", status: "todo" }],
     endpoints: [{ method: "GET", path: "/api/readings", purpose: "latest 100 readings", auth: "none (demo)" }, { method: "POST", path: "/api/readings", purpose: "device sends a reading", auth: "device token" }, { method: "POST", path: "/api/pump", purpose: "start pump for N seconds", auth: "demo token" }],
     data: [{ entity: "Reading", fields: "id, soil_pct, ts", note: "one row per sample" }, { entity: "PumpEvent", fields: "id, started, seconds", note: "written by the device" }] },
-  agent: { name: "Forge", usedSkills: [{ name: "brainstorming", why: "chose the simulation approach" }, { name: "writing-plans", why: "split the work into tasks with hours" }, { name: "project-hub", why: "built this hub" }, "3d-scene-builder"], notes: "" },
+  sections: {   // firmware | app | frontend | backend | database | ui | code. Every field is optional.
+    firmware: { summary: "State machine on the ESP32-C3: read sensor, decide, drive the pump, report over Wi-Fi.", stack: ["C++", "Arduino framework", "PlatformIO"], owner: "Omar", status: "todo",
+      tree: ["firmware/ | ESP32-C3 project", "firmware/platformio.ini | board and libraries", "firmware/src/main.cpp | state machine | planned", "firmware/src/sensor.cpp | planned", "firmware/src/pump.cpp | planned", "firmware/test/ | planned"],
+      items: [{ name: "main.cpp", role: "state machine", tech: "C++", status: "todo" }, { name: "sensor.cpp", role: "moisture read and filter", tech: "C++", status: "todo" }] },
+    app: { summary: "Static web demo with a simulated planter.", stack: ["HTML", "CSS", "JavaScript"], owner: "Sara", status: "doing",
+      tree: ["web/ | static site", "web/index.html | page", "web/app.js | simulation and UI", "web/scene.js | 3D scene | planned"] }
+  },
+  assets: [{ name: "Planter model", type: "model", path: "web/assets/planter.glb", source: "own CAD export", license: "client owns", status: "planned" }, { name: "Leaf texture", type: "image", source: "CC0 library", license: "CC0", status: "built" }],   // type groups the cards; status: planned | built | missing
+  libs: [{ name: "Three.js", version: "r160", purpose: "3D scene (approved)", license: "MIT", url: "https://threejs.org" }],
+  quality: { tests: [{ area: "Moisture filter", type: "unit", status: "todo" }, { area: "Demo page on phone", type: "manual", status: "passing", note: "checked at 360 px" }],   // status: passing | failing | todo
+    checklist: [{ t: "Client approves the scene", done: false }, { t: "Hosting decided", done: false }, { t: "Final accessibility check", done: false }],
+    envs: [{ name: "Local", status: "built", note: "open web/index.html" }, { name: "Live demo", status: "proposed", note: "host not chosen" }] },
+  agent: { name: "Forge", log: [{ date: "2026-10-13", task: "Built the hub and the work plan", skills: ["project-hub", "writing-plans"] }], usedSkills: [{ name: "brainstorming", why: "chose the simulation approach" }, { name: "writing-plans", why: "split the work into tasks with hours" }, { name: "project-hub", why: "built this hub" }, "3d-scene-builder"], notes: "" },
   gaps: [  // priority: blocker | important | nice. status: open | decided (decision = text). Options need label; note and recommended are optional.
     { id: "G1", area: "plan", priority: "blocker", question: "Are the hour estimates right?", why: "They set the delivery date and the price margin. All estimates are first guesses.",
       options: [{ label: "Confirm as they are", note: "team has seen them" }, { label: "Review in a planning call first", note: "adds one meeting", recommended: true }], status: "open" },
@@ -123,5 +147,5 @@ const HUB = {
     { id: "G3", area: "business", priority: "important", question: "Who hosts the demo after handover?", options: [{ label: "Client's own server" }, { label: "Our hosting, monthly fee", recommended: true }, { label: "Static host, client pays directly" }], status: "decided", decision: "Our hosting, monthly fee" }
   ],
   identity: { palette: [{ name: "Leaf", hex: "#2f9e5a", role: "primary" }, { name: "Sun", hex: "#f2b138", role: "accent" }, { name: "Soil", hex: "#3b2f2a", role: "text" }],
-    fonts: { heading: "Inter", body: "Inter" }, tone: ["calm", "clear", "friendly"], references: ["https://example.com/brand-inspiration"] }
+    fonts: { heading: "Inter", body: "Inter" }, tone: ["calm", "clear", "friendly"], tech: ["Plain CSS", "SVG icons"], references: ["https://example.com/brand-inspiration"] }
 };

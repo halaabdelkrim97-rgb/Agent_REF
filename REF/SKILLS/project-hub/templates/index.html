@@ -71,6 +71,8 @@ a{color:var(--pt)}
 .dg-t{fill:var(--text);font-size:13px;font-weight:700}.dg-s{fill:var(--muted);font-size:11px}.dg-p{fill:var(--text);font-size:11px}
 .dg-pin{fill:var(--card);stroke:var(--muted);stroke-width:1.4}
 .dg-e{fill:none;stroke-width:1.8}.dg-e.data{stroke:var(--pt)}.dg-e.power{stroke:var(--bad-t)}.dg-e.signal{stroke:var(--sig)}.dg-e.control{stroke:var(--muted);stroke-dasharray:5 4}
+.dg-m{fill:var(--muted);font-size:10.5px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.dg-z{fill:none;stroke:var(--muted);stroke-width:1.2;opacity:.8}.dg-z.dash{stroke-dasharray:6 5}.dg-zl{fill:var(--muted);font-size:10.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase}
 .dg-l{fill:var(--text);font-size:10.5px}.dg-lb{fill:var(--card);stroke:var(--line)}
 .dglegend{display:flex;gap:14px;flex-wrap:wrap;margin:10px 0 0;font-size:.85rem;color:var(--muted)}
 .dglegend i{display:inline-block;width:26px;height:0;border-top:3px solid;vertical-align:middle;margin-right:6px}
@@ -124,7 +126,17 @@ input[type=text],input[type=search]{width:100%;font:inherit;color:var(--text);ba
 dialog{border:1px solid var(--line);border-radius:var(--r);background:var(--card);color:var(--text);max-width:640px;width:calc(100% - 32px)}
 dialog textarea{width:100%;font:inherit;background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:8px}
 footer{margin-top:28px;color:var(--muted);font-size:.85rem}
-@media (max-width:600px){.hero{padding:22px 0}.kpi{font-size:1.6rem}}
+ul.tree,ul.tree ul{list-style:none;margin:0;padding-left:18px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88rem}ul.tree{padding-left:0}
+ul.tree li{padding:2px 0}ul.tree summary{cursor:pointer}ul.tree .tf::before{content:"· ";color:var(--muted)}
+.stack{display:flex;height:16px;border-radius:99px;overflow:hidden;background:var(--line)}.stack i{display:block;height:100%}
+.leg{display:flex;gap:6px 14px;flex-wrap:wrap;margin:8px 0 0;font-size:.85rem;color:var(--muted)}.leg b{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:baseline}
+.assets{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));margin-top:10px}
+.asset{display:grid;grid-template-columns:44px 1fr;gap:4px 12px;border:1px solid var(--line);border-radius:12px;padding:10px;background:var(--bg)}.asset.missing{border-style:dashed}
+.asset .ftype{height:44px;grid-row:span 2}.asset code{font-size:.78rem;color:var(--muted);word-break:break-all}
+.bars{display:grid;grid-template-columns:minmax(80px,150px) 1fr 36px;gap:6px 10px;align-items:center;margin:6px 0}.bars span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.bars b{text-align:right}
+.badge.passing{background:color-mix(in srgb,var(--ok) 18%,transparent);color:var(--ok-t)}.badge.failing{background:color-mix(in srgb,var(--bad) 18%,transparent);color:var(--bad-t)}
+.role{border-left:4px solid var(--primary);padding:2px 0 2px 12px;margin:10px 0}
+@media (max-width:600px){.hero{padding:22px 0}.kpi{font-size:1.6rem}.bars{grid-template-columns:90px 1fr 30px}}
 @media print{nav.tabs,.theme,.btn,.filters{display:none}section.panel[hidden]{display:block}.card{break-inside:avoid}}
 </style>
 </head>
@@ -141,13 +153,13 @@ footer{margin-top:28px;color:var(--muted);font-size:.85rem}
 <script src="hub-data.js"></script>
 <script>
 /*SKILLS:BEGIN*/
-const FORGE = {"version": "v2.6.0", "groups": [
+const FORGE = {"version": "v2.7.0", "groups": [
 {"g": "Planning & Process", "skills": [["brainstorming", "You MUST use this before any creative work - creating features, building components, adding functionality, or modifying…"], ["writing-plans", "Use when you have an approved spec or requirements for a multi-step task, before touching code."]]},
 {"g": "Engineering", "skills": [["backend-architect", "Backend and API architecture: REST, GraphQL and gRPC design, service boundaries, event-driven patterns, resilience and…"], ["frontend-developer", "Frontend component, responsive layout, client-side state, performance and accessibility guidance."], ["ui-components-21st", "Use 21st.dev (Magic MCP and 21st-dev CLI) to find or generate UI components from a prompt."], ["coding-standards", "Coding standards and best practices for JavaScript, plus TypeScript, React and Node.js where the project already uses t…"], ["debugging", "Root-cause debugging procedure - reproduce, isolate, form ranked hypotheses, gather evidence, apply the smallest fix an…"], ["git-workflow", "Git habits for clean history - branches, small commits, version-prefixed messages, safe pushes, pull requests, changelo…"]]},
 {"g": "UI, Motion & Visuals", "skills": [["ui-ux-pro-max", "Comprehensive design guide for web and mobile applications."], ["baseline-ui", "Quickly deslop UI code by fixing spacing, hierarchy, typography, and small layout issues."], ["scroll-experience", "Scroll-driven web experiences: parallax storytelling, scroll animations, interactive narratives and cinematic pages, us…"], ["css-motion", "Plain CSS and Web Animations motion: transitions, keyframes, scroll-driven animation, FLIP, micro-interactions, easing…"], ["framer-motion", "Motion (formerly Framer Motion) for React projects: motion components, variants, gestures, AnimatePresence exit animati…"], ["gsap", "GSAP (GreenSock) animation: tweens, timelines, easing, ScrollTrigger, stagger, SVG and text effects, React cleanup with…"], ["art-svg-canvas", "Illustrations, icons, patterns, generative art, backgrounds and simple image assets in plain SVG, CSS and Canvas, with…"], ["canvas-design", "Creates original static visual art (poster, cover, art piece) as a single .png or .pdf, guided by a short written desig…"], ["nano-banana", "Generates and edits raster images (hero art, mockups, icons, textures, product shots) with Google's Nano Banana image m…"], ["data-and-charts", "Charts, KPIs and small dashboards for client sites in plain SVG or Canvas - chart choice, scales, labels, accessible co…"], ["accessibility", "WCAG 2.2 AA accessibility checks and fixes for web pages and interactive tools - keyboard, focus, names, contrast, form…"]]},
 {"g": "3D & Simulation", "skills": [["threejs", "Three.js API reference: scenes, cameras, renderer, geometry, materials, textures, lighting, shadows, animation, raycast…"], ["3d-scene-builder", "Process for art-directed, game-like 3D product demos on client websites: brief, art direction, blockout, materials, lig…"], ["web-3d-assets", "Turning CAD or 3D models into fast web assets - glTF export, cleanup, PBR materials, texture sizes, compression, HDRI a…"], ["interactive-simulation", "Model, state, fixed-timestep loop, physics basics, controls and delivery for 2D (Canvas or SVG) simulations, product de…"], ["unity-scene-builder", "Unity scenes for web delivery - scene-as-code editor scripts, orbit camera, hotspots, simulation scripts, WebGL build s…"]]},
 {"g": "Quality & Delivery", "skills": [["testing", "Plans and runs tests for plain HTML, CSS and JavaScript projects - manual browser checklists first, then simple native…"], ["security-review", "Security checklist review for web code and static sites - secrets, input handling and XSS, forms and CSRF, headers, thi…"], ["seo-performance", "Search visibility and page speed for client websites - semantic HTML, titles, metadata, structured data, sitemap, image…"], ["i18n-forms", "Multilingual pages and reliable web forms: lang and RTL, text files, Intl formatting, language switcher, labels, valida…"], ["client-delivery", "Freelance client project flow - discovery brief, scope and acceptance criteria, milestones, change requests, final chec…"]]},
-{"g": "Docs & Memory", "skills": [["project-hub", "Builds and updates the Project Hub for the project Forge is working on, generated from the project itself: context, tas…"], ["doc-writer", "Writes and updates project documentation from the real code - README, setup and run steps, specs, handover notes, chang…"], ["reflect", "End-of-day and end-of-session self-improvement: reviews the session or today for corrections, approvals and token waste…"]]},
+{"g": "Docs & Memory", "skills": [["project-hub", "Builds and updates the Project Hub for the project Forge is working on, generated from the project and its type (web, m…"], ["doc-writer", "Writes and updates project documentation from the real code - README, setup and run steps, specs, handover notes, chang…"], ["reflect", "End-of-day and end-of-session self-improvement: reviews the session or today for corrections, approvals and token waste…"]]},
 {"g": "Mechatronics", "skills": [["cad-firmware", "Mechatronics help: parametric CAD and printable parts, Arduino/ESP32/STM32 C++ habits, pin maps, wiring and BOM docs, h…"]]},
 {"g": "Agents & Skill Authoring", "skills": [["agent-builder", "Builds a complete task-specific AI agent: mission, identity, scope, rules, tools, skills, memory, reports and tests, cr…"], ["writing-skills", "Use when creating, updating, testing or improving agent skills (SKILL.md files)."], ["writing-great-skills", "Reference for writing and editing skills well: the vocabulary and principles that make a skill predictable."], ["writing-guidelines", "Reviews files for compliance with Vercel's Writing Guidelines."]]}
 ]};
@@ -169,6 +181,7 @@ const bullets = (a, empty) => arr(a).length ? `<ul>${arr(a).map(x => `<li>${esc(
 
 const P = HUB.project || {}, C = HUB.context || {}, D = HUB.plan || {}, B = HUB.business || {}, I = HUB.identity || {}, A = HUB.agent || {};
 const phases = arr(D.phases), tracks = arr(HUB.tracks), docs = arr(HUB.docs), diagrams = arr(HUB.diagrams), HW = HUB.hardware || {}, SW = HUB.software || {};
+const S = HUB.sections || {}, PR = HUB.profile || {}, Q = HUB.quality || {}, assets = arr(HUB.assets), libs = arr(HUB.libs), PT = String(PR.type || "").toLowerCase();
 /* every task lives inside a phase: { id, t, owner, est (hours), spent (hours), status todo|doing|blocked|done, due, after: [ids], track, note } */
 const tasks = phases.flatMap((p, pi) => arr(p.tasks).map((t, ti) => ({ ...t, status: t.status || (t.done ? "done" : "todo"), phase: p.name, id: t.id || ("T" + (pi + 1) + "." + (ti + 1)), est: +t.est || 0, spent: +t.spent || 0 })));
 const byId = Object.fromEntries(tasks.map(t => [t.id, t]));
@@ -207,7 +220,12 @@ const AUTO = [
   ["business", "Who pays, for what, and how (revenue model)?", () => !(B.model || B.audience), "important"],
   ["business", "What is the price or budget, and what are the main costs?", () => !arr(B.offer).length || !arr(B.costs).length, "important"],
   ["business", "How is success measured (KPIs)?", () => !arr(B.kpis).length, "nice"],
-  ["identity", "What are the brand colors, fonts and tone (or reference sites)?", () => !arr(I.palette).length, "nice"]
+  ["identity", "What are the brand colors, fonts and tone (or reference sites)?", () => !arr(I.palette).length, "nice"],
+  ["quality", "How is the project tested and released (checks, environments, release checklist)?", () => !(arr(Q.tests).length || arr(Q.checklist).length), "nice"],
+  ["profile", "What kind of project is this (web, mechatronics, game) so the hub shows the right pages?", () => !PT, "important"],
+  ...({ web: [["architecture", "What are the frontend, backend and database, and how is each structured?", () => !(S.frontend && S.backend && S.database), "important"], ["assets", "Which design assets and references does the project use?", () => !assets.length, "nice"]],
+    mechatronics: [["architecture", "What are the firmware and hardware (schematic, parts list) and how are they structured?", () => !(S.firmware && (HW.bom || HW.summary)), "important"]],
+    game: [["architecture", "What are the UI and game code, and how is the project structured?", () => !(S.ui && S.code && arr(HUB.structure).length), "important"], ["assets", "Which assets and libraries does the game use, and under which licenses?", () => !(assets.length || libs.length), "important"]] }[PT] || [])
 ];
 const autoOpen = AUTO.map((g, i) => ({ id: "M" + (i + 1), area: g[0], question: g[1], priority: g[3], auto: true, open: g[2]() })).filter(g => g.open);
 const gaps = [...arr(HUB.gaps), ...autoOpen];
@@ -261,18 +279,19 @@ function trackCard(t) {
       <ul class="plain">${items.map(i => `<li><span class="dot ${esc(i.status)}"></span>${esc(i.t)}${i.note ? ` <span class="muted">(${esc(i.note)})</span>` : ""}</li>`).join("")}</ul>
       <p>${chips(t.stack)}</p>`}</div>`;
 }
-const homeTab = t => { const k = String(t.key || "").toLowerCase(), h = ["hardware", "firmware"].includes(k) ? "Hardware" : ["backend", "frontend"].includes(k) ? "Software" : "Plan"; return partShown(h) ? h : partShown("Plan") ? "Plan" : "Project"; };
+const KEYTAB = { hardware: "Hardware", firmware: "Firmware", backend: "Backend", frontend: "Frontend", database: "Database", app: "App", ui: "UI", code: "Code", assets: "Assets" };
+const homeTab = t => { const k = String(t.key || "").toLowerCase(); return [KEYTAB[k], ["hardware", "firmware"].includes(k) && "Hardware", ["backend", "frontend", "database"].includes(k) && "Software", "Plan"].find(h => h && partShown(h)) || "Project"; };
 const trackCards = part => { const ts = tracks.filter(t => homeTab(t) === part); return ts.length ? `<div class="grid">${ts.map(trackCard).join("")}</div>` : ""; };
 
 /* ---------- diagrams (drawn from data: nodes, edges, pins) ---------- */
-const KIND_TAB = { system: "Project", hardware: "Hardware", wiring: "Hardware", software: "Software", dataflow: "Software", state: "Software" };
+const KIND_TAB = { database: "Database", system: "Project", hardware: "Hardware", wiring: "Hardware", software: "Software", dataflow: "Software", state: "Software" };
 const homeOf = d => d.tab || KIND_TAB[d.kind] || "Software";
 const KCOL = { data: "var(--pt)", power: "var(--bad-t)", signal: "var(--sig)", control: "var(--muted)" };
 const LCOL = ["var(--fill)", "var(--accent)", "var(--ok)", "var(--warn)", "var(--bad)", "var(--muted)"];
 const wrapText = (t, n) => { const out = []; let line = ""; String(t ?? "").split(/\s+/).filter(Boolean).forEach(w => { if ((line + " " + w).trim().length > n && line) { out.push(line); line = w; } else line = (line + " " + w).trim(); }); if (line) out.push(line); return out; };
 const cut = (t, n) => { t = String(t ?? ""); return t.length > n ? t.slice(0, n - 1) + "…" : t; };
 function layoutDiagram(d) {
-  const NW = 168, ROW = 17, PADX = 20, TOP0 = 34, GAPY = 26, cols = arr(d.columns);
+  const NW = Math.max(140, Math.min(280, +d.nodeWidth || 168)), ROW = 17, PADX = 20, GAPY = 26, zones = arr(d.zones).map(z => ({ ...z, nodes: arr(z.nodes).map(String) })), TOP0 = zones.length ? 56 : 34, cols = arr(d.columns);
   const nodes = arr(d.nodes).map(n => ({ ...n, id: String(n.id), in: arr(n.in), out: arr(n.out) }));
   const idx = Object.fromEntries(nodes.map(n => [n.id, n]));
   const E = arr(d.edges).map(e => { const a = String(e.from).split("."), b = String(e.to).split("."); return { ...e, f: a[0], fp: a.slice(1).join("."), t: b[0], tp: b.slice(1).join(".") }; }).filter(e => idx[e.f] && idx[e.t]);
@@ -285,14 +304,20 @@ function layoutDiagram(d) {
   for (let k = 0; k < nodes.length; k++) { let ch = false; E.forEach(e => { if (e.f === e.t || back.has(e.f + ">" + e.t)) return; const a = idx[e.f], b = idx[e.t]; if (!b.fixed && b.layer < a.layer + 1) { b.layer = a.layer + 1; ch = true; } }); if (!ch) break; }
   const L = Math.max(0, ...nodes.map(n => n.layer)) + 1, GX = E.some(e => e.label) ? 118 : 80;
   const skip = E.filter(e => e.f !== e.t && idx[e.t].layer - idx[e.f].layer > 1).length, TOP = TOP0 + skip * 14;
-  nodes.forEach(n => { n.hl = wrapText(n.label, 21).slice(0, 3); n.sl = wrapText(n.sub, 26).slice(0, 2); n.top = n.sl.length ? 44 + (n.hl.length - 1) * 15 + (n.sl.length - 1) * 13 : 30 + (n.hl.length - 1) * 15; const rows = Math.max(n.in.length, n.out.length); n.h = n.top + (rows ? rows * ROW + 6 : 0) + 8; n.w = NW; });
-  const colsN = Array.from({ length: L }, (_, i) => nodes.filter(n => n.layer === i));
-  const colH = colsN.map(c => c.reduce((a, n) => a + n.h, 0) + Math.max(0, c.length - 1) * GAPY), H = Math.max(60, ...colH);
-  colsN.forEach((c, i) => { let y = TOP + (H - colH[i]) / 2; c.forEach(n => { n.x = PADX + i * (NW + GX); n.y = y; y += n.h + GAPY; }); });
-  return { nodes, E, idx, cols, L, NW, GX, PADX, TOP, skip, H, ROW, W: PADX * 2 + L * NW + (L - 1) * GX };
+  const zi = n => zones.findIndex(z => z.nodes.includes(n.id));
+  nodes.forEach(n => { n.hl = wrapText(n.label, Math.round(NW / 8)).slice(0, 3); n.sl = wrapText(n.sub, Math.round(NW * .155)).slice(0, 2); n.ll = arr(n.lines).flatMap(t => wrapText(t, Math.round((NW - 26) / 6.6))).slice(0, 9); n.tg = n.tag && n.tag.text ? wrapText(n.tag.text, Math.round(NW * .15)).slice(0, 2) : []; n.z = zi(n);
+    n.top = n.sl.length ? 44 + (n.hl.length - 1) * 15 + (n.sl.length - 1) * 13 : 30 + (n.hl.length - 1) * 15; const rows = Math.max(n.in.length, n.out.length); n.rows = rows; n.h = n.top + (rows ? rows * ROW + 6 : 0) + (n.ll.length ? n.ll.length * 13 + 4 : 0) + (n.tg.length ? n.tg.length * 13 + 4 : 0) + 8; n.w = NW; });
+  const colsN = Array.from({ length: L }, (_, i) => nodes.filter(n => n.layer === i).map((n, k) => [n, k]).sort((a, b) => (a[0].z - b[0].z) || (a[1] - b[1])).map(x => x[0]));
+  const gapAfter = (c, k) => GAPY + (k < c.length - 1 && c[k].z !== c[k + 1].z ? 26 : 0);
+  const colH = colsN.map(c => c.reduce((a, n, k) => a + n.h + (k < c.length - 1 ? gapAfter(c, k) : 0), 0)), H = Math.max(60, ...colH);
+  colsN.forEach((c, i) => { let y = TOP + (H - colH[i]) / 2; c.forEach((n, k) => { n.x = PADX + i * (NW + GX); n.y = y; y += n.h + gapAfter(c, k); }); });
+  return { nodes, E, idx, cols, L, NW, GX, PADX, TOP, skip, H, ROW, zones, W: PADX * 2 + L * NW + (L - 1) * GX };
 }
+const TONE = { ok: "var(--ok-t)", bad: "var(--bad-t)", warn: "var(--warn-t)" };
 function renderDiagram(d, uid) {
   const g = layoutDiagram(d), { nodes, E, idx, ROW } = g;
+  /* wire kinds: the four built-in ones plus your own (d.kinds: [{ key, label, color, dash }]) */
+  const KC = { ...KCOL }, KD = { control: true }, KL = {}; arr(d.kinds).forEach(k => { if (!k || !k.key) return; KC[k.key] = safeColor(k.color) || "var(--muted)"; KD[k.key] = !!k.dash; KL[k.key] = k.label || k.key; });
   const portY = (n, side, name) => { const i = (side === "r" ? n.out : n.in).indexOf(name); return i < 0 ? null : n.y + n.top + i * ROW + ROW / 2 + 2; };
   const slots = {};
   E.forEach((e, i) => { e.py1 = portY(idx[e.f], "r", e.fp); e.py2 = portY(idx[e.t], "l", e.tp); if (e.py1 == null) (slots[e.f + "r"] = slots[e.f + "r"] || []).push(i); if (e.py2 == null) (slots[e.t + "l"] = slots[e.t + "l"] || []).push(i); });
@@ -301,28 +326,37 @@ function renderDiagram(d, uid) {
   const bottom = g.TOP + g.H; let lk = 0, tk = 0;
   const paths = E.map(e => { const a = idx[e.f], b = idx[e.t]; let p, lx, ly;
     if (e.f === e.t) { const x = a.x + a.w, y = a.y + a.h * .35; p = `M${x},${y} h16 v${a.h * .3} h-16`; lx = x + 22; ly = y + a.h * .15; }
-    else if (b.layer <= a.layer) { const yb = bottom + 16 + (lk++) * 15; p = `M${e.x1},${e.y1} h14 V${yb} H${e.x2 - 14} V${e.y2} h14`; lx = (e.x1 + e.x2) / 2; ly = yb; }
+    else if (b.layer === a.layer) { const ya = a.y + a.h / 2, yb2 = b.y + b.h / 2, xr = Math.max(a.x + a.w, b.x + b.w) + 20; p = `M${a.x + a.w},${ya} H${xr} V${yb2} H${b.x + b.w}`; lx = xr; ly = (ya + yb2) / 2; e.x1 = a.x + a.w; e.y1 = ya; e.x2 = b.x + b.w; e.y2 = yb2; }
+    else if (b.layer < a.layer) { const yb = bottom + 16 + (lk++) * 15; p = `M${e.x1},${e.y1} h14 V${yb} H${e.x2 - 14} V${e.y2} h14`; lx = (e.x1 + e.x2) / 2; ly = yb; }
     else if (b.layer - a.layer > 1) { const yt = 30 + (tk++) * 14; p = `M${e.x1},${e.y1} h14 V${yt} H${e.x2 - 14} V${e.y2} h14`; lx = (e.x1 + e.x2) / 2; ly = yt; }
     else { const xm = (e.x1 + e.x2) / 2; p = `M${e.x1},${e.y1} C${xm},${e.y1} ${xm},${e.y2} ${e.x2},${e.y2}`; lx = xm; ly = (e.y1 + e.y2) / 2; }
-    return { p, lx, ly, kind: KCOL[e.kind] ? e.kind : "data", label: e.label }; });
+    return { p, lx, ly, kind: KC[e.kind] ? e.kind : "data", label: e.label, plan: e.status === "planned", s: e.start, t: e.end, x1: e.x1, y1: e.y1, x2: e.x2, y2: e.y2 }; });
   const Ht = Math.round(bottom + 16 + lk * 15 + 14), kinds = [...new Set(paths.map(x => x.kind))];
-  const defs = kinds.map(k => `<marker id="a-${uid}-${k}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" style="fill:${KCOL[k]}"/></marker>`).join("");
-  const lanes = g.cols.length ? Array.from({ length: g.L }, (_, i) => `<rect class="dg-lane" x="${g.PADX + i * (g.NW + g.GX) - 10}" y="${g.TOP - 8}" width="${g.NW + 20}" height="${Math.round(g.H + 16)}" rx="12"/><text class="dg-lh" x="${g.PADX + i * (g.NW + g.GX) + g.NW / 2}" y="16" text-anchor="middle">${esc(cut(g.cols[i] || "", 22))}</text>`).join("") : "";
+  const defs = kinds.map(k => `<marker id="a-${uid}-${k}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" style="fill:${KC[k]}"/></marker>`).join("");
+  const lanes = g.cols.length && !g.zones.length ? Array.from({ length: g.L }, (_, i) => `<rect class="dg-lane" x="${g.PADX + i * (g.NW + g.GX) - 10}" y="${g.TOP - 8}" width="${g.NW + 20}" height="${Math.round(g.H + 16)}" rx="12"/><text class="dg-lh" x="${g.PADX + i * (g.NW + g.GX) + g.NW / 2}" y="16" text-anchor="middle">${esc(cut(g.cols[i] || "", 22))}</text>`).join("") : "";
   const nodeSvg = nodes.map(n => { const c = LCOL[n.layer % LCOL.length];
     return `<g><rect class="dg-box ${n.status === "planned" ? "planned" : ""}" x="${n.x}" y="${n.y}" width="${n.w}" height="${n.h}" rx="10"/><rect x="${n.x}" y="${n.y}" width="6" height="${n.h}" rx="3" style="fill:${c}"/>`
       + n.hl.map((t, i) => `<text class="dg-t" x="${n.x + 16}" y="${n.y + 20 + i * 15}">${esc(t)}</text>`).join("")
       + n.sl.map((t, i) => `<text class="dg-s" x="${n.x + 16}" y="${n.y + 36 + (n.hl.length - 1) * 15 + i * 13}">${esc(t)}</text>`).join("")
+      + n.ll.map((t, i) => `<text class="dg-m" x="${n.x + 16}" y="${n.y + n.top + (n.rows ? n.rows * ROW + 6 : 0) + 10 + i * 13}">${esc(t)}</text>`).join("")
+      + n.tg.map((t, i) => `<text class="dg-s" style="fill:${TONE[n.tag.tone] || "var(--muted)"};font-weight:700" x="${n.x + 16}" y="${n.y + n.top + (n.rows ? n.rows * ROW + 6 : 0) + (n.ll.length ? n.ll.length * 13 + 4 : 0) + 10 + i * 13}">${esc(t)}</text>`).join("")
       + n.in.map((t, i) => `<circle class="dg-pin" cx="${n.x}" cy="${n.y + n.top + i * ROW + ROW / 2 + 2}" r="3.5"/><text class="dg-p" x="${n.x + 10}" y="${n.y + n.top + i * ROW + ROW / 2 + 6}">${esc(cut(t, 15))}</text>`).join("")
       + n.out.map((t, i) => `<circle class="dg-pin" cx="${n.x + n.w}" cy="${n.y + n.top + i * ROW + ROW / 2 + 2}" r="3.5"/><text class="dg-p" x="${n.x + n.w - 10}" y="${n.y + n.top + i * ROW + ROW / 2 + 6}" text-anchor="end">${esc(cut(t, 15))}</text>`).join("") + "</g>"; }).join("");
-  const edgeSvg = paths.map(x => `<path class="dg-e ${x.kind}" d="${x.p}" marker-end="url(#a-${uid}-${x.kind})"/>`).join("");
+  const zoneSvg = g.zones.map(z => { const m = nodes.filter(n => z.nodes.includes(n.id)); if (!m.length) return ""; const x1 = Math.min(...m.map(n => n.x)) - 14, y1 = Math.min(...m.map(n => n.y)) - 26, x2 = Math.max(...m.map(n => n.x + n.w)) + 14, y2 = Math.max(...m.map(n => n.y + n.h)) + 14;
+    return `<rect class="dg-z ${z.style === "dashed" ? "dash" : ""}" x="${x1}" y="${y1}" width="${x2 - x1}" height="${y2 - y1}" rx="12"/><text class="dg-zl" x="${x1 + 12}" y="${y1 + 16}">${esc(cut(z.label || z.id || "", Math.round((x2 - x1) / 7)))}</text>`; }).join("");
+  const edgeSvg = paths.map(x => `<path class="dg-e ${x.kind}" d="${x.p}" style="${KCOL[x.kind] ? "" : `stroke:${KC[x.kind]};`}${KD[x.kind] || x.plan ? "stroke-dasharray:5 4" : ""}" marker-end="url(#a-${uid}-${x.kind})"/>`).join("");
+  const endTxt = (t, x, y, end) => { t = cut(t, 20); const w = Math.round(t.length * 5.7 + 8); return `<rect class="dg-lb" x="${end ? x - w : x - 2}" y="${y - 11}" width="${w}" height="14" rx="4"/><text class="dg-l" x="${end ? x - 4 : x + 2}" y="${y}" ${end ? 'text-anchor="end"' : ""}>${esc(t)}</text>`; };
+  const endSvg = paths.map(x => (x.s ? endTxt(x.s, Math.round(x.x1 + 8), Math.round(x.y1 - 6), false) : "") + (x.t ? endTxt(x.t, Math.round(x.x2 - 8), Math.round(x.y2 - 6), true) : "")).join("");
   const labelSvg = paths.filter(x => x.label).map(x => { const t = cut(x.label, 26), w = Math.round(t.length * 5.7 + 10); return `<rect class="dg-lb" x="${Math.round(x.lx - w / 2)}" y="${Math.round(x.ly - 8)}" width="${w}" height="15" rx="4"/><text class="dg-l" x="${Math.round(x.lx)}" y="${Math.round(x.ly + 3)}" text-anchor="middle">${esc(t)}</text>`; }).join("");
-  const svg = `<svg role="img" aria-labelledby="ti-${uid}" viewBox="0 0 ${g.W} ${Ht}" style="width:100%;min-width:${Math.round(g.W * .72)}px;max-width:${Math.round(g.W * 1.1)}px"><title id="ti-${uid}">${esc(d.title || "Diagram")}</title><defs>${defs}</defs>${lanes}${edgeSvg}${nodeSvg}${labelSvg}</svg>`;
-  const legend = `<div class="dglegend">${kinds.map(k => `<span><i style="border-top-color:${KCOL[k]};${k === "control" ? "border-top-style:dashed" : ""}"></i>${k}</span>`).join("")}${nodes.some(n => n.status === "planned") ? "<span>dashed box: planned, not built yet</span>" : ""}</div>`;
+  const svg = `<svg role="img" aria-labelledby="ti-${uid}" viewBox="0 0 ${g.W} ${Ht}" style="width:100%;min-width:${Math.round(g.W * .72)}px;max-width:${Math.round(g.W * 1.1)}px"><title id="ti-${uid}">${esc(d.title || "Diagram")}</title><defs>${defs}</defs>${lanes}${zoneSvg}${edgeSvg}${nodeSvg}${endSvg}${labelSvg}</svg>`;
+  const legend = `<div class="dglegend">${kinds.map(k => `<span><i style="border-top-color:${KC[k]};${KD[k] ? "border-top-style:dashed" : ""}"></i>${esc(KL[k] || k)}</span>`).join("")}${nodes.some(n => n.status === "planned") || paths.some(x => x.plan) ? "<span>dashed: planned, not built yet</span>" : ""}${g.zones.length ? "<span>outlined area: enclosure or location</span>" : ""}</div>`;
   const alt = `<details class="alt"><summary>Text version of this diagram</summary><ul>${E.map(e => `<li>${esc(idx[e.f].label)}${e.fp ? " (" + esc(e.fp) + ")" : ""} → ${esc(idx[e.t].label)}${e.tp ? " (" + esc(e.tp) + ")" : ""}${e.label ? ": " + esc(e.label) : ""} <span class="muted">[${esc(e.kind || "data")}]</span></li>`).join("")}</ul></details>`;
   return svg.length ? `<div class="dgw" tabindex="0" role="group" aria-label="${esc(d.title || "Diagram")}, scrollable">${svg}</div>${legend}${alt}` : "";
 }
 const diagCard = d => `<div class="card" style="margin-top:16px"><div class="row"><h2>${esc(d.title || "Diagram")}</h2>${d.status ? badge(d.status) : ""}</div>${d.note ? `<p class="muted">${esc(d.note)}</p>` : ""}${renderDiagram(d, "d" + diagrams.indexOf(d))}</div>`;
-const diagCards = part => diagrams.filter(d => homeOf(d) === part).map(diagCard).join("");
+const FALL = { Hardware: ["Firmware"], Software: ["Backend", "Frontend", "Code", "App", "Firmware"], Backend: ["Software", "Code"], Frontend: ["UI", "Software"], Database: ["Backend", "Software"], Firmware: ["Hardware", "Code"], Code: ["Software", "Backend"], UI: ["Frontend", "Software"] };
+const homeFinal = d => { const h = homeOf(d); return [h, ...(FALL[h] || [])].find(partShown) || "Project"; };
+const diagCards = part => diagrams.filter(d => homeFinal(d) === part).map(diagCard).join("");
 
 function vHardware() {
   const power = arr(HW.power), bom = arr(HW.bom), pins = arr(HW.pins), cur = HW.currency || B.currency;
@@ -333,14 +367,15 @@ function vHardware() {
   const out = [trackCards("Hardware"), HW.summary ? `<div class="card" style="margin-top:16px"><h2>Hardware summary</h2><p>${esc(HW.summary)}</p>${arr(HW.interfaces).length ? `<p>${chips(HW.interfaces)}</p>` : ""}</div>` : "", diagCards("Hardware"),
     power.length ? `<div class="card" style="margin-top:16px"><h2>Power budget</h2>${power.map(rail).join("")}<p class="muted">Amber above 80%, red above 100% of the rail capacity. Loads are the figures entered, not measurements.</p></div>` : "",
     bom.length ? `<div class="card" style="margin-top:16px"><h2>Bill of materials</h2><div class="tw"><table><tr><th>Ref</th><th>Part</th><th class="num">Qty</th><th class="num">Unit</th><th class="num">Line</th><th>Status</th></tr>${bom.map(b => `<tr><td class="m">${esc(b.ref)}</td><td>${esc(b.part)}${b.note ? `<div class="muted">${esc(b.note)}</div>` : ""}</td><td class="num">${esc(b.qty || 1)}</td><td class="num">${m2(b.unit)}</td><td class="num">${b.unit == null ? TODO : m2((+b.unit || 0) * (+b.qty || 1))}</td><td>${b.status ? badge(b.status) : ""}</td></tr>`).join("")}<tr><td></td><td><b>Total</b>${unpriced ? ` <span class="muted">(${unpriced} unpriced)</span>` : ""}</td><td></td><td></td><td class="num"><b>${m2(bomTotal)}</b></td><td></td></tr></table></div></div>` : "",
-    pins.length ? `<div class="card" style="margin-top:16px"><h2>Pin map</h2><div class="tw s"><table><tr><th>Pin</th><th>Signal</th><th>Connects to</th><th>Note</th></tr>${pins.map(x => `<tr><td class="m">${esc(x.pin)}</td><td>${esc(x.signal)}</td><td>${esc(x.connects)}</td><td class="muted">${esc(x.note)}</td></tr>`).join("")}</table></div></div>` : ""].join("");
+    pins.length ? `<div class="card" style="margin-top:16px"><h2>Pin map</h2><div class="tw s"><table><tr><th>Pin</th><th>Signal</th><th>Connects to</th><th>Note</th></tr>${pins.map(x => `<tr><td class="m">${esc(x.pin)}</td><td>${esc(x.signal)}</td><td>${esc(x.connects)}</td><td class="muted">${esc(x.note)}</td></tr>`).join("")}</table></div></div>` : "", treeCard(HW.tree, "Hardware project structure")].join("");
   return out.trim() ? out : `<div class="card"><h2>Hardware</h2><p>${TODO}</p><p class="muted">Block-level schematic, power budget, parts list and pin map appear here once the hardware is defined. See the Gaps page.</p></div>`;
 }
 
+const layersCard = layers => arr(layers).length ? `<div class="card" style="margin-top:16px"><h2>Architecture layers</h2><div class="layers">${layers.map((l, i) => `<div class="layer" style="--c:${LCOL[i % LCOL.length]}"><div class="lname"><b>${esc(l.name)}</b><span class="muted">${esc(l.tech)}</span></div><div class="litems">${arr(l.items).map(x => `<span class="lit">${esc(x)}</span>`).join("")}</div></div>`).join("")}</div><p class="muted">Top to bottom: what the visitor sees down to the device.</p></div>` : "";
 function vSoftware() {
   const layers = arr(SW.layers), mods = arr(SW.modules), eps = arr(SW.endpoints), data = arr(SW.data);
   const out = [trackCards("Software"), SW.summary ? `<div class="card" style="margin-top:16px"><h2>Software summary</h2><p>${esc(SW.summary)}</p></div>` : "",
-    layers.length ? `<div class="card" style="margin-top:16px"><h2>Architecture layers</h2><div class="layers">${layers.map((l, i) => `<div class="layer" style="--c:${LCOL[i % LCOL.length]}"><div class="lname"><b>${esc(l.name)}</b><span class="muted">${esc(l.tech)}</span></div><div class="litems">${arr(l.items).map(x => `<span class="lit">${esc(x)}</span>`).join("")}</div></div>`).join("")}</div><p class="muted">Top to bottom: what the visitor sees down to the device.</p></div>` : "",
+    layersCard(layers),
     diagCards("Software"),
     mods.length ? `<div class="card" style="margin-top:16px"><h2>Modules</h2><div class="tw"><table><tr><th>Module</th><th>Layer</th><th>Role</th><th>Tech</th><th>Owner</th><th>Status</th></tr>${mods.map(x => `<tr><td><b>${esc(x.name)}</b></td><td>${esc(x.layer)}</td><td>${esc(x.role)}</td><td>${esc(x.tech)}</td><td>${esc(x.owner)}</td><td>${x.status ? badge(x.status) : ""}</td></tr>`).join("")}</table></div></div>` : "",
     eps.length ? `<div class="card" style="margin-top:16px"><h2>API endpoints</h2><div class="tw"><table><tr><th>Method</th><th>Path</th><th>Purpose</th><th>Access</th></tr>${eps.map(x => `<tr><td class="m"><b>${esc(x.method)}</b></td><td class="m">${esc(x.path)}</td><td>${esc(x.purpose)}</td><td>${esc(x.auth)}</td></tr>`).join("")}</table></div></div>` : "",
@@ -384,6 +419,57 @@ function vPlan() {
     <div class="card"><h2>Risks</h2>${arr(D.risks).length ? `<div class="tw s"><table><tr><th>Risk</th><th>Level</th><th>Mitigation</th></tr>${D.risks.map(r => `<tr><td>${esc(r.r)}</td><td>${badge(r.level || "medium")}</td><td>${esc(r.mitigation)}</td></tr>`).join("")}</table></div>` : `<p>${TODO}</p>`}</div>
     <div class="card"><h2>Decisions</h2>${arr(D.decisions).length ? `<div class="tw s"><table><tr><th>Decision</th><th>Why</th><th>Date</th></tr>${D.decisions.map(d => `<tr><td>${esc(d.d)}</td><td>${esc(d.why)}</td><td class="num">${esc(d.date)}</td></tr>`).join("")}</table></div>` : `<p>${TODO}</p>`}</div>
   </div>`;
+}
+
+/* ---------- project-type sections: frontend, backend, database, firmware, app, ui, code (HUB.sections) ---------- */
+function treeHtml(lines) {
+  const root = { c: Object.create(null) };
+  arr(lines).slice(0, 300).forEach(l => { const [p, ...r] = String(l).split("|"), q = p.trim(), parts = q.split("/").filter(Boolean); let n = root; parts.forEach((seg, i) => { n = n.c[seg] || (n.c[seg] = { c: Object.create(null) }); if (i === parts.length - 1) { n.note = r.join("|").trim(); n.dir = n.dir || /\/$/.test(q); } }); });
+  const rec = (n, d) => Object.entries(n.c).sort((a, b) => (Object.keys(b[1].c).length > 0) - (Object.keys(a[1].c).length > 0) || a[0].localeCompare(b[0])).map(([k, v]) => {
+    const note = v.note ? ` <span class="muted">${esc(v.note)}</span>` : "";
+    return Object.keys(v.c).length || v.dir ? `<li><details ${d < 1 ? "open" : ""}><summary><b>${esc(k)}/</b>${note}</summary><ul>${rec(v, d + 1)}</ul></details></li>` : `<li><span class="tf">${esc(k)}</span>${note}</li>`; }).join("");
+  return `<ul class="tree">${rec(root, 0)}</ul>`;
+}
+const treeCard = (lines, title) => arr(lines).length ? `<div class="card" style="margin-top:16px"><h2>${esc(title)}</h2>${treeHtml(lines)}<p class="muted">${arr(lines).length} entries. Not-built-yet files are marked "planned" in the note.</p></div>` : "";
+const SEC = {
+  Frontend: ["frontend", "Frontend", "Pages and components"], Backend: ["backend", "Backend", "Services and modules"], Database: ["database", "Database", "Tables and collections"],
+  Firmware: ["firmware", "Firmware", "Modules and drivers"], App: ["app", "App", "Screens and features"], UI: ["ui", "User interface", "Screens and widgets"], Code: ["code", "Game code", "Scripts and systems"]
+};
+function vSection(part) {
+  const [key, title, itemsTitle] = SEC[part], s = S[key] || {}, items = arr(s.items), eps = arr(s.endpoints).length ? arr(s.endpoints) : part === "Backend" ? arr(SW.endpoints) : [], tbl = arr(s.tables).length ? arr(s.tables) : part === "Database" ? arr(SW.data) : [];
+  const out = [trackCards(part),
+    s.summary || arr(s.stack).length ? `<div class="card" style="margin-top:16px"><div class="row"><h2>${esc(title)} details</h2>${s.status ? badge(s.status) : ""}</div>${s.summary ? `<p>${esc(s.summary)}</p>` : ""}${arr(s.stack).length ? `<p>${chips(s.stack)}</p>` : ""}${s.owner ? `<p class="muted">Owner: ${esc(s.owner)}</p>` : ""}</div>` : "",
+    layersCard(s.layers), diagCards(part),
+    items.length ? `<div class="card" style="margin-top:16px"><h2>${esc(s.itemsTitle || itemsTitle)}</h2><div class="tw"><table><tr><th>Name</th><th>Role</th><th>Tech</th><th>Status</th></tr>${items.map(x => `<tr><td><b>${esc(x.name)}</b>${x.note ? `<div class="muted">${esc(x.note)}</div>` : ""}</td><td>${esc(x.role)}</td><td>${esc(x.tech)}</td><td>${x.status ? badge(x.status) : ""}</td></tr>`).join("")}</table></div></div>` : "",
+    eps.length ? `<div class="card" style="margin-top:16px"><h2>API endpoints</h2><div class="tw"><table><tr><th>Method</th><th>Path</th><th>Purpose</th><th>Access</th></tr>${eps.map(x => `<tr><td class="m"><b>${esc(x.method)}</b></td><td class="m">${esc(x.path)}</td><td>${esc(x.purpose)}</td><td>${esc(x.auth)}</td></tr>`).join("")}</table></div></div>` : "",
+    tbl.length ? `<div class="card" style="margin-top:16px"><h2>Data model</h2><div class="tw s"><table><tr><th>Entity</th><th>Fields</th><th>Note</th></tr>${tbl.map(x => `<tr><td><b>${esc(x.entity)}</b></td><td class="m">${esc(x.fields)}</td><td class="muted">${esc(x.note)}</td></tr>`).join("")}</table></div></div>` : "",
+    treeCard(s.tree, title + " project structure")].join("");
+  return out.trim() ? out : `<div class="card"><h2>${esc(title)}</h2><p>${TODO}</p><p class="muted">Details, project structure and diagrams appear here once this part is defined. See the Gaps page.</p></div>`;
+}
+const vStructure = () => {
+  const lines = arr(HUB.structure), tops = {}; lines.forEach(l => { const t = String(l).split("|")[0].trim().split("/").filter(Boolean)[0]; if (t) tops[t] = (tops[t] || 0) + 1; });
+  return lines.length ? `<div class="card"><h2>Folders</h2><p>${Object.entries(tops).map(([k, n]) => `<span class="badge">${esc(k)} ${n}</span> `).join("")}</p></div>${treeCard(lines, "Project structure")}` : `<div class="card"><h2>Project structure</h2><p>${TODO}</p><p class="muted">The folder tree appears here once the project is laid out. See the Gaps page.</p></div>`;
+};
+
+/* ---------- assets, libraries, quality ---------- */
+const TCOL = ["var(--fill)", "var(--accent)", "var(--ok)", "var(--warn)", "var(--bad)", "var(--sig)", "var(--muted)"];
+function vAssets() {
+  const types = [...new Set(assets.map(a => a.type || "other"))], cnt = t => assets.filter(a => (a.type || "other") === t).length;
+  const asset = a => `<div class="asset ${a.status === "missing" ? "missing" : ""}"><span class="ftype">${esc(String(a.type || "file").slice(0, 5).toUpperCase())}</span><div><b>${esc(a.name)}</b> ${a.status ? badge(a.status) : ""}</div><div class="muted">${[a.source, a.license, a.note].filter(Boolean).map(esc).join(" · ") || "&nbsp;"}${a.path ? `<br><code>${esc(a.path)}</code>` : ""}</div></div>`;
+  const noLic = libs.filter(l => !l.license).length;
+  return `${assets.length ? `<div class="card"><h2>Assets (${assets.length})</h2><div class="stack" role="img" aria-label="Assets by type">${types.map((t, i) => `<i style="width:${cnt(t) / assets.length * 100}%;background:${TCOL[i % TCOL.length]}" title="${esc(t)} ${cnt(t)}"></i>`).join("")}</div><div class="leg">${types.map((t, i) => `<span><b style="background:${TCOL[i % TCOL.length]}"></b>${esc(t)} ${cnt(t)}</span>`).join("")}</div></div>
+    ${types.map(t => `<div class="card" style="margin-top:16px"><h3>${esc(t)}</h3><div class="assets">${assets.filter(a => (a.type || "other") === t).map(asset).join("")}</div></div>`).join("")}` : `<div class="card"><h2>Assets</h2><p>${TODO}</p><p class="muted">Images, models, audio, fonts and references are listed here with source, license and status. Paid or licensed assets must have their license noted.</p></div>`}
+  ${libs.length ? `<div class="card" style="margin-top:16px"><div class="row"><h2>Libraries and packages (${libs.length})</h2>${noLic ? `<span class="over">${noLic} without license</span>` : ""}</div><div class="tw"><table><tr><th>Name</th><th>Version</th><th>Purpose</th><th>License</th></tr>${libs.map(l => `<tr><td><b>${l.url ? `<a href="${safeUrl(l.url)}" target="_blank" rel="noopener">${esc(l.name)}</a>` : esc(l.name)}</b></td><td class="m">${esc(l.version)}</td><td>${esc(l.purpose)}</td><td>${l.license ? esc(l.license) : '<span class="over">unknown</span>'}</td></tr>`).join("")}</table></div></div>` : ""}`;
+}
+function vQuality() {
+  const tests = arr(Q.tests), list = arr(Q.checklist), envs = arr(Q.envs), done = list.filter(c => c.done).length, p = list.length ? Math.round(done / list.length * 100) : 0, pass = tests.filter(t => t.status === "passing").length;
+  if (!tests.length && !list.length && !envs.length) return `<div class="card"><h2>Quality and release</h2><p>${TODO}</p><p class="muted">Tests, the release checklist and the places the project runs (dev, staging, live) appear here. See the Gaps page.</p></div>`;
+  return `<div class="grid">
+    <div class="card" style="text-align:center"><h2>Release checklist</h2>${ring(p, "Release checklist")}<p class="muted">${done} of ${list.length} done</p></div>
+    <div class="card stat"><h2>Tests</h2><div class="kpi">${pass}<small> of ${tests.length} passing</small></div>${prog(tests.length ? Math.round(pass / tests.length * 100) : 0, "Tests passing")}<span class="muted">${tests.filter(t => t.status === "failing").length} failing · ${tests.filter(t => !["passing", "failing"].includes(t.status)).length} not run</span></div>
+    <div class="card"><h2>Environments</h2>${envs.length ? `<ul class="plain">${envs.map(e => `<li><b>${esc(e.name)}</b> ${e.status ? badge(e.status) : ""} ${e.url ? `<a href="${safeUrl(e.url)}" target="_blank" rel="noopener">${esc(e.url)}</a>` : ""}<div class="muted">${esc(e.note)}</div></li>`).join("")}</ul>` : `<p>${TODO}</p>`}</div></div>
+  ${tests.length ? `<div class="card" style="margin-top:16px"><h2>Tests</h2><div class="tw s"><table><tr><th>Area</th><th>Type</th><th>Status</th><th>Note</th></tr>${tests.map(t => `<tr><td><b>${esc(t.area)}</b></td><td>${esc(t.type)}</td><td>${badge(t.status || "todo")}</td><td class="muted">${esc(t.note)}</td></tr>`).join("")}</table></div></div>` : ""}
+  ${list.length ? `<div class="card" style="margin-top:16px"><h2>Release checklist</h2><ul class="plain">${list.map(c => `<li><span class="dot ${c.done ? "done" : ""}"></span>${esc(c.t)}</li>`).join("")}</ul></div>` : ""}`;
 }
 
 const DOC_STATUS = ["draft", "review", "approved", "outdated", "missing"];
@@ -438,6 +524,27 @@ const FORGE_ROLE = {
   wont: ["Invent facts, prices, tests or results", "Add dependencies or switch stack without permission", "Re-read files or skills it already read", "Touch unrelated files or expose secrets"],
   commands: [["/forge:start", "Load the rules, check the context file and the hub"], ["/forge:context", "Create, migrate or update the context file"], ["/forge:hub", "Create or refresh this hub"], ["/forge:report", "Skills used, tokens, plan, improvements"], ["/forge:improve", "End-of-day self-improvement from the session"]]
 };
+const DEF_ROLES = [{ role: "Planner", does: "Breaks the brief into phases and tasks with hour estimates and keeps the plan current" }, { role: "Builder", does: "Makes the smallest change that solves the task, in the project's own stack" }, { role: "Verifier", does: "Checks syntax, paths, console, responsive layout and accessibility, and says what it could not check" }, { role: "Documenter", does: "Keeps the context file, the docs and this hub in sync with the work" }];
+function agentExtra(used, total) {
+  const log = arr(A.log), freq = {}; log.forEach(l => arr(l.skills).forEach(k => { freq[k] = (freq[k] || 0) + 1; })); used.forEach((w, k) => { if (!freq[k]) freq[k] = 1; });
+  const top = Object.entries(freq).sort((a, b) => b[1] - a[1]).slice(0, 8), mx = Math.max(1, ...top.map(x => x[1])), cov = total ? Math.round(used.size / total * 100) : 0;
+  const tok = log.reduce((n, l) => n + (+l.tokens || 0), 0), me = A.name || "Forge", mine = tasks.filter(t => t.owner === me), grp = FORGE.groups.map(g => [g.g, g.skills.filter(k => used.has(k[0])).length, g.skills.length]);
+  const bar = (l, n, m) => `<span title="${esc(l)}">${esc(l)}</span><div class="bar" role="progressbar" aria-label="${esc(l)}" aria-valuenow="${Math.round(n / m * 100)}" aria-valuemin="0" aria-valuemax="100"><i style="width:${n / m * 100}%"></i></div><b>${n}</b>`;
+  return `
+  <div class="grid" style="margin-bottom:16px">
+    <div class="card"><h2>Roles in this project</h2>${(arr(A.roles).length ? A.roles : DEF_ROLES).map(r => `<div class="role"><b>${esc(r.role)}</b><div class="muted">${esc(r.does)}</div></div>`).join("")}</div>
+    <div class="card"><h2>Capabilities used here</h2>${grp.filter(g => g[1]).length ? grp.filter(g => g[1]).map(g => `<p><b>${esc(g[0])}</b> <span class="muted">${g[1]} of ${g[2]} skills used</span></p>`).join("") : '<p class="tbd">Appears after the first skills are used.</p>'}</div>
+  </div>
+  <div class="grid" style="margin-bottom:16px">
+    <div class="card" style="text-align:center"><h2>Skill coverage</h2>${ring(cov, "Skill coverage")}<p class="muted">${used.size} of ${total} skills used</p></div>
+    <div class="card stat"><h2>Sessions and tokens</h2><div class="kpi">${log.length}<small> sessions logged</small></div><span class="muted">Tokens: ${tok ? tok.toLocaleString() : "not measured"}</span></div>
+    <div class="card stat"><h2>Work by ${esc(me)}</h2><div class="kpi">${mine.filter(t => t.status === "done").length}<small> of ${mine.length} tasks done</small></div><span class="muted">${sumH(mine.filter(t => t.status === "done"))} of ${sumH(mine)} h · project ${pct}% done</span></div>
+  </div>
+  <div class="grid" style="margin-bottom:16px">
+    <div class="card"><h2>Most used skills</h2>${top.length ? `<div class="bars">${top.map(([k, n]) => bar(k, n, mx)).join("")}</div>` : '<p class="tbd">No usage recorded yet.</p>'}</div>
+    <div class="card"><h2>Recent sessions</h2>${log.length ? `<ul class="plain">${log.slice(-5).reverse().map(l => `<li><b>${esc(l.date)}</b> ${esc(l.task)}<div class="muted">${arr(l.skills).map(esc).join(", ")}${l.tokens ? " · " + esc(l.tokens) + " tokens" : ""}</div></li>`).join("")}</ul>` : '<p class="tbd">Forge adds one line per piece of work.</p>'}</div>
+  </div>`;
+}
 function vAgent() {
   const used = new Map(arr(A.usedSkills).map(u => typeof u === "string" ? [u, ""] : [u.name, u.why || ""]));
   const total = FORGE.groups.reduce((n, g) => n + g.skills.length, 0);
@@ -452,8 +559,9 @@ function vAgent() {
     <div class="card"><h2>Commands</h2><table>${role.commands.map(c => `<tr><td><code>${esc(c[0])}</code></td><td>${esc(c[1])}</td></tr>`).join("")}</table></div>
     <div class="card"><h2>Used in this project</h2>${used.size ? `<ul class="plain">${[...used].map(([n, w]) => `<li><span class="badge used">${esc(n)}</span> <span class="muted">${esc(w)}</span></li>`).join("")}</ul>` : '<p class="tbd">No skills recorded yet. Forge adds them after each piece of work.</p>'}${A.notes ? `<p class="muted">${esc(A.notes)}</p>` : ""}</div>
   </div>
-  <div class="card"><div class="row"><h2>Skill catalog</h2><span class="muted">${used.size} used of ${total}</span></div><input type="search" id="skq" placeholder="Filter skills" aria-label="Filter skills">
-    <div id="skl">${FORGE.groups.map(g => `<h3 style="margin-top:14px">${esc(g.g)}</h3>${g.skills.map(s => `<div class="sk ${used.has(s[0]) ? "used" : ""}" data-t="${esc((s[0] + " " + s[1]).toLowerCase())}"><code>${esc(s[0])}</code><span>${esc(s[1])}</span></div>`).join("")}`).join("") || '<p class="tbd">Skill catalog not generated.</p>'}</div></div>`;
+  ${agentExtra(used, total)}
+  <details class="card"><summary class="row"><h2 style="display:inline">Skill catalog</h2><span class="muted">${used.size} used of ${total} · open to browse</span></summary><input type="search" id="skq" placeholder="Filter skills" aria-label="Filter skills" style="margin-top:12px">
+    <div id="skl">${FORGE.groups.map(g => `<h3 style="margin-top:14px">${esc(g.g)}</h3>${g.skills.map(s => `<div class="sk ${used.has(s[0]) ? "used" : ""}" data-t="${esc((s[0] + " " + s[1]).toLowerCase())}"><code>${esc(s[0])}</code><span>${esc(s[1])}</span></div>`).join("")}`).join("") || '<p class="tbd">Skill catalog not generated.</p>'}</div></details>`;
 }
 
 function gapPrompt(g) {
@@ -484,16 +592,26 @@ function vIdentity() {
   <div class="grid">
     <div class="card"><h2>Typography</h2><p>Headings: ${val(I.fonts && I.fonts.heading)}</p><p>Body: ${val(I.fonts && I.fonts.body)}</p></div>
     <div class="card"><h2>Tone</h2>${chips(I.tone)}</div>
+    <div class="card"><h2>Techs and tools</h2>${chips(I.tech)}</div>
     <div class="card"><h2>References</h2>${arr(I.references).length ? `<ul>${I.references.map(r => `<li>${/^https?:\/\//i.test(r) ? `<a href="${safeUrl(r)}" target="_blank" rel="noopener">${esc(r)}</a>` : esc(r)}</li>`).join("")}</ul>` : TODO}</div>
   </div>`;
 }
 
 /* ---------- shell: the tabs are generated from the project (HUB.ui.tabs overrides) ---------- */
-const PARTS = { Project: vProject, Plan: vPlan, Hardware: vHardware, Software: vSoftware, Business: vBusiness, Docs: vDocs, Agent: vAgent, Gaps: vGaps, Identity: vIdentity };
+const PARTS = { Project: vProject, Plan: vPlan, Hardware: vHardware, Software: vSoftware, Business: vBusiness, Docs: vDocs, Quality: vQuality, Agent: vAgent, Gaps: vGaps, Identity: vIdentity, Assets: vAssets, Structure: vStructure };
+Object.keys(SEC).forEach(k => { PARTS[k] = () => vSection(k); });
 const hasKey = ks => tracks.some(t => ks.includes(String(t.key || "").toLowerCase()) && t.applicable !== false);
 const hasHW = !!(Object.keys(HW).length || diagrams.some(d => homeOf(d) === "Hardware") || hasKey(["hardware", "firmware"]));
 const hasSW = !!(Object.keys(SW).length || diagrams.some(d => homeOf(d) === "Software") || hasKey(["backend", "frontend"]));
-const spec = arr((HUB.ui || {}).tabs).length ? HUB.ui.tabs : ["Project", "Plan", hasHW && "Hardware", hasSW && "Software", "Business", "Docs", "Agent", "Gaps", "Identity"].filter(Boolean);
+/* project type decides the middle tabs: web, mechatronics, game; anything else is picked from the data */
+const apps = arr(PR.apps), hasApp = apps.length || S.app, appTab = (hasApp || hasSW) && { label: apps.length ? apps.map(a => ({ hmi: "HMI", webapp: "Web app", mobile: "Mobile app" }[a] || a[0].toUpperCase() + a.slice(1))).join(" / ") : "Software", parts: [hasApp && "App", hasSW && "Software"].filter(Boolean) };
+const TYPE_TABS = {
+  web: ["Frontend", "Backend", "Database", { label: "Design", parts: ["Identity", "Assets"] }],
+  mechatronics: ["Firmware", "Hardware", appTab, (assets.length || libs.length) && "Assets", arr(I.palette).length && "Identity"],
+  game: ["UI", "Code", "Structure", { label: "Assets", parts: ["Assets", "Identity"] }]
+};
+const middle = TYPE_TABS[PT] || [hasHW && "Hardware", hasSW && "Software", "Identity", (assets.length || libs.length) && "Assets"];
+const spec = arr((HUB.ui || {}).tabs).length ? HUB.ui.tabs : ["Project", "Plan", ...middle, "Business", { label: "Docs and quality", parts: ["Docs", "Quality"] }, "Agent", "Gaps"].filter(Boolean);
 const views = spec.map(t => typeof t === "string" ? { label: t, parts: [t] } : { label: t.label || arr(t.parts).join(" + "), parts: arr(t.parts) }).map(v => ({ ...v, parts: v.parts.filter(p => PARTS[p]) })).filter(v => v.parts.length);
 if (!views.some(v => v.parts.includes("Gaps"))) views.push({ label: "Gaps", parts: ["Gaps"] });
 const tabOf = part => views.findIndex(v => v.parts.includes(part));
@@ -502,9 +620,14 @@ const openCount = () => gaps.filter(g => !isDecided(g)).length;
 let cur = 0;
 const tabsHtml = () => views.map((v, i) => `<button role="tab" id="t${i}" aria-selected="${i === cur}" aria-controls="p${i}">${esc(v.label)}${v.parts.includes("Gaps") && openCount() ? `<span class="n">${openCount()}</span>` : ""}</button>`).join("") + '<button class="theme" id="theme" aria-label="Toggle dark mode">Light / Dark</button>';
 const panelHtml = v => v.parts.map(p => `<div class="part">${v.parts.length > 1 ? `<h2 class="ph">${esc(p)}</h2>` : ""}${PARTS[p]()}</div>`).join("");
-$("#main").innerHTML = views.map((v, i) => `<section class="panel" role="tabpanel" id="p${i}" aria-labelledby="t${i}" ${i ? "hidden" : ""}>${panelHtml(v)}</section>`).join("");
-function show(i) { if (i < 0) return; cur = i; $("#tabs").innerHTML = tabsHtml(); views.forEach((_, k) => { $("#p" + k).hidden = k !== i; }); window.scrollTo(0, 0); }
-function refreshPart(part) { const i = tabOf(part); if (i < 0) return; const y = window.scrollY; $("#p" + i).innerHTML = panelHtml(views[i]); if ($("#dq")) { $("#dq").value = docQ; applyDocs(); } $("#tabs").innerHTML = tabsHtml(); window.scrollTo(0, y); }
+/* panels are drawn when first opened (a light first load); printing draws them all */
+const drawn = new Set();
+function draw(i) { if (drawn.has(i)) return; drawn.add(i); $("#p" + i).innerHTML = panelHtml(views[i]); if ($("#dq")) { $("#dq").value = docQ; applyDocs(); } }
+$("#main").innerHTML = views.map((v, i) => `<section class="panel" role="tabpanel" id="p${i}" aria-labelledby="t${i}" ${i ? "hidden" : ""}></section>`).join("");
+draw(0);
+addEventListener("beforeprint", () => views.forEach((_, i) => draw(i)));
+function show(i) { if (i < 0) return; cur = i; draw(i); $("#tabs").innerHTML = tabsHtml(); views.forEach((_, k) => { $("#p" + k).hidden = k !== i; }); window.scrollTo(0, 0); }
+function refreshPart(part) { const i = tabOf(part); if (i < 0) return; const y = window.scrollY; drawn.add(i); $("#p" + i).innerHTML = panelHtml(views[i]); if ($("#dq")) { $("#dq").value = docQ; applyDocs(); } $("#tabs").innerHTML = tabsHtml(); window.scrollTo(0, y); }
 const refreshPlan = () => refreshPart("Plan"), refreshGaps = () => refreshPart("Gaps");
 $("#tabs").innerHTML = tabsHtml();
 $("#tabs").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; if (b.id === "theme") { const dark = matchMedia("(prefers-color-scheme:dark)").matches; const c = document.documentElement.dataset.theme || (dark ? "dark" : "light"); document.documentElement.dataset.theme = c === "dark" ? "light" : "dark"; } else if (b.role === "tab" || b.getAttribute("role") === "tab") show(+b.id.slice(1)); });

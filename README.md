@@ -1,8 +1,8 @@
 # Agent_REF: Forge, the REF dev agent
 
-**Version v2.6.0** · see [CHANGELOG.md](CHANGELOG.md). Every update to `main` has a commit prefixed with its version, for example `v2.6.0: ...`.
+**Version v2.7.0** · see [CHANGELOG.md](CHANGELOG.md). Every update to `main` has a commit prefixed with its version, for example `v2.7.0: ...`.
 
-**Forge** is a dev agent for Claude Code and Claude chat. It is one instruction file ([`REF/AGENT/forge.md`](REF/AGENT/forge.md)) plus 37 skills, a project context file convention, a visual Project Hub page and five commands. Forge works in native HTML, CSS and JavaScript first, asks before adding anything else, keeps the project context file and the Project Hub current, reports which skills it used, and is built to spend few tokens.
+**Forge** is a dev agent for Claude Code and Claude chat. It is one instruction file ([`REF/AGENT/forge.md`](REF/AGENT/forge.md)) plus 37 skills, a project context file convention, a visual Project Hub page that adapts to the project type and five commands. Forge works in native HTML, CSS and JavaScript first, asks before adding anything else, keeps the project context file and the Project Hub current, reports which skills it used, and is built to spend few tokens.
 
 ---
 
@@ -168,7 +168,7 @@ Each skill is a folder with a `SKILL.md` (name and description frontmatter) and,
 
 | Skill | Description |
 | --- | --- |
-| [`project-hub`](REF/SKILLS/project-hub) | Builds and updates the Project Hub for the project Forge is working on, generated from the project itself: context, task-by-task work plan with hours, hardware (block schematic, power budget, parts list, pin map), software (layers, data flow, API, data model), system diagrams, business plan, documents, the agent page, a gap page with decisions, and identity. Use at project start, after substantial work, or for /forge:hub. |
+| [`project-hub`](REF/SKILLS/project-hub) | Builds and updates the Project Hub for the project Forge is working on, generated from the project and its type (web, mechatronics, game). Always has context, work plan with hours, business plan, documents and quality, the agent page with analytics, and open points with Q&A. Adds type pages (frontend, backend, database, design; firmware, hardware, app; UI, code, structure, assets) and system drawings with zones. Use at project start, after substantial work, or for /forge:hub. |
 | [`doc-writer`](REF/SKILLS/doc-writer) | Writes and updates project documentation from the real code - README, setup and run steps, specs, handover notes, changelogs and code comments, and keeps the project context file current. Use when asked to document, write a README, explain how a project works, wrap up or hand off, for /forge:context, or when docs are out of date after a change. |
 | [`reflect`](REF/SKILLS/reflect) | End-of-day and end-of-session self-improvement: reviews the session or today for corrections, approvals and token waste, skips what exists, proposes small edits for approval. Use for /forge:improve or when a skill got something wrong. |
 
