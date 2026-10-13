@@ -1,6 +1,6 @@
 # Agent_REF: Forge, the REF dev agent
 
-**Version v2.4.0** · see [CHANGELOG.md](CHANGELOG.md). Every update to `main` has a commit prefixed with its version, for example `v2.4.0: ...`.
+**Version v2.5.0** · see [CHANGELOG.md](CHANGELOG.md). Every update to `main` has a commit prefixed with its version, for example `v2.5.0: ...`.
 
 **Forge** is a dev agent for Claude Code and Claude chat. It is one instruction file ([`REF/AGENT/forge.md`](REF/AGENT/forge.md)) plus 37 skills, a project context file convention, a visual Project Hub page and five commands. Forge works in native HTML, CSS and JavaScript first, asks before adding anything else, keeps the project context file and the Project Hub current, reports which skills it used, and is built to spend few tokens.
 
@@ -30,7 +30,7 @@ Never add React, TypeScript, Tailwind, Node or any build tool during setup.
 | `/forge:start` | Start of a session | Loads the Forge rules, checks the project context file (reads it, or offers to create or migrate it), then waits. |
 | `/forge:context` | Any time | Makes `REF/CONTEXT/001_PROJECT_CONTEXT.md` follow the REF template: creates it if missing, or maps every existing fact into the ten sections without dropping content, updates status and visual identity, shows the diff. |
 | `/forge:improve` | End of the workday | Learns from this session (or today's sessions) with `reflect`: collects corrections, approvals and token waste, skips what already exists, proposes small edits, applies only what you approve, updates the context file, and prints the report. |
-| `/forge:hub` | Project start, then after big changes | Creates or refreshes the **Project Hub** in `REF/CONTEXT/hub/` (`index.html` + `hub-data.js`), generated from the context file by `project-hub`: Project context, Tracks (hardware, firmware, backend, frontend), Plan (roadmap, action plan, risks, decisions), Business plan, Agent page (Forge, commands, skills used, skill catalog), a **Gaps** page with options and "Ask Forge" buttons, and Identity. Published as an artifact when the Artifact tool exists. Unknown facts stay "to define"; nothing is invented. |
+| `/forge:hub` | Project start, then after big changes | Creates or refreshes the **Project Hub** in `REF/CONTEXT/hub/` (`index.html` + `hub-data.js`), generated from the context file by `project-hub`: Project context, Tracks (hardware, firmware, backend, frontend), **Plan** (task-by-task work plan with owners, due dates and hour estimates, workload per person, list and board views), Business plan, **Docs** (all project documents with status), Agent page (Forge, commands, skills used, skill catalog), a **Gaps** page with options and "Ask Forge" buttons, and Identity. Published as an artifact when the Artifact tool exists. Unknown facts stay "to define"; estimates are marked as estimates until the team confirms them. |
 | `/forge:report` | Any time | Prints the session report: skills used, tokens (only figures the environment shows), plan, improvements. |
 
 Without the plugin, say the same in plain words ("Forge: improve"). Forge also runs the start routine on its own when it begins project work.
@@ -168,7 +168,7 @@ Each skill is a folder with a `SKILL.md` (name and description frontmatter) and,
 
 | Skill | Description |
 | --- | --- |
-| [`project-hub`](REF/SKILLS/project-hub) | Builds and updates the Project Hub, a visually rich HTML page (published as an artifact when the tool exists) with project context, dev tracks (hardware, firmware, backend, frontend), dev plan, action plan, business plan, the AI agent page, a gap page with decisions, and visual identity. Use at project start, after substantial work, or for /forge:hub. |
+| [`project-hub`](REF/SKILLS/project-hub) | Builds and updates the Project Hub, a visually rich HTML page (published as an artifact when the tool exists): project context, dev tracks, a task-by-task work plan with hour estimates and owners, business plan, project documents, the AI agent page, a gap page with decisions, and visual identity. Use at project start, after substantial work, or for /forge:hub. |
 | [`doc-writer`](REF/SKILLS/doc-writer) | Writes and updates project documentation from the real code - README, setup and run steps, specs, handover notes, changelogs and code comments, and keeps the project context file current. Use when asked to document, write a README, explain how a project works, wrap up or hand off, for /forge:context, or when docs are out of date after a change. |
 | [`reflect`](REF/SKILLS/reflect) | End-of-day and end-of-session self-improvement: reviews the session or today for corrections, approvals and token waste, skips what exists, proposes small edits for approval. Use for /forge:improve or when a skill got something wrong. |
 

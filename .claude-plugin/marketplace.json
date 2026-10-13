@@ -11,7 +11,7 @@
       "name": "forge",
       "source": "./",
       "description": "Forge, the REF dev agent: rules, skills and commands (start, context, improve, report, hub) for native HTML, CSS and JavaScript projects",
-      "version": "2.4.0"
+      "version": "2.5.0"
     }
   ]
 }
