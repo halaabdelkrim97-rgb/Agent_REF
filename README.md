@@ -1,8 +1,8 @@
 # Agent_REF: Forge, the REF dev agent
 
-**Version v2.2.3** · see [CHANGELOG.md](CHANGELOG.md). Every update to `main` has a commit prefixed with its version, for example `v2.0.0: ...`.
+**Version v2.3.0** · see [CHANGELOG.md](CHANGELOG.md). Every update to `main` has a commit prefixed with its version, for example `v2.3.0: ...`.
 
-**Forge** is a dev agent for Claude Code and Claude chat. It is one instruction file ([`REF/AGENT/forge.md`](REF/AGENT/forge.md)) plus 36 skills, a project context file convention and four commands. Forge works in native HTML, CSS and JavaScript first, asks before adding anything else, keeps the project context file current, reports which skills it used, and is built to spend few tokens.
+**Forge** is a dev agent for Claude Code and Claude chat. It is one instruction file ([`REF/AGENT/forge.md`](REF/AGENT/forge.md)) plus 37 skills, a project context file convention, a visual Project Hub page and five commands. Forge works in native HTML, CSS and JavaScript first, asks before adding anything else, keeps the project context file and the Project Hub current, reports which skills it used, and is built to spend few tokens.
 
 ---
 
@@ -12,7 +12,7 @@
 > **Agent:** the steps below are for you. Do them in order, skip anything already done, and install nothing else.
 
 1. **Ask once:** install for **this project only** (`.claude/skills/`) or **all projects** (`~/.claude/skills/`)? Default to this project.
-2. **Plugin route (preferred):** run `/plugin marketplace add halaabdelkrim97-rgb/Agent_REF`, then `/plugin install forge@agent-ref`. This installs the skills and the commands `/forge:start`, `/forge:context`, `/forge:improve` and `/forge:report`. If plugin commands are unavailable, use the copy route.
+2. **Plugin route (preferred):** run `/plugin marketplace add halaabdelkrim97-rgb/Agent_REF`, then `/plugin install forge@agent-ref`. This installs the skills and the commands `/forge:start`, `/forge:context`, `/forge:improve`, `/forge:report` and `/forge:hub`. If plugin commands are unavailable, use the copy route.
 3. **Copy route:** `git clone --depth 1 https://github.com/halaabdelkrim97-rgb/Agent_REF.git` into a temporary folder, copy each folder of `REF/SKILLS/` to the chosen skills folder (skip folders that already exist and say so), then delete the clone.
 4. **Forge file:** if `CLAUDE.md` contains "FORGE — REF DEV AGENT", leave it (compare the version line and offer to update). If it contains the older "REF PROJECT AGENT" block, offer to replace that block. Otherwise append the contents of `REF/AGENT/forge.md` to `CLAUDE.md` (create the file if missing). Do not edit the rules.
 5. **Context file:** run the Forge start routine. If `REF/CONTEXT/001_PROJECT_CONTEXT.md` is missing, create it from `REF/TEMPLATES/001_PROJECT_CONTEXT.md` and ask the user for goal, stack and constraints. If it exists in another format, offer `/forge:context` to migrate it without losing content. Do not invent answers.
@@ -23,13 +23,14 @@ Never add React, TypeScript, Tailwind, Node or any build tool during setup.
 
 ---
 
-## 🧭 Daily use: the four commands
+## 🧭 Daily use: the five commands
 
 | Command | When | What it does |
 | --- | --- | --- |
 | `/forge:start` | Start of a session | Loads the Forge rules, checks the project context file (reads it, or offers to create or migrate it), then waits. |
 | `/forge:context` | Any time | Makes `REF/CONTEXT/001_PROJECT_CONTEXT.md` follow the REF template: creates it if missing, or maps every existing fact into the ten sections without dropping content, updates status and visual identity, shows the diff. |
 | `/forge:improve` | End of the workday | Learns from this session (or today's sessions) with `reflect`: collects corrections, approvals and token waste, skips what already exists, proposes small edits, applies only what you approve, updates the context file, and prints the report. |
+| `/forge:hub` | Project start, then after big changes | Creates or refreshes the **Project Hub**: one visually rich HTML page (overview, dev plan, business plan, identity) generated from the context file with `project-hub`. Published as an artifact when the Artifact tool exists, otherwise saved as `REF/CONTEXT/PROJECT_HUB.html`. Unknown business facts stay "to define"; nothing is invented. |
 | `/forge:report` | Any time | Prints the session report: skills used, tokens (only figures the environment shows), plan, improvements. |
 
 Without the plugin, say the same in plain words ("Forge: improve"). Forge also runs the start routine on its own when it begins project work.
@@ -89,7 +90,7 @@ Agent_REF/
 ├── CHANGELOG.md                # version history (commits on main are prefixed vX.Y.Z)
 ├── CLAUDE.md                   # rules for working on this repo
 ├── .claude-plugin/             # marketplace.json and plugin.json (plugin "forge")
-├── commands/                   # /forge:start, /forge:context, /forge:improve, /forge:report
+├── commands/                   # /forge:start, /forge:context, /forge:improve, /forge:report, /forge:hub
 ├── examples/                   # tested demos: spring-damper (2D), desk-fan (Three.js)
 ├── scripts/
 │   └── package_skills.py       # validates skills and builds upload-ready ZIPs for Claude chat
@@ -98,12 +99,12 @@ Agent_REF/
     │   └── forge.md            # the Forge agent instruction file
     ├── TEMPLATES/
     │   └── 001_PROJECT_CONTEXT.md   # copy into a project as REF/CONTEXT/001_PROJECT_CONTEXT.md
-    └── SKILLS/                 # 36 skills, one folder each (SKILL.md + optional references)
+    └── SKILLS/                 # 37 skills, one folder each (SKILL.md + optional references)
 ```
 
 ---
 
-## 🧰 Skills (36)
+## 🧰 Skills (37)
 
 Each skill is a folder with a `SKILL.md` (name and description frontmatter) and, for some, `references/`, data, scripts or templates. Claude loads a skill when its description fits the task, so reading the whole folder is never needed. The task-to-skill routing table is in [`forge.md`](REF/AGENT/forge.md), section 4.
 
@@ -165,6 +166,7 @@ Each skill is a folder with a `SKILL.md` (name and description frontmatter) and,
 
 | Skill | Description |
 | --- | --- |
+| [`project-hub`](REF/SKILLS/project-hub) | Builds and updates the Project Hub, a visually rich single-file HTML page (published as an artifact when the tool exists) with project details, dev plan, business plan and visual identity, generated from the context file. Use at project start, after substantial work, or for /forge:hub. |
 | [`doc-writer`](REF/SKILLS/doc-writer) | Writes and updates project documentation from the real code - README, setup and run steps, specs, handover notes, changelogs and code comments, and keeps the project context file current. Use when asked to document, write a README, explain how a project works, wrap up or hand off, for /forge:context, or when docs are out of date after a change. |
 | [`reflect`](REF/SKILLS/reflect) | End-of-day and end-of-session self-improvement: reviews the session or today for corrections, approvals and token waste, skips what exists, proposes small edits for approval. Use for /forge:improve or when a skill got something wrong. |
 

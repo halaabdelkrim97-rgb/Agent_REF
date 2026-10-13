@@ -3,6 +3,14 @@
 Versions follow `vMAJOR.MINOR.PATCH`. Every commit on `main` starts with the version it belongs to, for example `v1.2.0: summary`.
 Git tags cannot be pushed from the environment these updates were made in, so the commit prefix and this file are the version record.
 
+## v2.3.0 (Project Hub)
+
+- **New skill `project-hub`** (37 skills): every project gets a visually rich single-file HTML hub with four tabs (Overview, Dev plan, Business plan, Identity): progress ring, roadmap timeline, risks and decisions tables, offer, costs and margin, KPIs, brand palette, dark mode, print styles, phone layout. All content is one `HUB` data object in `templates/hub-template.html`, so updates are small targeted edits, not rewrites. It is generated from the context file (source of truth) and published as an artifact when the Artifact tool exists, otherwise saved as `REF/CONTEXT/PROJECT_HUB.html`.
+- **Forge rules:** the start routine checks for the hub and creates it; context upkeep refreshes it; routing table row; non-negotiable 4 now covers the hub. New command `/forge:hub` (five commands). `/forge:start` offers the hub when missing. The context-file step in `doc-writer` now ends with a hub refresh.
+- **No invented business plan:** unknown prices, costs and KPIs stay empty and show "to define"; at most five short questions are asked. Internal costs and margin are left out of a client-facing hub unless the user says otherwise.
+- **Tested:** the template renders with empty data and with sample data in headless Chromium at 1200 and 360 px: no console errors, no horizontal scroll, HTML in data is escaped, a `javascript:` link is neutralized, dark mode toggles. **Not tested:** publishing through the Artifact tool from Claude Code, the `/forge:hub` command in a live plugin install, and a hub generated from a real context file.
+- Rebased onto v2.1.0 to v2.2.3 (another session had pushed `canvas-design`, `nano-banana`, `framer-motion`, `gsap`, `ui-components-21st` and moved `project-summarizer` into `doc-writer`); this release is numbered v2.3.0 to avoid reusing those versions.
+
 ## v2.2.3
 
 - **`ui-components-21st` from a first real test:** new `scripts/twentyfirst.py` (Python standard library) calls the 21st.dev MCP server over HTTP without registering it: `tools`, `search`, `call <tool> '<json>'`. It reads `TWENTYFIRST_API_KEY` from the environment or a gitignored `.env`, never prints the key, and prints UTF-8 on Windows consoles. The skill adds `--scope user` to the `claude mcp add` command, the main tools, and the free-tier limits (2 code retrievals a day, AI generation off) so the agent checks `get_usage` first.

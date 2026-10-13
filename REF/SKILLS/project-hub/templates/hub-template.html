@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Project Hub</title>
+<style>
+/* Forge Project Hub. Single file, no dependencies. Edit only the HUB object below. */
+:root{--primary:#4f46e5;--accent:#f59e0b;--bg:#f6f7fb;--card:#fff;--text:#161a2b;--muted:#5d647a;--line:#e3e6f0;--ok:#16a34a;--warn:#d97706;--bad:#dc2626;--r:14px}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0e1020;--card:#171a30;--text:#eceefb;--muted:#9aa1bd;--line:#272b49}}
+:root[data-theme=dark]{--bg:#0e1020;--card:#171a30;--text:#eceefb;--muted:#9aa1bd;--line:#272b49}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px 48px}
+header.hero{background:linear-gradient(135deg,var(--primary),color-mix(in srgb,var(--primary) 55%,var(--accent)));color:#fff;padding:32px 0 28px}
+.hero h1{margin:0 0 4px;font-size:clamp(1.6rem,4vw,2.4rem);line-height:1.15}
+.hero p{margin:0;opacity:.92;max-width:60ch}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.chip{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);border-radius:99px;padding:3px 12px;font-size:.82rem}
+nav.tabs{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);display:flex;gap:4px;overflow-x:auto;padding:8px 16px;margin:0 -16px 20px}
+nav.tabs button{border:0;background:none;color:var(--muted);font:inherit;font-weight:600;padding:8px 14px;border-radius:99px;cursor:pointer;white-space:nowrap}
+nav.tabs button[aria-selected=true]{background:var(--primary);color:#fff}
+nav.tabs button:focus-visible,.theme:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.theme{margin-left:auto;border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:99px;padding:6px 12px;cursor:pointer;font:inherit}
+section.panel[hidden]{display:none}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.card h2,.card h3{margin:0 0 10px;font-size:1.05rem}
+.muted{color:var(--muted)}
+.kpi{font-size:2rem;font-weight:800;line-height:1}
+.bar{height:10px;background:var(--line);border-radius:99px;overflow:hidden}
+.bar>i{display:block;height:100%;background:linear-gradient(90deg,var(--primary),var(--accent));border-radius:99px}
+.row{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
+.badge{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:2px 9px;border-radius:99px;background:var(--line);color:var(--muted)}
+.badge.done,.badge.low{background:color-mix(in srgb,var(--ok) 18%,transparent);color:var(--ok)}
+.badge.doing,.badge.medium{background:color-mix(in srgb,var(--warn) 18%,transparent);color:var(--warn)}
+.badge.high{background:color-mix(in srgb,var(--bad) 18%,transparent);color:var(--bad)}
+.timeline{position:relative;margin:0;padding:0 0 0 22px;list-style:none;border-left:3px solid var(--line)}
+.timeline li{position:relative;margin:0 0 18px}
+.timeline li::before{content:"";position:absolute;left:-30px;top:6px;width:13px;height:13px;border-radius:50%;background:var(--line);border:3px solid var(--bg)}
+.timeline li.done::before{background:var(--ok)}.timeline li.doing::before{background:var(--accent)}
+ul.tasks{list-style:none;margin:8px 0 0;padding:0}
+ul.tasks li{padding:2px 0}
+ul.tasks li.done{color:var(--muted);text-decoration:line-through}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.78rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.sw{display:flex;gap:12px;flex-wrap:wrap}
+.sw div{width:104px}.sw b{display:block;height:56px;border-radius:10px;border:1px solid var(--line)}
+.sw small{display:block;color:var(--muted)}
+.todo{color:var(--muted);font-style:italic}
+a{color:var(--primary)}
+footer{margin-top:28px;color:var(--muted);font-size:.85rem}
+@media (max-width:600px){.hero{padding:22px 0}.kpi{font-size:1.6rem}}
+@media print{nav.tabs,.theme{display:none}section.panel[hidden]{display:block}.card{break-inside:avoid}}
+</style>
+</head>
+<body>
+<header class="hero"><div class="wrap">
+  <h1 id="pname"></h1><p id="ptag"></p><div class="chips" id="chips"></div>
+</div></header>
+<div class="wrap">
+  <nav class="tabs" role="tablist" id="tabs"></nav>
+  <main id="main"></main>
+  <footer id="foot"></footer>
+</div>
+
+<script>
+/* ===== DATA: the only part Forge edits. Unknown values stay "" or [] and show as "to define". Never invent numbers. ===== */
+const HUB = {
+  project: { name: "Project name", tagline: "", client: "", status: "planning", version: "", updated: "", goal: "", stack: [], links: [] },
+  identity: { palette: [], fonts: { heading: "", body: "" }, tone: [] },
+  plan: {
+    phases: [],      // { name, status: "todo|doing|done", progress: 0-100, start: "", end: "", tasks: [{ t: "", done: false }] }
+    next: [],        // ordered strings, max 5
+    risks: [],       // { r, level: "low|medium|high", mitigation }
+    decisions: [],   // { d, why, date }
+    resume: ""       // how to resume
+  },
+  business: {
+    audience: "", value: "", model: "",
+    offer: [],       // { item, price: number|null, note }
+    costs: [],       // { item, amount: number|null }
+    kpis: [],        // { k, target, now }
+    milestones: [],  // { m, date }
+    currency: "EUR", notes: ""
+  }
+};
+/* ===== END DATA ===== */
+
+const $ = (s, r = document) => r.querySelector(s);
+const esc = v => String(v ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const TODO = '<span class="todo">to define</span>';
+const val = v => (v === "" || v == null) ? TODO : esc(v);
+const money = n => n == null || n === "" || isNaN(n) ? TODO : new Intl.NumberFormat(undefined, { style: "currency", currency: HUB.business.currency || "EUR", maximumFractionDigits: 0 }).format(n);
+const safeUrl = u => /^https?:\/\//i.test(u) ? esc(u) : "#";
+const safeColor = c => /^#[0-9a-f]{3,8}$/i.test(c || "") ? c : null;
+
+const P = HUB.project, I = HUB.identity, D = HUB.plan, B = HUB.business;
+const phases = D.phases || [];
+const pct = phases.length ? Math.round(phases.reduce((a, p) => a + (p.status === "done" ? 100 : +p.progress || 0), 0) / phases.length) : 0;
+
+// brand colours from the visual identity
+const root = document.documentElement.style;
+(I.palette || []).forEach(c => { const h = safeColor(c.hex); if (!h) return;
+  const r = (c.role || "").toLowerCase();
+  if (r.includes("primary")) root.setProperty("--primary", h);
+  else if (r.includes("accent")) root.setProperty("--accent", h); });
+if (I.fonts && I.fonts.body) $("body").style.fontFamily = I.fonts.body + ", system-ui, sans-serif";
+document.title = (P.name || "Project") + " - Hub";
+
+$("#pname").textContent = P.name || "Project";
+$("#ptag").textContent = P.tagline || P.goal || "";
+$("#chips").innerHTML = [P.client && "Client: " + P.client, P.status && "Status: " + P.status, P.version && "Version " + P.version, P.updated && "Updated " + P.updated]
+  .filter(Boolean).map(t => `<span class="chip">${esc(t)}</span>`).join("");
+
+const ring = p => { const r = 42, c = 2 * Math.PI * r; return `<svg viewBox="0 0 100 100" width="120" height="120" role="img" aria-label="${p}% complete"><circle cx="50" cy="50" r="${r}" fill="none" stroke="var(--line)" stroke-width="10"/><circle cx="50" cy="50" r="${r}" fill="none" stroke="var(--primary)" stroke-width="10" stroke-linecap="round" stroke-dasharray="${c * p / 100} ${c}" transform="rotate(-90 50 50)"/><text x="50" y="56" text-anchor="middle" font-size="22" font-weight="800" fill="var(--text)">${p}%</text></svg>`; };
+const badge = s => `<span class="badge ${esc(s)}">${esc(s)}</span>`;
+const list = (a, empty) => a && a.length ? `<ul>${a.map(x => `<li>${esc(x)}</li>`).join("")}</ul>` : `<p>${empty || TODO}</p>`;
+
+const totalCost = (B.costs || []).reduce((a, c) => a + (+c.amount || 0), 0);
+const totalOffer = (B.offer || []).reduce((a, o) => a + (+o.price || 0), 0);
+const hasMoney = totalCost > 0 || totalOffer > 0;
+
+const views = {
+  Overview: () => `
+  <div class="grid">
+    <div class="card"><h2>Goal</h2><p>${val(P.goal)}</p></div>
+    <div class="card" style="text-align:center"><h2>Progress</h2>${ring(pct)}<p class="muted">${phases.filter(p => p.status === "done").length} of ${phases.length} phases done</p></div>
+    <div class="card"><h2>Stack</h2>${(P.stack || []).length ? (P.stack).map(s => `<span class="badge">${esc(s)}</span> `).join("") : TODO}</div>
+    <div class="card"><h2>Next steps</h2>${(D.next || []).length ? `<ol>${D.next.map(n => `<li>${esc(n)}</li>`).join("")}</ol>` : TODO}${D.resume ? `<p class="muted"><b>Resume:</b> ${esc(D.resume)}</p>` : ""}</div>
+    <div class="card"><h2>Links</h2>${(P.links || []).length ? `<ul>${P.links.map(l => `<li><a href="${safeUrl(l.url)}" target="_blank" rel="noopener">${esc(l.label || l.url)}</a></li>`).join("")}</ul>` : TODO}</div>
+  </div>`,
+
+  "Dev plan": () => `
+  <div class="card"><h2>Roadmap</h2>${phases.length ? `<ol class="timeline">${phases.map(p => `
+    <li class="${esc(p.status)}"><div class="row"><b>${esc(p.name)}</b>${badge(p.status || "todo")}</div>
+      <div class="muted">${esc([p.start, p.end].filter(Boolean).join(" to "))}</div>
+      <div class="bar" role="progressbar" aria-valuenow="${p.status === "done" ? 100 : +p.progress || 0}" aria-valuemin="0" aria-valuemax="100"><i style="width:${p.status === "done" ? 100 : Math.min(100, +p.progress || 0)}%"></i></div>
+      <ul class="tasks">${(p.tasks || []).map(t => `<li class="${t.done ? "done" : ""}">${t.done ? "&#10003; " : "&#9675; "}${esc(t.t)}</li>`).join("")}</ul></li>`).join("")}</ol>` : `<p>${TODO}</p>`}</div>
+  <div class="grid" style="margin-top:16px">
+    <div class="card"><h2>Risks</h2>${(D.risks || []).length ? `<table><tr><th>Risk</th><th>Level</th><th>Mitigation</th></tr>${D.risks.map(r => `<tr><td>${esc(r.r)}</td><td>${badge(r.level || "medium")}</td><td>${esc(r.mitigation)}</td></tr>`).join("")}</table>` : `<p>${TODO}</p>`}</div>
+    <div class="card"><h2>Decisions</h2>${(D.decisions || []).length ? `<table><tr><th>Decision</th><th>Why</th><th>Date</th></tr>${D.decisions.map(d => `<tr><td>${esc(d.d)}</td><td>${esc(d.why)}</td><td class="num">${esc(d.date)}</td></tr>`).join("")}</table>` : `<p>${TODO}</p>`}</div>
+  </div>`,
+
+  "Business plan": () => `
+  <div class="grid">
+    <div class="card"><h2>Audience</h2><p>${val(B.audience)}</p></div>
+    <div class="card"><h2>Value proposition</h2><p>${val(B.value)}</p></div>
+    <div class="card"><h2>Revenue model</h2><p>${val(B.model)}</p></div>
+  </div>
+  <div class="grid" style="margin-top:16px">
+    <div class="card"><h2>Offer and pricing</h2>${(B.offer || []).length ? `<table>${B.offer.map(o => `<tr><td>${esc(o.item)}<div class="muted">${esc(o.note)}</div></td><td class="num">${money(o.price)}</td></tr>`).join("")}<tr><td><b>Total</b></td><td class="num"><b>${money(totalOffer || null)}</b></td></tr></table>` : `<p>${TODO}</p>`}</div>
+    <div class="card"><h2>Costs</h2>${(B.costs || []).length ? `<table>${B.costs.map(c => `<tr><td>${esc(c.item)}</td><td class="num">${money(c.amount)}</td></tr>`).join("")}<tr><td><b>Total</b></td><td class="num"><b>${money(totalCost || null)}</b></td></tr></table>` : `<p>${TODO}</p>`}</div>
+    ${hasMoney ? `<div class="card"><h2>Margin</h2><div class="kpi">${money(totalOffer - totalCost)}</div><p class="muted">offer minus costs, from the figures entered</p>
+      <div class="bar"><i style="width:${totalOffer ? Math.max(0, Math.min(100, Math.round((totalOffer - totalCost) / totalOffer * 100))) : 0}%"></i></div></div>` : ""}
+  </div>
+  <div class="grid" style="margin-top:16px">
+    <div class="card"><h2>KPIs</h2>${(B.kpis || []).length ? `<table><tr><th>KPI</th><th>Target</th><th>Now</th></tr>${B.kpis.map(k => `<tr><td>${esc(k.k)}</td><td>${val(k.target)}</td><td>${val(k.now)}</td></tr>`).join("")}</table>` : `<p>${TODO}</p>`}</div>
+    <div class="card"><h2>Milestones</h2>${(B.milestones || []).length ? `<ol class="timeline">${B.milestones.map(m => `<li><b>${esc(m.m)}</b> <span class="muted">${esc(m.date)}</span></li>`).join("")}</ol>` : `<p>${TODO}</p>`}</div>
+  </div>
+  ${B.notes ? `<div class="card" style="margin-top:16px"><h2>Notes</h2><p>${esc(B.notes)}</p></div>` : ""}`,
+
+  Identity: () => `
+  <div class="card"><h2>Palette</h2>${(I.palette || []).length ? `<div class="sw">${I.palette.map(c => `<div><b style="background:${safeColor(c.hex) || "transparent"}"></b><strong>${esc(c.name)}</strong><small>${esc(c.hex)} ${esc(c.role)}</small></div>`).join("")}</div>` : `<p>${TODO}</p>`}</div>
+  <div class="grid" style="margin-top:16px">
+    <div class="card"><h2>Typography</h2><p>Headings: ${val(I.fonts && I.fonts.heading)}</p><p>Body: ${val(I.fonts && I.fonts.body)}</p></div>
+    <div class="card"><h2>Tone</h2>${(I.tone || []).length ? I.tone.map(t => `<span class="badge">${esc(t)}</span> `).join("") : TODO}</div>
+  </div>`
+};
+
+const names = Object.keys(views);
+$("#tabs").innerHTML = names.map((n, i) => `<button role="tab" id="t${i}" aria-selected="${i === 0}" aria-controls="p${i}">${esc(n)}</button>`).join("") + '<button class="theme" id="theme" aria-label="Toggle dark mode">Light / Dark</button>';
+$("#main").innerHTML = names.map((n, i) => `<section class="panel" role="tabpanel" id="p${i}" aria-labelledby="t${i}" ${i ? "hidden" : ""}>${views[n]()}</section>`).join("");
+$("#tabs").addEventListener("click", e => {
+  const b = e.target.closest("button[role=tab]"); if (!b) return;
+  names.forEach((_, i) => { $("#t" + i).setAttribute("aria-selected", "t" + i === b.id); $("#p" + i).hidden = "t" + i !== b.id; });
+});
+$("#theme").addEventListener("click", () => {
+  const dark = matchMedia("(prefers-color-scheme:dark)").matches;
+  const cur = document.documentElement.dataset.theme || (dark ? "dark" : "light");
+  document.documentElement.dataset.theme = cur === "dark" ? "light" : "dark";
+});
+$("#foot").textContent = "Generated by Forge from REF/CONTEXT/001_PROJECT_CONTEXT.md. Source of truth: the context file. Empty fields are not filled in on purpose.";
+</script>
+</body>
+</html>
