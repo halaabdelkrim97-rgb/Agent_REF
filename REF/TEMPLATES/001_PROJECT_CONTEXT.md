@@ -21,7 +21,7 @@
 - Not approved / do not introduce:
 
 ## 5. Structure and conventions
-<!-- Folder layout, file naming, code style, how things are wired together. -->
+<!-- Compact navigation index: entry points, modules and responsibilities, state owner, detailed spec paths, file naming and code style. Link details instead of copying them. -->
 
 ## 6. Constraints
 <!-- Browsers/devices supported, performance budget, accessibility level, hosting, offline needs, legal. -->
@@ -33,7 +33,7 @@
 <!-- Exact commands or manual steps. Say "no build step" if there is none. -->
 
 ## 9. Current status and next steps
-<!-- Keep this short and update it at the end of each work session so a new session does not need to re-read the whole project. -->
+<!-- Update only when status changes. Current milestone, blockers and next task; link the relevant HANDOFF.md entry. No session transcript. -->
 
 ## 10. Visual identity and references
 <!-- Short brand and style sheet the agent reuses so every screen, scene and document matches. Fill only what exists; leave the rest blank. -->

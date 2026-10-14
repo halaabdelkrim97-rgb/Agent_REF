@@ -1,8 +1,8 @@
 # Agent_REF: Forge, the REF dev agent
 
-**Version v2.7.1** · see [CHANGELOG.md](CHANGELOG.md). Every update to `main` has a commit prefixed with its version, for example `v2.7.1: ...`.
+**Version v2.12.0** · see [CHANGELOG.md](CHANGELOG.md). Every update to `main` has a commit prefixed with its version, for example `v2.12.0: ...`.
 
-**Forge** is a dev agent for Claude Code and Claude chat. It is one instruction file ([`REF/AGENT/forge.md`](REF/AGENT/forge.md)) plus 37 skills, a project context file convention, a visual Project Hub page that adapts to the project type and five commands. Forge works in native HTML, CSS and JavaScript first, asks before adding anything else, keeps the project context file and the Project Hub current, reports which skills it used, and is built to spend few tokens.
+**Forge** is a shared dev workflow for Claude Code, Claude chat and Codex. It is one instruction file ([`REF/AGENT/forge.md`](REF/AGENT/forge.md)) plus 39 skills, a project context file convention, a visual Project Hub page that adapts to the project type and five commands. Forge works in native HTML, CSS and JavaScript first, asks before adding anything else, keeps the project context file and the Project Hub current, reports which skills it used, and is built to spend few tokens.
 
 ---
 
@@ -20,6 +20,30 @@
 7. **Report:** installed skills (count and where), Forge file added or present, context file created, found or migrated, and anything skipped. Tell the user to run `/skills` to confirm.
 
 Never add React, TypeScript, Tailwind, Node or any build tool during setup.
+
+---
+
+## Artistic work across ChatGPT, Claude Code and Codex
+
+Forge has no house style: the user's vision and references define the target. Visual skills supply techniques, not aesthetic preferences. Creative alternatives are offered when requested or delegated; reviews check fidelity to the brief.
+
+Use `art-direction` for new visual concepts or weak artistic output. It compares distinct concepts when needed, selects media/assets, polishes one sample, and critiques runtime captures before expansion. Optional references cover cinematic 3D, choreography, game feel and stable artistic physics. Engineering skills are unchanged.
+
+In ChatGPT, image generation and previews depend on available tools; generated artwork is not proof of runtime behavior. In Claude Code and Codex, use actual source, assets and available browser capture. No host is assumed to have another host's tools. Shared files carry decisions; automatic model calls still require a configured coordinator.
+
+## Focused work, visual quality and context cost
+
+Start from a compact project context and its module index; load only task-relevant source and skill references. Vanilla frontend tasks no longer load the optional React/Next.js catalog. Use one agent by default and keep handoffs short. Update documentation only when facts change.
+
+For new visuals, use [`VISUAL_BRIEF.md`](REF/TEMPLATES/VISUAL_BRIEF.md) to fill context section 10, polish one representative screen or scene, then expand. Reuse design tokens and suitable approved assets. Inspect screenshots when tools exist; limit visual correction rounds and report unresolved criteria honestly. These rules aim to reduce rework; actual token savings and visual improvements require measurement on real tasks.
+
+## Codex and shared projects
+
+Codex can use Forge by reading the shared instruction file and relevant skills directly; the Claude plugin does not install into Codex. In this repository, `AGENTS.md` is the Codex entry point. In a client project, add an `AGENTS.md` pointing to the actual installed `forge.md` and `REF/SKILLS/` location, and retain existing project instructions.
+
+Claude and Codex share project context through Git, not chat history. Use `REF/CONTEXT/HANDOFF.md` based on [`HANDOFF.md`](REF/TEMPLATES/HANDOFF.md) for task ownership, branch and commit, changes, validation and next action. Concurrent implementations need separate worktrees and branches; edits in a single folder must be serialized. Automatic agent invocation needs a separately configured coordinator and is not included in Forge.
+
+The approved project stack can be reused without repeated permission. Startup checks for a Hub and offers creation; an unrelated small fix does not require generating it first. Visual work includes screenshot inspection when the environment supports it.
 
 ---
 
@@ -68,8 +92,8 @@ Work (HTML/CSS/JS first, ask before any new technology) ──► validate ─�
 End of day: /forge:improve ──► learnings, context update, session report
 ```
 
-- **Routing and token budget** live in [`forge.md`](REF/AGENT/forge.md) sections 4 and 10: a task-to-skill table, one or two skills per step, never re-read, targeted reads, short replies. Skills load on demand, so only their short descriptions sit in context.
-- **Technology policy:** native HTML, CSS and JavaScript first. React, Tailwind, TypeScript, Node, build tools, Three.js, physics engines, test frameworks and outside services need your approval. Unity is used only for projects you define as Unity projects.
+- **Routing and token budget** live in [`forge.md`](REF/AGENT/forge.md) sections 4 and 10: a task-to-skill table, one or two skills per step, re-read changed context only, targeted reads, short replies. Skills load on demand, so only their short descriptions sit in context.
+- **Technology policy:** native HTML, CSS and JavaScript first. New dependencies, services and architectural changes need approval unless already authorized; reuse the existing or approved stack without asking again. Unity is used only for projects you define as Unity projects.
 - **Honesty:** Forge never claims access, tests or token numbers it does not have.
 
 ---
@@ -101,12 +125,12 @@ Agent_REF/
     │   └── forge.md            # the Forge agent instruction file
     ├── TEMPLATES/
     │   └── 001_PROJECT_CONTEXT.md   # copy into a project as REF/CONTEXT/001_PROJECT_CONTEXT.md
-    └── SKILLS/                 # 37 skills, one folder each (SKILL.md + optional references)
+    └── SKILLS/                 # 39 skills, one folder each (SKILL.md + optional references)
 ```
 
 ---
 
-## 🧰 Skills (37)
+## 🧰 Skills (39)
 
 Each skill is a folder with a `SKILL.md` (name and description frontmatter) and, for some, `references/`, data, scripts or templates. Claude loads a skill when its description fits the task, so reading the whole folder is never needed. The task-to-skill routing table is in [`forge.md`](REF/AGENT/forge.md), section 4.
 
@@ -114,8 +138,8 @@ Each skill is a folder with a `SKILL.md` (name and description frontmatter) and,
 
 | Skill | Description |
 | --- | --- |
-| [`brainstorming`](REF/SKILLS/brainstorming) | You MUST use this before any creative work - creating features, building components, adding functionality, or modifying behavior. Explores user intent, requirements and design before implementation. |
-| [`writing-plans`](REF/SKILLS/writing-plans) | Use when you have an approved spec or requirements for a multi-step task, before touching code. Produces a bite-sized implementation plan saved to docs/plans/. |
+| [`brainstorming`](REF/SKILLS/brainstorming) | Resolve material ambiguity or explore requested designs; reuse approved requirements instead of forcing discovery for every change. |
+| [`writing-plans`](REF/SKILLS/writing-plans) | Plan complex dependent work with paths, outcomes and checks; use short steps for bounded tasks without duplicating implementation code. |
 
 ### Engineering
 
@@ -132,6 +156,7 @@ Each skill is a folder with a `SKILL.md` (name and description frontmatter) and,
 
 | Skill | Description |
 | --- | --- |
+| [`art-direction`](REF/SKILLS/art-direction) | Art direction, creative concepts, medium and asset selection, cinematic composition and rendered critique for websites, apps, games, animation and artistic simulations; adapts to ChatGPT, Claude Code and Codex tools. |
 | [`ui-ux-pro-max`](REF/SKILLS/ui-ux-pro-max) | Comprehensive design guide for web and mobile applications. Use when designing new UI components or pages, choosing color palettes and typography, or reviewing code for UX issues. |
 | [`baseline-ui`](REF/SKILLS/baseline-ui) | Quickly deslop UI code by fixing spacing, hierarchy, typography, and small layout issues. Use when the interface needs a fast cleanup or polish pass. |
 | [`scroll-experience`](REF/SKILLS/scroll-experience) | Scroll-driven web experiences: parallax storytelling, scroll animations, interactive narratives and cinematic pages, using CSS scroll-driven animation and IntersectionObserver before any library. Use when a page should unfold as the visitor scrolls. |
@@ -182,6 +207,7 @@ Each skill is a folder with a `SKILL.md` (name and description frontmatter) and,
 
 | Skill | Description |
 | --- | --- |
+| [`graphify`](REF/SKILLS/graphify) | Set up Graphify Cloud or local MCP, preserve client configuration, verify OAuth access, select indexed repositories and answer architecture questions with graph evidence and source locations. |
 | [`agent-builder`](REF/SKILLS/agent-builder) | Builds a complete task-specific AI agent: mission, identity, scope, rules, tools, skills, memory, reports and tests, creating needed skills from verified sources. Use to create, define, improve or test an agent or specialist role. |
 | [`writing-skills`](REF/SKILLS/writing-skills) | Use when creating, updating, testing or improving agent skills (SKILL.md files). Routes to templates, testing guidance, description-writing (CSO) and anthropic best-practice references. Use before writing any new skill. |
 | [`writing-great-skills`](REF/SKILLS/writing-great-skills) | Reference for writing and editing skills well: the vocabulary and principles that make a skill predictable. Use only when the user explicitly asks for it. |
@@ -198,3 +224,7 @@ The newer skills are original text written for this repo. Topics were chosen fro
 ## 🛠 Contributing and versions
 
 See [`CLAUDE.md`](CLAUDE.md). Run `python3 scripts/package_skills.py --check` before every push, update the README table and CHANGELOG, and prefix commits with the version. The repo has no `LICENSE` file yet; add one before sharing it publicly.
+
+## Performance review
+
+See [the focused performance review](docs/reviews/2026-10-15-performance.md) for findings, fixes and measurement limits. Core routing now distinguishes defined fixes, features, open designs and audits; optional detailed catalogs do not load for ordinary tasks.

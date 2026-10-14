@@ -1,6 +1,6 @@
 ---
 name: writing-plans
-description: Use when you have an approved spec or requirements for a multi-step task, before touching code. Produces a bite-sized implementation plan saved to docs/plans/.
+description: Plan complex or dependent work from defined requirements with scope, affected files, acceptance criteria and validation. Use for multi-stage implementation or a requested plan; keep bounded tasks to short steps without duplicating code.
 metadata:
   source: community
   date_added: '2026-02-27'
@@ -8,110 +8,21 @@ metadata:
 
 # Writing Plans
 
-## Overview
+Use the existing or approved stack. Preserve user decisions and authorization. Plan only enough to make implementation and verification clear.
 
-Write comprehensive implementation plans assuming the engineer has zero context for our codebase and questionable taste. Document everything they need to know: which files to touch for each task, code, testing, docs they might need to check, how to test it. Give them the whole plan as bite-sized tasks. DRY. YAGNI. TDD. Frequent commits.
+## Choose the size
+- Small defined task: state a few steps in the conversation; no plan file required.
+- Complex work, handoff or requested written plan: update an existing plan, or save `docs/plans/YYYY-MM-DD-<feature>.md`.
+- Unresolved material requirements: use brainstorming to resolve those choices, not to repeat the entire discovery process.
 
-Assume they are a skilled developer, but know almost nothing about our toolset or problem domain. Assume they don't know good test design very well.
+## Plan contents
+State the goal, constraints and acceptance criteria. For each coherent deliverable include affected paths (verified when possible), dependencies, implementation intent, checks and expected behavior. Name uncertain paths as provisional. Include risks only when material.
+Do not write the complete implementation twice. Use pseudocode or a short interface contract only where ambiguity justifies it. Prefer meaningful behavior checks to tests that merely repeat implementation. Use the project's existing tools; do not add test frameworks by default.
+Group steps by independently verifiable outcomes, not arbitrary minute counts or a commit after every micro-action. Include required release checks.
 
-**Announce at start:** "I'm using the writing-plans skill to create the implementation plan."
+## Execution
+When the user asked to implement, continue after planning within their authorization; do not end with another execution-choice question. Use the current worker by default. Another agent requires an available authorized mechanism and a concrete benefit. Mark actual progress and blockers without duplicating the plan in context and handoff.
+Do not push, deploy or make other consequential changes without the required authorization. A plan is not blanket permission.
 
-**Context:** Run this after brainstorming has produced an approved design. Using a separate git branch or worktree is optional, not required.
-
-**Stack:** Plan with native HTML, CSS and JavaScript unless the project already uses something else. Never put a new framework, library, test runner or build tool in a plan without the user's approval. If one would clearly help, say so in the plan as a question for the user.
-
-**Testing:** Use the project's existing test approach. For plain HTML/CSS/JS with no test setup, the "test" can be a manual browser check with exact steps and expected result.
-
-**Save plans to:** `docs/plans/YYYY-MM-DD-<feature-name>.md`
-
-## Bite-Sized Task Granularity
-
-**Each step is one action (2-5 minutes):**
-- "Write the failing test" - step
-- "Run it to make sure it fails" - step
-- "Implement the minimal code to make the test pass" - step
-- "Run the tests and make sure they pass" - step
-- "Commit" - step
-
-## Plan Document Header
-
-**Every plan MUST start with this header:**
-
-```markdown
-# [Feature Name] Implementation Plan
-
-> **For Claude:** Implement this plan task-by-task, in order. Verify each task before starting the next.
-
-**Goal:** [One sentence describing what this builds]
-
-**Architecture:** [2-3 sentences about approach]
-
-**Tech Stack:** [Key technologies/libraries]
-
----
-```
-
-## Task Structure
-
-```markdown
-### Task N: [Component Name]
-
-**Files:**
-- Create: `exact/path/to/file.py`
-- Modify: `exact/path/to/existing.py:123-145`
-- Test: `tests/exact/path/to/test.py`
-
-**Step 1: Write the failing test**
-
-```python
-def test_specific_behavior():
-    result = function(input)
-    assert result == expected
-```
-
-**Step 2: Run test to verify it fails**
-
-Run: `pytest tests/path/test.py::test_name -v`
-Expected: FAIL with "function not defined"
-
-**Step 3: Write minimal implementation**
-
-```python
-def function(input):
-    return expected
-```
-
-**Step 4: Run test to verify it passes**
-
-Run: `pytest tests/path/test.py::test_name -v`
-Expected: PASS
-
-**Step 5: Commit**
-
-```bash
-git add tests/path/test.py src/path/file.py
-git commit -m "feat: add specific feature"
-```
-```
-
-## Remember
-- Exact file paths always
-- Complete code in plan (not "add validation")
-- Exact commands with expected output
-- Reference relevant skills with @ syntax
-- DRY, YAGNI, TDD, frequent commits
-
-## Execution Handoff
-
-After saving the plan, offer execution choice:
-
-**"Plan complete and saved to `docs/plans/<filename>.md`. Two execution options:**
-
-**1. Inline (this session, default)** - I work through the tasks in order, verify each one, and report at the end. Cheapest in tokens.
-
-**2. Subagent-Driven (only if subagents are available)** - A fresh subagent per task with a review between tasks. Slower to set up and uses more tokens.
-
-**Which approach?"**
-
-If the user picks neither, use Inline. Either way, finish and verify one task before starting the next, and stop to ask if a task turns out to need a technology the plan did not approve.
-
+## Optional reference
+The [legacy detailed plan format](references/legacy-planning.md) is preserved for users who explicitly want a comprehensive workshop. Mandatory full-code plans, per-step commits and execution-choice prompts there are superseded by this entry point.

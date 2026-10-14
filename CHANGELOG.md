@@ -3,6 +3,49 @@
 Versions follow `vMAJOR.MINOR.PATCH`. Every commit on `main` starts with the version it belongs to, for example `v1.2.0: summary`.
 Git tags cannot be pushed from the environment these updates were made in, so the commit prefix and this file are the version record.
 
+## v2.12.0 (Proportionate work and optional detail)
+
+- Audit 39 skill entry points and resolve expensive conflicts in discovery, planning, UI guidance, testing and reflection.
+- Shorten four recurring skills while preserving originals in optional references; stop mandatory full-code plans, repeated approvals and blanket style choices.
+- Remove duplicated Hub/visual detail from core and add task-size routing plus targeted diagnostics.
+- Add review findings and explicit measurement limitations in docs/reviews. Validation does not establish runtime token savings or visual quality.
+
+## v2.11.1 (User vision, no house style)
+
+- Make the user's vision authoritative: visual skills provide techniques without imposing an aesthetic.
+- Offer concepts only when exploration is requested or delegated; distinguish objective defects and brief mismatches from optional subjective preferences.
+- Validate through packaging and Hub synchronization; live visual behavior remains untested.
+
+## v2.11.0 (Graphify integration skill)
+
+- Add Graphify skill for current-guide-first Cloud/local setup across clients, additive MCP configuration, user-completed OAuth and authenticated verification.
+- Require workspace/repository selection and source-backed architecture answers; distinguish index evidence, semantic suggestions and inference.
+- Skill addition does not initiate a connection or change active MCP settings.
+- Validation: skill packaging, Hub catalog and documentation checks. No live Graphify account, OAuth or indexed repository query tested.
+
+## v2.10.0 (Art direction across hosts)
+
+- Add art-direction: compact creative concepts, reference inspection, medium/asset selection, one polished sample and evidence-based visual critique. Detailed cinematic, animation and game techniques load only when relevant.
+- Adapt to available ChatGPT, Claude Code and Codex tools without assuming image generation, browser access or automatic cross-agent communication.
+- Strengthen 3D cinematic composition and animation choreography. Add an artistic/game branch to simulations, with bounded stepping, responsive feedback and frame-rate checks. Correct the suggestion that explicit RK4 is a general stiff-system fix.
+- Preserve engineering workflows for later development; artistic projects do not require CAD, measured readouts or engineering formulas.
+- Validation: packaging, catalog and documentation checks; rendered artistic quality and live host behavior still require real-project trials.
+
+## v2.9.0 (Focused context and visual quality)
+
+- Add task-based context loading, one-agent defaults, bounded review rounds and documentation updates only when facts change.
+- Replace the default frontend capability catalog with focused implementation, module ownership and design-token guidance. Preserve the full original in an optional React/Next.js reference.
+- Add a reusable visual brief, one polished sample before expansion, and explicit screenshot review criteria for UI and 3D.
+- Align 3D and documentation skills with existing approvals and compact shared handoffs.
+- Validation: all 37 skills passed packaging checks; Hub catalog, changed-document links, version metadata, section sequence, whitespace and verbatim catalog preservation passed. Real task token savings, visual outcomes and live agent collaboration are not yet measured.
+
+## v2.8.0 (Shared Forge workflow for Claude and Codex)
+
+- Restore missing Forge sections 3-10: task routing, proportionate work, implementation, visual review, validation, collaboration, reporting and context budget.
+- Add a Codex AGENTS.md entry point and a shared handoff template. Document separate worktrees for concurrent edits and the limits of file-based coordination.
+- Reuse existing stack approvals and align startup Hub behavior with the start command: offer creation rather than blocking unrelated work.
+- Validation: skill packaging, Hub catalog synchronization and local documentation checks. Live Claude/Codex handoffs and visual browser automation have not been tested.
+
 ## v2.7.1 (Clearer wires)
 
 - **Block diagrams route wires to overlap less.** Blocks are reordered inside each column to reduce crossings (zones stay together), each wire between neighbouring columns gets its own vertical channel with square corners (ordered so wires do not cross each other needlessly), the gap between columns widens with the number of wires, and wire labels, baud rates and pin labels are placed so they do not cover each other or the blocks (they move along the wire, or just above or below it).

@@ -41,10 +41,10 @@ Expected: <observable result>
 Result: pass | fail | not verified (<reason>)
 ```
 
-## Browser automation (ask first)
-Driving a real browser (Playwright and similar) is the best way to test flows and take screenshots, but it is a new dependency. Offer it when manual steps would be repeated often or the project has many flows. Explain the benefit and the cost (install, maintenance) and wait for approval. Without it, keep the manual checklist.
+## Browser automation
+Use available authorized browser tools or existing project automation directly; no repeated approval is needed just because automation is involved. New installations, dependencies or services require authorization unless already approved. If runtime checks are unavailable, report them as not verified and provide exact manual steps. Do not install tools merely to avoid stating a limitation.
 
 ## Rules
-- Test the behavior you changed and the nearest behavior it could break. Do not run the whole project's checks for a one-line change.
+- Test the behavior you changed and the nearest behavior it could break. Use targeted checks during iteration; still run repository-required checks and the required broader suite before release.
 - A test you did not run is "not verified", never "passed".
 - If a check needs a tool you may not install (browser automation, a test framework), say so and ask first.

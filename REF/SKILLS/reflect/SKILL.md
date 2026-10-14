@@ -8,7 +8,7 @@ metadata:
 
 # Reflect (improve mode)
 
-Manual by design: nothing is saved or changed without the user's approval. Command: `/forge:improve`.
+User-directed: use explicit existing authorization for the requested changes. Seek approval only for additional unapproved changes; do not repeat an already granted approval. Command: `/forge:improve`.
 
 ## Scope (ask once if not stated)
 - **This session** (default): the current conversation.
@@ -16,12 +16,12 @@ Manual by design: nothing is saved or changed without the user's approval. Comma
 
 ## Procedure
 1. **Collect** three signals: **corrections** the user made, **approvals** they confirmed, **repeated patterns** that worked. Add **token waste**: skills opened but unused, files read twice, long replies, unneeded tool calls.
-2. **Skip what exists.** Check the learnings file `REF/CONTEXT/forge-learnings.md`, the context file, the installed skills and the Forge rules. Drop any item already covered and report how many were skipped. Merge near-duplicates into one rule.
+2. **Skip what exists.** Check the learnings file `REF/CONTEXT/forge-learnings.md`, the relevant context section and matching Forge rule or skill section. Search candidate paths first; do not read every installed skill. Drop any item already covered and report how many were skipped. Merge near-duplicates into one rule.
 3. **Classify each remaining item:**
    - *Project lesson* (this project's conventions, client preferences, constraints) -> `REF/CONTEXT/forge-learnings.md`.
    - *Skill or Forge improvement* (applies to any project) -> a proposal for the Agent_REF repo. In a project session, never edit installed skill or Forge files; write the proposal in the learnings file under "Proposals for Agent_REF" so it can be applied later in the repo.
 4. **Tag confidence:** High (explicit "always" or "never"), Medium (worked more than once), Low (single observation; keep only if the user wants it).
-5. **Show a short list** (rule, destination, confidence) and wait for approval.
+5. **Show a short list** (rule, destination, confidence) and obtain approval for any item not already authorized.
 6. **Apply only approved items.** In the Agent_REF repo: edit the skill, run `python3 scripts/package_skills.py --check`, bump the version, update the CHANGELOG, commit with the version prefix.
 7. **Update the context file** with `doc-writer` (project context file: status, decisions, visual identity) and show the diff.
 8. **Finish** with the session report: skills used, tokens (only figures the environment shows), learned, skipped, tomorrow's first step.

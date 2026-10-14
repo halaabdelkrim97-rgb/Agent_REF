@@ -10,6 +10,9 @@ metadata:
   license_source: https://github.com/ibelick/ui-skills/blob/main/LICENSE
 ---
 
+> User vision and approved project conventions govern. Stylistic defaults in this reference are optional techniques, not mandatory taste. Do not change the agreed design or introduce dependencies merely to satisfy an opinionated default.
+
+
 > **Stack gate (vanilla-first):** This repo's default is native HTML, CSS and JavaScript. The Stack and Components rules below assume Tailwind CSS and React. Apply them only if the project already uses them or the user has approved them. Otherwise apply the Interaction, Animation, Typography, Layout, Performance and Design rules in plain CSS (for example `100dvh` instead of `h-dvh`). If Tailwind or a component library would clearly give better results, tell the user why and ask first.
 
 # Baseline UI
