@@ -211,7 +211,7 @@ const AUTO = [
   ["identity", "What are the brand colors, fonts and tone (or reference sites)?", () => !arr(I.palette).length, "nice"],
   ["hardware", "Where is the electrical schematic (components, pins, nets), as an export from the EDA file?", () => !!(Object.keys(HW).length || tracks.some(t => ["hardware", "firmware"].includes(String(t.key || "").toLowerCase()) && t.applicable !== false)) && !arr(HW.schematics).length && !diagrams.some(d => d.kind === "schematic"), "important"]
 ];
-const autoOpen = AUTO.map((g, i) => ({ id: "M" + (i + 1), area: g[0], question: g[1], priority: g[3], auto: true, open: g[2]() })).filter(g => g.open);
+const autoOpen = AUTO.map((g, i) => ({ id: "M" + (i + 1), area: g[0], question: g[1], priority: g[3], auto: true, open: g[2]() })).filter(g => g.open && !arr(HUB.gaps).some(x => x.id === g.id));  /* an explicit gap with the same id (for example decided "not needed") replaces the automatic one */
 const gaps = [...arr(HUB.gaps), ...autoOpen];
 const completeness = Math.round((AUTO.length - autoOpen.length) / AUTO.length * 100);
 
