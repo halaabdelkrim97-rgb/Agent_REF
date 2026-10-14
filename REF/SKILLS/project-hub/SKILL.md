@@ -14,7 +14,7 @@ Two files in `REF/CONTEXT/hub/`:
 - `index.html`: the static page. Copy it, never edit or re-read it.
 - `hub-data.js`: all project content in one `HUB` object. This is the only file Forge edits (it is small).
 
-Tabs are generated from the project (see Analyze the project). Possible tabs: **Project** (goal, problem, users, scope, constraints, people, next steps, build and completeness rings), **Plan** (hours summary, next-up tasks, workload per person, risks, decisions), **Work plan** (every task by phase, as list or board with person and status filters; its own tab whenever there are tasks), **Hardware** (wiring schematic first, hardware and firmware tracks, block diagram with pins, firmware state diagram, power budget, parts list with total, pin map), **Software** (backend and frontend tracks, architecture layers, data flow and structure diagrams, modules, API endpoints, data model), **Business**, **Docs** (all project documents with status, search, open link or copy path, missing documents), **Agent** (Forge role, commands, skills used here, full skill catalog), **Gaps**, **Identity**.
+Tabs are generated from the project (see Analyze the project). Possible tabs: **Project** (goal, problem, users, scope, constraints, people, next steps, build and completeness rings, and the full project details from `context.details`), **Plan** (hours summary, next-up tasks, workload per person, risks, decisions), **Work plan** (every task by phase, as list or board with person and status filters; its own tab whenever there are tasks), **Hardware** (wiring schematic first, hardware and firmware tracks, block diagram with pins, firmware state diagram, power budget, parts list with total, pin map), **Software** (backend and frontend tracks, architecture layers, data flow and structure diagrams, modules, API endpoints, data model), **Business**, **Docs** (all project documents with status, search, open link or copy path, missing documents), **Agent** (Forge role, commands, skills used here, full skill catalog), **Gaps**, **Identity**.
 
 ## Analyze the project first
 The hub is built for this project, not from a fixed form.
@@ -68,6 +68,7 @@ The user picks an option or types an answer on the Gaps tab. "Ask Forge about th
 ## Update (token-friendly)
 - After substantial work, change only the changed fields in `hub-data.js` with targeted edits (task status and spent hours, new tasks, document status, risks, decisions, gap status, used skills, version, updated date). Re-publish only when something visible changed.
 - If the context file and the hub disagree, the context file wins.
+- **The Project tab is the source of truth the client sees.** Mirror every context-file section and every agreed client document (spec, paper, parts lists, tests, work plan, points to confirm with their decisions, changes since) in `context.details`: `[{ title, text, items, ordered, table: { head, rows }, note }]`, in the document's order. Put the details in the context file first; the hub never holds facts the context file does not.
 - New Forge or skills version: the catalog inside `index.html` is refreshed by copying the new template over `index.html` (data stays in `hub-data.js`).
 
 ## Rules

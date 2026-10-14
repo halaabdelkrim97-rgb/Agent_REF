@@ -8,6 +8,9 @@ const HUB = {
   context: { problem: "The client cannot show a hidden mechanism (sensor, pump, logic) in photos or a video.",
     users: "Garden-shop visitors on phones and desktops; the client's sales team.",
     scope: { in: ["3D planter with live soil-moisture simulation", "Pump on/off logic shown step by step", "Dashboard with a moisture chart", "Working hardware test board"], out: ["Real cloud connection", "Checkout", "Native app"] },
+    details: [
+      { title: "1. What the client gets", items: ["Interactive 3D planter", "Moisture dashboard", "Hardware test board"] },
+      { title: "2. Parts list", table: { head: ["#", "Item", "Qty"], rows: [["1", "Soil-moisture sensor", "1"], ["2", "Mini pump 5 V", "1"]] }, note: "Supplied by the client." }],
     constraints: ["Runs on a 3-year-old phone", "Delivery 2026-11-20", "Budget fixed by the quote"], assumptions: ["Client sends final logo by Oct 16", "CAD export as STEP is available"],
     stakeholders: [{ name: "Alex", role: "lead, client contact" }, { name: "Lina", role: "hardware and CAD" }, { name: "Omar", role: "firmware and backend" }, { name: "Sara", role: "frontend and 3D" }] },
   tracks: [  // key: hardware | firmware | backend | frontend | other. Tasks join a track through their "track" field.

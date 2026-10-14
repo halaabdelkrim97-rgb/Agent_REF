@@ -232,6 +232,18 @@ async function copy(text, msg = "Copied. Paste it into Forge.") { try { await na
 $("#dlgx").addEventListener("click", () => { try { $("#dlg").close(); } catch (e) { $("#dlg").removeAttribute("open"); } });
 
 /* ---------- views ---------- */
+/* context.details: every section of the context file and agreed spec, shown on the Project tab (source of truth) */
+function detailCard(x) {
+  const paras = v => arr(Array.isArray(v) ? v : v ? [v] : []).map(t => `<p>${esc(t)}</p>`).join("");
+  const list = (a, o) => arr(a).length ? `<${o ? "ol" : "ul"}>${a.map(i => `<li>${esc(i)}</li>`).join("")}</${o ? "ol" : "ul"}>` : "";
+  const tb = x.table && arr(x.table.rows).length ? `<div class="tw s"><table>${arr(x.table.head).length ? `<tr>${x.table.head.map(h => `<th>${esc(h)}</th>`).join("")}</tr>` : ""}${x.table.rows.map(r => `<tr>${arr(r).map((c, i) => `<td${i === 0 && String(c).length <= 4 ? ' class="m"' : i === 0 ? ' style="font-weight:600"' : ""}>${esc(c)}</td>`).join("")}</tr>`).join("")}</table></div>` : "";
+  const body = paras(x.text) + list(x.items, x.ordered) + tb + (x.note ? `<p class="muted">${esc(x.note)}</p>` : "");
+  return `<div class="card" style="margin-top:16px;overflow-wrap:anywhere"><div class="row"><h2>${esc(x.title)}</h2>${x.added ? badge("added " + x.added) : ""}</div>${body || `<p>${TODO}</p>`}</div>`;
+}
+function detailCards() {
+  const ds = arr(C.details); if (!ds.length) return "";
+  return `<div class="card" style="margin-top:16px"><h2>Project details</h2><p class="muted" style="overflow-wrap:anywhere">${esc(C.detailsSource || "From the project context file, the source of truth.")}</p></div>${ds.map(detailCard).join("")}`;
+}
 function vProject() { return vProjectBase() + diagCards("Project"); }
 function vProjectBase() {
   const sc = C.scope || {};
@@ -241,6 +253,7 @@ function vProjectBase() {
     <div class="card" style="text-align:center"><h2>Build progress</h2>${ring(pct, "Build progress")}<p class="muted">${totalH ? doneH + " of " + totalH + " planned hours done" : phases.filter(p => p.status === "done").length + " of " + phases.length + " phases done"}</p></div>
     <div class="card" style="text-align:center"><h2>Hub completeness</h2>${ring(completeness, "Completeness")}<p class="muted">${gaps.filter(g => !isDecided(g)).length} open gaps</p><button class="btn pri sm" data-go="Gaps">Open the gap page</button></div>
   </div>
+  ${detailCards()}
   <div class="grid">
     <div class="card"><h2>In scope</h2>${bullets(sc.in)}</div>
     <div class="card"><h2>Out of scope</h2>${bullets(sc.out)}</div>
