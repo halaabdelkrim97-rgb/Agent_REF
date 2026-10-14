@@ -1,8 +1,8 @@
 # Agent_REF: Forge, the REF dev agent
 
-**Version v2.12.0** · see [CHANGELOG.md](CHANGELOG.md). Every update to `main` has a commit prefixed with its version, for example `v2.12.0: ...`.
+**Version v2.12.1** · see [CHANGELOG.md](CHANGELOG.md). Every update to `main` has a commit prefixed with its version, for example `v2.12.1: ...`.
 
-**Forge** is a shared dev workflow for Claude Code, Claude chat and Codex. It is one instruction file ([`REF/AGENT/forge.md`](REF/AGENT/forge.md)) plus 39 skills, a project context file convention, a visual Project Hub page that adapts to the project type and five commands. Forge works in native HTML, CSS and JavaScript first, asks before adding anything else, keeps the project context file and the Project Hub current, reports which skills it used, and is built to spend few tokens.
+**Forge** is a shared dev workflow for Claude Code, Claude chat and Codex. It is one instruction file ([`REF/AGENT/forge.md`](REF/AGENT/forge.md)) plus 39 skills, a project context file convention, a visual Project Hub page that adapts to the project type and six commands. Forge works in native HTML, CSS and JavaScript first, asks before adding anything else, keeps the project context file and the Project Hub current, reports which skills it used, and is built to spend few tokens.
 
 ---
 
@@ -47,11 +47,12 @@ The approved project stack can be reused without repeated permission. Startup ch
 
 ---
 
-## 🧭 Daily use: the five commands
+## 🧭 Daily use: the six commands
 
 | Command | When | What it does |
 | --- | --- | --- |
-| `/forge:start` | Start of a session | Loads the Forge rules, checks the project context file (reads it, or offers to create or migrate it), then waits. |
+| `/forge:stop` | Pause Forge in this session | Suspends Forge routines and reporting until explicitly resumed; keeps project requirements and host rules. Plain words: "Forge: stop". |
+| `/forge:start` | Start or resume a session | Loads the Forge rules, checks the project context file (reads it, or offers to create or migrate it), then waits. |
 | `/forge:context` | Any time | Makes `REF/CONTEXT/001_PROJECT_CONTEXT.md` follow the REF template: creates it if missing, or maps every existing fact into the ten sections without dropping content, updates status and visual identity, shows the diff. |
 | `/forge:improve` | End of the workday | Learns from this session (or today's sessions) with `reflect`: collects corrections, approvals and token waste, skips what already exists, proposes small edits, applies only what you approve, updates the context file, and prints the report. |
 | `/forge:hub` | Project start, then after big changes | Studies the project (file list and manifests, no source reading) and builds or refreshes the **Project Hub** in `REF/CONTEXT/hub/` (`index.html` + `hub-data.js`) with only the sections it needs: Project context and system diagram, **Plan** (task-by-task with owners, due dates and hour estimates, workload per person), **Hardware** (block-level schematic with pins, firmware state diagram, power budget, parts list, pin map), **Software** (architecture layers, data flow, modules, API, data model), Business plan, **Docs**, Agent page, a **Gaps** page with options and "Ask Forge" buttons, and Identity. Published as an artifact when the Artifact tool exists. Unknown facts stay "to define"; diagrams are marked proposed until you confirm them. |
@@ -114,7 +115,7 @@ Agent_REF/
 ├── CHANGELOG.md                # version history (commits on main are prefixed vX.Y.Z)
 ├── CLAUDE.md                   # rules for working on this repo
 ├── .claude-plugin/             # marketplace.json and plugin.json (plugin "forge")
-├── commands/                   # /forge:start, /forge:context, /forge:improve, /forge:report, /forge:hub
+├── commands/                   # /forge:start, /forge:stop, /forge:context, /forge:improve, /forge:report, /forge:hub
 ├── examples/                   # tested demos: spring-damper (2D), desk-fan (Three.js)
 ├── scripts/
 │   ├── package_skills.py       # validates skills and builds upload-ready ZIPs for Claude chat

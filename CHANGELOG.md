@@ -3,6 +3,12 @@
 Versions follow `vMAJOR.MINOR.PATCH`. Every commit on `main` starts with the version it belongs to, for example `v1.2.0: summary`.
 Git tags cannot be pushed from the environment these updates were made in, so the commit prefix and this file are the version record.
 
+## v2.12.1 (Pause and resume)
+
+- Add /forge:stop and plain-language equivalents to pause session routines without changing files or configuration; /forge:start resumes.
+- Keep independent project constraints and host safeguards active; individual Forge commands during a pause do not resume automatic behavior.
+- Validation: skill packaging, command metadata, documentation and Hub catalog checks. Live plugin command registration and pause behavior are not tested.
+
 ## v2.12.0 (Proportionate work and optional detail)
 
 - Audit 39 skill entry points and resolve expensive conflicts in discovery, planning, UI guidance, testing and reflection.
