@@ -30,6 +30,10 @@ Documentation must describe what exists. If it is not in the code or the project
 ## Project context file
 `REF/CONTEXT/001_PROJECT_CONTEXT.md` is the one small file a later session reads instead of the whole project. Keep it current after substantial work, at wrap-up or handoff, when it is missing, and for `/forge:context`. Procedure, handoff note, template check, visual identity (section 10) and rules: `references/project-context.md`. Do not create another summary file.
 
+## Compact context and handoffs
+Keep context under about 150 lines by linking detailed specs, not deleting requirements. Section 5 is the navigation index: entry points, module ownership and paths to detailed documents. Read task-relevant linked detail on demand. Section 9 holds current status, not a chronological transcript.
+Update documentation only when its facts change. Keep task ownership and checks in `REF/CONTEXT/HANDOFF.md` using the shared template; this operational record is not another project summary. Link commits for detailed changes. Avoid copying the same status into multiple documents or reading the generated Hub as startup context.
+
 ## Style
 - Short sentences, active voice, present tense. Lead with what the reader needs first.
 - One idea per paragraph. Use a table only to compare things, a list only for steps or parallel items.

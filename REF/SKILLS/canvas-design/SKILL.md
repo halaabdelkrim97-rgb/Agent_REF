@@ -7,6 +7,9 @@ metadata:
   date_added: '2026-10-12'
 ---
 
+> User vision and approved project conventions govern. Stylistic defaults in this reference are optional techniques, not mandatory taste. Do not change the agreed design or introduce dependencies merely to satisfy an opinionated default.
+
+
 These are instructions for creating design philosophies - aesthetic movements that are then EXPRESSED VISUALLY. Output only .md files, .pdf files, and .png files.
 
 Complete this in two steps:

@@ -12,6 +12,10 @@ metadata:
 
 Motion should explain change, guide attention or confirm an action. If it does none of these, remove it.
 
+## Artistic choreography
+For new creative direction, use `art-direction` first. Define trigger, primary subject, anticipation, action, settle and interruption. Use arcs, overlap and pauses deliberately; keep secondary motion subordinate. UI feedback durations below are starting points, not limits on artistic storytelling. Keep interactive controls responsive during longer sequences.
+Inspect actual playback or sampled states for timing and continuity, including reversed or interrupted animations and repeated input. Treat screenshots as composition checks, not proof of smoothness. Reuse the project's easing and duration tokens; do not apply identical entrance effects to every element.
+
 ## Choose the tool
 | Need | Use |
 | --- | --- |

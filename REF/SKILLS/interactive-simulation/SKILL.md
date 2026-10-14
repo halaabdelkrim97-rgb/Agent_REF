@@ -10,7 +10,16 @@ metadata:
 
 # Interactive Simulation
 
-Goal: a client opens one page, moves a control, and sees how their product behaves. Correct, smooth and easy to hand over.
+For games and artistic simulations, aim for an expressive, responsive experience. Use `art-direction` for new visual direction; load its games reference only when tuning gameplay or physics. The product/measurement questions below apply only to explanatory or engineering work; do not require CAD, SI readouts or formulas in a purely artistic game.
+
+## Artistic and game branch
+- Define the core loop and intended feel; reuse approved choices. Polish one playable moment with coherent visuals before adding levels, features or decorative effects.
+- Separate input, fixed-step simulation, rendering and feedback. Bound catch-up steps, reset the accumulator on resume, and specify an excess-time policy so slow devices do not spiral into more work. Interpolate render state where useful.
+- Tune acceleration, drag, gravity, restitution and camera follow together. Use stylized physics deliberately; preserve repeatable behavior and responsive input. Test collisions at corners, fast motion, restacking, restart and repeated input. Check different rendering rates and suspension.
+- Make feedback readable through pose, color, trails, impact or optional audio. Add secondary particles or shake after the primary response works, not to obscure unstable collisions. Respect reduced motion and avoid excessive flashing.
+- Inspect runtime motion through recordings or sampled states when available. Still images cannot prove game feel, timing or physics. Report untested aspects.
+
+For explanatory product simulations, the goal remains a clear, correct and smooth demonstration.
 
 ## 1. Scope first (ask, one question at a time)
 - What question should the simulation answer for the client's customer? (the one thing it must show)
@@ -35,9 +44,9 @@ Goal: a client opens one page, moves a control, and sees how their product behav
 | Charts of results | Canvas/SVG line chart drawn by hand; library only with approval |
 
 ## 4. Physics and math
-- Use semi-implicit Euler for simple motion; RK4 for stiff or oscillating systems. Smaller `dt` before bigger formulas.
+- Use an integrator suited to the model; semi-implicit Euler is a common starting point for simple game motion. Explicit RK4 is not a general cure for stiff systems. Use bounded steps and the existing engine solver for constraints; investigate instability rather than masking it.
 - Keep SI units inside the model; convert only for display. Name variables with units.
-- Check stability: energy should not grow on its own. Clamp, damp or reduce `dt` when it does.
+- Check stability: energy should not grow on its own. Investigate timestep, solver and collision response when it does; apply damping only when physically or artistically intended.
 - Collisions: start with circles/AABB and simple impulses. Engines (Matter.js, Rapier, cannon-es) only with approval.
 - Verify with a reference case: a known analytic result or the client's measured data. Report the error.
 
