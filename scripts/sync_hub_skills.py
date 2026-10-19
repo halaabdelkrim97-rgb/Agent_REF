@@ -5,10 +5,11 @@ Standard library only. Run from the repository root:
   python3 scripts/sync_hub_skills.py          rewrite the catalog block in index.html
   python3 scripts/sync_hub_skills.py --check  exit 1 if it is out of date
 
-Groups and one-line purposes come from README.md (### group headings and skill table rows).
+Groups come from the README skill catalog; purposes come from skill frontmatter.
 """
 import json, re, sys
 from pathlib import Path
+from package_skills import read_frontmatter
 
 ROOT = Path(__file__).resolve().parent.parent
 PAGE = ROOT / "skills/project-hub/templates/index.html"
@@ -24,20 +25,34 @@ def short(text, n=120):
 
 def catalog():
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
-    body = readme.split("## 🧰 Skills", 1)[1].split("\n## ", 1)[0]
-    groups, cur = [], None
+    try:
+        body = readme.split("### Skill catalog", 1)[1].split("\n## ", 1)[0]
+    except IndexError:
+        sys.exit("README skill catalog heading is missing")
+    groups, seen = [], set()
     for line in body.splitlines():
-        if line.startswith("### "):
-            cur = {"g": line[4:].strip(), "skills": []}
-            groups.append(cur)
-        else:
-            m = re.match(r"\| \[`([^`]+)`\]\([^)]*\) \| (.*) \|$", line)
-            if m and cur is not None:
-                if not (ROOT / "skills" / m.group(1) / "SKILL.md").exists():
-                    sys.exit(f"README lists {m.group(1)} but the skill folder is missing")
-                cur["skills"].append([m.group(1), short(m.group(2))])
+        row = re.match(r"^\|\s*([^|]+?)\s*\|\s*(.*?)\s*\|$", line)
+        if not row:
+            continue
+        names = re.findall(r"\[([a-z0-9-]+)\]\(skills/\1/SKILL\.md\)", row.group(2))
+        if not names:
+            continue
+        group = {"g": row.group(1).strip(), "skills": []}
+        for name in names:
+            skill = ROOT / "skills" / name / "SKILL.md"
+            if name in seen or not skill.exists():
+                sys.exit(f"Duplicate or missing skill in README: {name}")
+            frontmatter = read_frontmatter(skill)
+            if not frontmatter or not frontmatter[2]:
+                sys.exit(f"Missing skill description: {name}")
+            seen.add(name)
+            group["skills"].append([name, short(frontmatter[2])])
+        groups.append(group)
+    available = {p.parent.name for p in (ROOT / "skills").glob("*/SKILL.md")}
+    if seen != available:
+        sys.exit(f"README skill catalog mismatch: {sorted(seen ^ available)}")
     ver = re.search(r"Agent version: (v[\d.]+)", (ROOT / "agent/forge.md").read_text(encoding="utf-8"))
-    return {"version": ver.group(1) if ver else "", "groups": [g for g in groups if g["skills"]]}
+    return {"version": ver.group(1) if ver else "", "groups": groups}
 
 
 def render():

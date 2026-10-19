@@ -3,6 +3,11 @@
 Versions follow `vMAJOR.MINOR.PATCH`. Every commit on `main` starts with the version it belongs to, for example `v1.2.0: summary`.
 Git tags cannot be pushed from the environment these updates were made in, so the commit prefix and this file are the version record.
 
+## v3.0.1 (README refresh)
+
+- Rebuild the README with clearer setup guidance, a task-based skill finder, and direct links to the skill catalog.
+- Adapt the Hub catalog generator to the new README layout and skill descriptions.
+
 ## v3.0.0 (Docs-first migration)
 
 - Replace the project `REF/` documentation convention with `docs/PROJECT_CONTEXT.md`, `docs/source-of-truth/`, `docs/plans/` and `docs/hub/`. Add a collision-safe migration guide and update context, planning and Hub workflows.
