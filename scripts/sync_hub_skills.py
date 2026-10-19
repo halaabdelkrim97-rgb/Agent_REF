@@ -11,7 +11,7 @@ import json, re, sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-PAGE = ROOT / "REF/SKILLS/project-hub/templates/index.html"
+PAGE = ROOT / "skills/project-hub/templates/index.html"
 BEGIN, END = "/*SKILLS:BEGIN*/", "/*SKILLS:END*/"
 
 
@@ -33,10 +33,10 @@ def catalog():
         else:
             m = re.match(r"\| \[`([^`]+)`\]\([^)]*\) \| (.*) \|$", line)
             if m and cur is not None:
-                if not (ROOT / "REF/SKILLS" / m.group(1) / "SKILL.md").exists():
+                if not (ROOT / "skills" / m.group(1) / "SKILL.md").exists():
                     sys.exit(f"README lists {m.group(1)} but the skill folder is missing")
                 cur["skills"].append([m.group(1), short(m.group(2))])
-    ver = re.search(r"Agent version: (v[\d.]+)", (ROOT / "REF/AGENT/forge.md").read_text(encoding="utf-8"))
+    ver = re.search(r"Agent version: (v[\d.]+)", (ROOT / "agent/forge.md").read_text(encoding="utf-8"))
     return {"version": ver.group(1) if ver else "", "groups": [g for g in groups if g["skills"]]}
 
 

@@ -16,7 +16,7 @@ import zipfile
 from pathlib import Path
 
 ALLOWED = {"name", "description", "license", "compatibility", "metadata", "allowed-tools"}
-SKILLS_DIR = Path(__file__).resolve().parent.parent / "REF" / "SKILLS"
+SKILLS_DIR = Path(__file__).resolve().parent.parent / "skills"
 OUT_DIR = Path(__file__).resolve().parent.parent / "dist"
 SKIP = {"__pycache__", ".DS_Store"}
 

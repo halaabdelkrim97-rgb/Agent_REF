@@ -1,10 +1,10 @@
 {
   "name": "forge",
-  "version": "2.12.1",
-  "description": "Forge, the REF dev agent: rules, skills and commands",
+  "version": "3.0.0",
+  "description": "Forge, the development agent: rules, skills and commands",
   "author": {
     "name": "halaabdelkrim97-rgb"
   },
   "repository": "https://github.com/halaabdelkrim97-rgb/Agent_REF",
-  "skills": "./REF/SKILLS"
+  "skills": "./skills"
 }

@@ -2,7 +2,7 @@
 """Merge the Project Hub page and its data into one shareable HTML file (standard library only).
 
 Usage: python3 scripts/hub_inline.py <hub folder> <output.html> [--bare] [--title "Name"]
-The folder holds index.html and hub-data.js (default location in a project: REF/CONTEXT/hub).
+The folder holds index.html and hub-data.js (default location in a project: docs/hub).
 --bare drops the <!DOCTYPE>, <html>, <head> and <body> wrapper, as the Artifact tool adds its own.
 --title sets the page <title> (the artifact name); keep it stable across republishes.
 """

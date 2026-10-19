@@ -4,14 +4,14 @@
     "name": "halaabdelkrim97-rgb"
   },
   "metadata": {
-    "description": "Forge and the REF Skills for Claude Code"
+    "description": "Forge and its skills for Claude Code"
   },
   "plugins": [
     {
       "name": "forge",
       "source": "./",
-      "description": "Forge, the REF dev agent: rules, skills and commands (start, stop, context, improve, report, hub) for native HTML, CSS and JavaScript projects",
-      "version": "2.12.1"
+      "description": "Forge, the development agent: rules, skills and commands (start, stop, context, improve, report, hub)",
+      "version": "3.0.0"
     }
   ]
 }

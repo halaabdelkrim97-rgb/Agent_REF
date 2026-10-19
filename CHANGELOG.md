@@ -3,6 +3,13 @@
 Versions follow `vMAJOR.MINOR.PATCH`. Every commit on `main` starts with the version it belongs to, for example `v1.2.0: summary`.
 Git tags cannot be pushed from the environment these updates were made in, so the commit prefix and this file are the version record.
 
+## v3.0.0 (Docs-first migration)
+
+- Replace the project `REF/` documentation convention with `docs/PROJECT_CONTEXT.md`, `docs/source-of-truth/`, `docs/plans/` and `docs/hub/`. Add a collision-safe migration guide and update context, planning and Hub workflows.
+- Move the shared agent, skills and templates to `agent/`, `skills/` and `templates/`; update plugin paths and packaging scripts. Existing installs and custom paths require migration; historical changelog paths remain historical.
+- Keep project migration content-preserving and task-aware. Distinguish verified current facts, plans, conflicts and historical claims.
+- Graphify local code-only extraction is limited to supported source files and does not cover Markdown documentation; actual host behavior and token savings require separate measurement.
+
 ## v2.12.1 (Pause and resume)
 
 - Add /forge:stop and plain-language equivalents to pause session routines without changing files or configuration; /forge:start resumes.
