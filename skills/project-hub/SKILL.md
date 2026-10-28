@@ -15,7 +15,8 @@ Two files in `docs/hub/`:
 - `hub-data.js`: all project content in one `HUB` object. This is the only file Forge edits (it is small).
 
 Pages are generated from the project and its type (`HUB.profile`, details in `references/profiles.md`).
-- **Always:** Project, Plan (task-by-task work plan with hour estimates), Business, Docs and quality, Agent (roles, capabilities, skills used, analytics), Gaps (open points with options and typed answers).
+- **Always:** Dashboard (first page: progress, hours, task map, hours per phase, project timeline, next up, risks, open decisions, quick access, then the full project details), Plan (summary, timeline, workload, risks, decisions), Work plan (every task, list or board; added automatically after Plan when there are tasks), Business, Docs and quality, Agent (roles, capabilities, skills used, analytics), Gaps (open points with options and typed answers).
+- The page is a dark and light dashboard (pill tabs, rounded cards, status colors: done lime, in progress orange, blocked red, not started white or black). The toggle remembers the choice.
 - **web:** Frontend, Backend, Database, Design (palette, techs, assets, references, libraries). **mechatronics:** Firmware, Hardware (system drawing, block schematic, parts list, power, pins), and App (web app, mobile app or HMI) when present. **game:** UI, Code (for example Unity), Structure, Assets (by type, libraries, licenses).
 - Each type page can hold details, a project structure tree, diagrams and its tasks. The page draws every tab when first opened, so it loads light.
 
@@ -37,6 +38,12 @@ The hub is built for this project, not from a fixed form.
 4. Business plan: use only what the user stated or the files show. Leave unknown fields empty; the page shows "to define". Never invent prices, costs, market sizes or KPIs.
 5. Gaps: the page automatically lists missing basics as "missing info" gaps. Add explicit gaps to `gaps` for real decisions, each with 2 to 4 options (`label`, short `note`, mark at most one `recommended`) and a `why`. Priorities: `blocker` (stops work), `important`, `nice`. Do not write option notes you cannot justify.
 6. Open `index.html` in a headless browser or the browser pane and fix console errors. Say what you could not check.
+
+## Dashboard and project details
+- The first tab mirrors the context index and the linked source-of-truth files, so the client sees the same facts. Put them in `context.details`, in the document's order: `[{ title, text, flow, stats, meter, split, tiles, items, ordered, chips, table, timeline, note, wide, fold, count }]`. Prefer visual forms over paragraphs: `flow` (steps with arrows: `[{ t, s }]`), `tiles` (`[{ n, t, d, tag }]`, `tag` marks later additions), `stats` (`[{ n, l }]`), `meter` (`{ max, zones: [{ from, to, tone ok|warn, label }], marks: [{ at, label, lvl }] }`), `split` (`[{ title, items }]`), `table` (`{ head, rows, badgeCol }`), `timeline` (`[{ date, t }]`). `fold: true` collapses long tables such as parts lists. Set `context.detailsSource` to one line naming the sources.
+- Keep text short. Each card holds one idea; long paragraphs go to the source-of-truth file and the card links the idea, not the prose.
+- Phases may carry `stage` (for example "Stage 1"); the timeline groups them under stage bands. The timeline is drawn in hours, one task after another, from the task data.
+- Never put a fact in `context.details` that the context index or source-of-truth files do not hold. When a fact changes, change the file first, then the card.
 
 ## Work plan (tasks and hours)
 - Every task lives in a phase of `plan.phases`: `{ id, t, owner, est, spent, status, due, after, track, note }`. `est` and `spent` are hours; `status` is `todo`, `doing`, `blocked` or `done`; `after` lists task ids that must finish first; `track` is `hardware`, `firmware`, `backend`, `frontend` or `project`.

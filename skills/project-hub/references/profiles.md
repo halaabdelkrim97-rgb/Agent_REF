@@ -5,7 +5,7 @@ Set `HUB.profile = { type, apps }` in `hub-data.js`. `type` is `web`, `mechatron
 ## Always present
 | Page | Holds |
 | --- | --- |
-| Project | context, goal, problem, users, scope, constraints, people, next steps, progress rings, system overview diagram |
+| Dashboard | project context cards (`context.details`), KPI tiles, task map, hours chart, Gantt, quick access, risks and open decisions; theme toggle (dark/light). A separate Work plan tab holds the phases, tasks and `stage` grouping |
 | Plan | work plan with hour estimates (tasks, owners, dependencies), workload, risks, decisions |
 | Business | audience, value, revenue model, offer, costs, margin, KPIs, milestones |
 | Docs and quality | project documents with status; tests, release checklist, environments |

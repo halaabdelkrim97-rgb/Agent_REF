@@ -6,9 +6,9 @@
 <title>Project Hub</title>
 <style>
 /* Forge Project Hub. Static page: never edit it per project. Project content lives in hub-data.js. */
-:root{--primary:#4f46e5;--accent:#f59e0b;--bg:#f6f7fb;--card:#fff;--text:#161a2b;--muted:#5d647a;--line:#e3e6f0;--ok:#16a34a;--warn:#d97706;--bad:#dc2626;--ok-t:#166534;--warn-t:#92400e;--bad-t:#991b1b;--sig:#1d4ed8;--fill:var(--primary);--pt:color-mix(in srgb,var(--primary) 55%,var(--text));--r:14px}
-@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0e1020;--card:#171a30;--text:#eceefb;--muted:#9aa1bd;--line:#272b49;--ok-t:#86efac;--warn-t:#fcd34d;--bad-t:#fca5a5;--sig:#93c5fd;color-scheme:dark}}
-:root[data-theme=dark]{--bg:#0e1020;--card:#171a30;--text:#eceefb;--muted:#9aa1bd;--line:#272b49;--ok-t:#86efac;--warn-t:#fcd34d;--bad-t:#fca5a5;--sig:#93c5fd;color-scheme:dark}
+:root{--primary:#b8f04a;--accent:#ff9b2f;--on:#0b0b0b;--on-accent:#0b0b0b;--on-bad:#fff;--bg:#ecebe5;--card:#fff;--card2:#f3f2ec;--text:#0e0e0d;--muted:#5d5d56;--line:#e0ded6;--ok:#5ea500;--warn:#d97706;--bad:#d93025;--ok-t:#3f6212;--warn-t:#92400e;--bad-t:#b3261e;--sig:#1d4ed8;--done:#a3e035;--on-done:#0b0b0b;--idle:#1d1d1b;--on-idle:#fff;--cap:#d6d4ca;--fill:var(--primary);--pt:#3f6212;--display:"Oswald","Bebas Neue","Arial Narrow","Roboto Condensed","Helvetica Neue Condensed",Impact,system-ui,sans-serif;--r:22px}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#080808;--card:#151515;--card2:#1e1e1e;--text:#f4f4f0;--muted:#9d9d96;--line:#2a2a2a;--ok:#b8f04a;--warn:#ff9b2f;--bad:#ff6b5e;--ok-t:#b8f04a;--warn-t:#ffb866;--bad-t:#ff8a7e;--sig:#8ab4ff;--done:#b8f04a;--idle:#e8e8e3;--on-idle:#0b0b0b;--on-bad:#0b0b0b;--cap:#3a3a36;--pt:#c9f56f;color-scheme:dark}}
+:root[data-theme=dark]{--bg:#080808;--card:#151515;--card2:#1e1e1e;--text:#f4f4f0;--muted:#9d9d96;--line:#2a2a2a;--ok:#b8f04a;--warn:#ff9b2f;--bad:#ff6b5e;--ok-t:#b8f04a;--warn-t:#ffb866;--bad-t:#ff8a7e;--sig:#8ab4ff;--done:#b8f04a;--idle:#e8e8e3;--on-idle:#0b0b0b;--on-bad:#0b0b0b;--cap:#3a3a36;--pt:#c9f56f;color-scheme:dark}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
 .wrap{max-width:1140px;margin:0 auto;padding:0 16px 48px}
@@ -138,12 +138,119 @@ ul.tree li{padding:2px 0}ul.tree summary{cursor:pointer}ul.tree .tf::before{cont
 .role{border-left:4px solid var(--primary);padding:2px 0 2px 12px;margin:10px 0}
 @media (max-width:600px){.hero{padding:22px 0}.kpi{font-size:1.6rem}.bars{grid-template-columns:90px 1fr 30px}}
 @media print{nav.tabs,.theme,.btn,.filters{display:none}section.panel[hidden]{display:block}.card{break-inside:avoid}}
+/* dashboard skin: pill navigation, rounded cards, status colors, charts */
+body{font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:1280px}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:color-mix(in srgb,var(--bg) 90%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.topbar{display:flex;align-items:center;gap:10px;padding-top:12px;padding-bottom:12px}
+.logo{flex:none;width:42px;height:42px;border-radius:13px;background:var(--text);color:var(--bg);display:grid;place-items:center;font-weight:900;letter-spacing:-.02em}
+nav.tabs{position:static;flex:1;min-width:0;display:flex;gap:8px;overflow-x:auto;padding:2px;margin:0;border:0;background:none;scrollbar-width:none}
+nav.tabs::-webkit-scrollbar{display:none}
+nav.tabs button{background:var(--card);color:var(--text);padding:10px 18px;font-size:.9rem;font-weight:700}
+nav.tabs button:hover{background:var(--card2)}
+nav.tabs button[aria-selected=true]{background:var(--fill);color:var(--on)}
+nav.tabs .n{background:var(--bad);color:var(--on-bad)}
+.theme{flex:none;width:42px;height:42px;padding:0!important;margin:0!important;border-radius:50%;border:0!important;background:var(--card)!important;color:var(--text)!important;display:grid;place-items:center;cursor:pointer}
+.theme svg{width:20px;height:20px}
+.titlebar{display:flex;gap:16px;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;margin:14px 0 22px}
+.titlebar h1{margin:0;font:800 clamp(2.2rem,6vw,3.6rem)/1 var(--display);text-transform:uppercase;letter-spacing:.01em;font-stretch:condensed}
+.titlebar p{margin:8px 0 0;color:var(--muted);max-width:60ch}
+.pills{display:flex;gap:8px;flex-wrap:wrap}
+.chip{background:var(--card);border:0;border-radius:99px;padding:8px 14px;font-size:.84rem;font-weight:600}
+.chip b{color:var(--muted);font-weight:600;margin-right:4px}
+.card{border:0;border-radius:var(--r);padding:20px;box-shadow:none}
+.card h2,.card h3{font-weight:700}
+.card h2{font-size:1rem;margin-bottom:12px}
+.card .row h2{margin:0}
+.sec{margin:36px 0 14px;font:800 1.7rem/1.1 var(--display);text-transform:uppercase;letter-spacing:.01em;scroll-margin-top:84px}
+.sec small{font:600 .85rem/1 system-ui,sans-serif;text-transform:none;color:var(--muted);margin-left:10px;letter-spacing:0}
+.btn{border:0;background:var(--card2);border-radius:99px}
+.btn.pri{background:var(--fill);color:var(--on)}
+.seg .btn[aria-pressed=true],.filters .btn[aria-pressed=true]{background:var(--text);color:var(--bg)}
+.tracktag{color:var(--on)}
+.badge{border-radius:99px}
+.badge.open{background:color-mix(in srgb,var(--warn) 18%,transparent);color:var(--warn-t)}
+.badge.todo{background:var(--card2);color:var(--muted)}
+.dot.done{background:var(--done)}.dot.doing{background:var(--accent)}.dot.blocked{background:var(--bad)}.dot.todo{background:var(--idle)}
+.k-done{background-color:var(--done);color:var(--on-done)}.k-doing{background-color:var(--accent);color:var(--on-accent)}.k-blocked{background-color:var(--bad);color:var(--on-bad)}.k-todo{background-color:var(--idle);color:var(--on-idle)}
+.kpis{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.kpis+*,.grid+.kpis,.card+.kpis{margin-top:16px}
+.tile .tl{color:var(--muted);font-size:.74rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase}
+.big{font:800 2.7rem/1 var(--display);margin:10px 0 4px;letter-spacing:.01em}
+.big small{font:700 1rem/1 system-ui,sans-serif;color:var(--muted);margin-left:6px}
+.ts{color:var(--muted);font-size:.85rem}
+.tile.hot .big{color:var(--warn-t)}
+.spark{display:block;width:100%;height:56px;margin-top:10px}
+.sp-l{fill:none;stroke:var(--accent);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}.sp-a{fill:var(--accent);opacity:.16}.sp-d{fill:var(--card);stroke:var(--accent);stroke-width:2}
+.sbar{display:flex;gap:3px;height:12px;margin:10px 0 8px}.sbar i{display:block;border-radius:99px}
+.leg b.k-done,.leg b.k-doing,.leg b.k-blocked,.leg b.k-todo{border-radius:50%}
+.dash2{display:grid;gap:16px;margin-top:16px;grid-template-columns:minmax(0,1fr);align-items:start}
+@media (min-width:1000px){.dash2{grid-template-columns:minmax(0,1fr) minmax(0,1.35fr)}}
+.stk{display:grid;gap:16px}
+.gantt{overflow:hidden}
+.gr,.gh{display:grid;grid-template-columns:170px minmax(0,1fr);gap:12px;align-items:center}
+.gr{padding:6px 0}
+.gl{min-width:0;display:grid;line-height:1.25}.gl b{font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.gl span{font-size:.75rem}
+.gt{position:relative;height:36px;border-radius:99px;background-color:color-mix(in srgb,var(--line) 35%,transparent);background-image:repeating-linear-gradient(90deg,var(--line) 0 1px,transparent 1px var(--step,10%))}
+.gp{position:absolute;top:3px;bottom:3px;border-radius:99px;display:flex;align-items:center;gap:6px;padding:0 5px 0 3px;overflow:hidden;font-weight:800;font-size:.78rem;white-space:nowrap;background-image:linear-gradient(90deg,var(--done) var(--pc,0%),transparent var(--pc,0%))}
+.gp.k-done{background-image:none}
+.av{font-style:normal;flex:none;width:26px;height:26px;border-radius:50%;background:var(--card);color:var(--text);display:grid;place-items:center;font-size:.68rem;font-weight:800;letter-spacing:0}
+.gh.axis{margin-bottom:2px}.axis .gt2{position:relative;height:16px}.axis .gt2 span{position:absolute;transform:translateX(-50%);font-size:.72rem;color:var(--muted)}.axis .gt2 span:first-child{transform:none}
+.gh.stages{margin-bottom:6px}.stages .gt2{display:flex}.stages .gt2 span{background:var(--card2);border-right:3px solid var(--card);padding:5px 10px;font-size:.78rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.stages .gt2 span:first-child{border-radius:99px 0 0 99px}.stages .gt2 span:last-child{border-radius:0 99px 99px 0;border-right:0}.stages i{font-style:normal;font-weight:500;color:var(--muted)}
+.dm{display:grid;gap:9px}.dr{display:grid;grid-template-columns:112px minmax(0,1fr);gap:10px;align-items:center}
+.dl{font-size:.78rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dd{display:flex;flex-wrap:wrap;gap:6px;align-items:center}.dd i{display:block;width:var(--sz);height:var(--sz);border-radius:50%}
+.cap{display:flex;gap:10px}.cc{flex:1;min-width:0;display:grid;justify-items:center;gap:6px;text-align:center}
+.cc>span{font-size:.75rem;color:var(--muted)}
+.cw{height:170px;width:100%;display:flex;align-items:flex-end;justify-content:center;padding-top:22px}
+.cp{position:relative;width:min(30px,80%);min-height:10px}.cp>b{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);margin-bottom:5px;font-size:.8rem}
+.cb{height:100%;width:100%;border-radius:99px;background:var(--cap);overflow:hidden;display:flex;flex-direction:column-reverse}.cb i{display:block;width:100%}
+.rp{list-style:none;display:flex;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}.rp:last-child{border-bottom:0}
+.rp .rt{flex:1;min-width:0;display:grid;line-height:1.3}.rp .rt small{font-size:.78rem}
+ul.rl{margin:0;padding:0}
+.alert{display:flex;gap:10px;align-items:center;background:color-mix(in srgb,var(--bad) 16%,transparent);color:var(--bad-t);border-radius:14px;padding:9px 12px;margin-bottom:8px;font-weight:600;font-size:.9rem}
+.grid3{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));margin-top:16px}
+.qa{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(190px,1fr))}
+.qt{position:relative;display:grid;gap:4px;text-align:left;border:0;border-radius:var(--r);background:var(--card);color:var(--text);font:inherit;padding:16px 56px 16px 18px;cursor:pointer}
+.qt b{font-size:1rem}.qt small{color:var(--muted)}
+.qt::after{content:"\2197";position:absolute;right:14px;top:14px;width:30px;height:30px;line-height:30px;text-align:center;border-radius:50%;background:var(--fill);color:var(--on);font-weight:800}
+.qt:hover{outline:2px solid var(--fill)}
+.jump{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 16px}
+.dgrid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr))}.dgrid .wide{grid-column:1/-1}
+.flow{display:flex;gap:10px;align-items:stretch;flex-wrap:wrap;margin:6px 0 12px}
+.fs{flex:1 1 150px;background:var(--card2);border-radius:16px;padding:12px 14px;display:grid;gap:2px;align-content:center}.fs b{font-size:.95rem}.fs small{color:var(--muted)}
+.fa{align-self:center;color:var(--accent);font-weight:800;font-size:1.3rem}
+.ftiles{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));margin-top:6px}
+.ft{background:var(--card2);border-radius:16px;padding:14px;display:grid;gap:4px;align-content:start;justify-items:start}
+.ft .fn{width:30px;height:30px;border-radius:50%;background:var(--fill);color:var(--on);display:grid;place-items:center;font-weight:800;font-size:.85rem;margin-bottom:4px}
+.ft.new .fn{background:var(--accent);color:var(--on-accent)}.ft b{font-size:.95rem}.ft small{color:var(--muted)}
+.fstats{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(130px,1fr))}
+.fstats div{background:var(--card2);border-radius:16px;padding:12px 14px}.fstats b{display:block;font:800 1.9rem/1 var(--display)}.fstats small{color:var(--muted)}
+.meter{margin:16px 6px 96px;position:relative}
+.mt{position:relative;height:36px;border-radius:99px;background:var(--cap);overflow:hidden}
+.mz{position:absolute;top:0;bottom:0;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:800;white-space:nowrap;overflow:hidden}
+.mz.ok{background:var(--done);color:var(--on-done)}.mz.warn{background:color-mix(in srgb,var(--accent) 38%,var(--cap));color:var(--text)}
+.mk{position:relative;height:0}.mk span{position:absolute;transform:translateX(-50%);font-size:.75rem;color:var(--muted);text-align:center;white-space:nowrap}
+.mk span i{display:block;width:2px;height:10px;background:var(--text);margin:0 auto 2px;opacity:.7}
+.mk span.end{transform:translateX(-100%);text-align:right}.mk span.end i{margin-left:auto;margin-right:0}.mk span.start{transform:none;text-align:left}.mk span.start i{margin-left:0}
+.dl-list{margin:6px 0 0;padding-left:20px}.dl-list li{margin:5px 0}
+.sub h3{margin:0 0 6px}.card>.row:first-child{margin-bottom:12px}.card .grid{margin-top:8px}
+details.card>summary{cursor:pointer;display:flex;gap:12px;align-items:baseline;list-style:none}details.card>summary .muted{margin-left:auto}details.card>summary::-webkit-details-marker{display:none}details.card>summary h2{margin:0}details.card[open]>summary{margin-bottom:12px}
+details.card>summary::after{content:"+";font-weight:800;color:var(--muted)}details.card[open]>summary::after{content:"\2212"}
+.timeline li.done::before{background:var(--done)}.timeline li b{margin-right:6px}
+.timeline li::before{border-color:var(--card)}
+@media (max-width:700px){
+.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.gp span{display:none}
+.gr,.gh{grid-template-columns:minmax(0,1fr);gap:4px}.gh .gl{display:none}.gl{display:flex;justify-content:space-between;gap:8px}
+.dr{grid-template-columns:86px minmax(0,1fr)}.big{font-size:2.2rem}.sec{font-size:1.4rem}.card{padding:16px}.topbar{gap:8px}}
+@media print{.top,.jump{display:none}}
+.av.k-done{background-color:var(--done);color:var(--on-done)}.av.k-doing{background-color:var(--accent);color:var(--on-accent)}.av.k-blocked{background-color:var(--bad);color:var(--on-bad)}.av.k-todo{background-color:var(--idle);color:var(--on-idle)}
 </style>
 </head>
 <body>
-<header class="hero"><div class="wrap"><h1 id="pname"></h1><p id="ptag"></p><div class="chips" id="chips"></div></div></header>
+<header class="top"><div class="wrap topbar"><span class="logo" id="logo" aria-hidden="true">F</span><nav class="tabs" role="tablist" id="tabs" aria-label="Hub pages"></nav><button class="theme" id="theme" type="button" aria-label="Switch between light and dark mode" title="Light / dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/></svg></button></div></header>
 <div class="wrap">
-  <nav class="tabs" role="tablist" id="tabs"></nav>
+  <section class="titlebar"><div><h1 id="pname"></h1><p id="ptag"></p></div><div class="pills" id="chips"></div></section>
   <main id="main"></main>
   <footer id="foot"></footer>
 </div>
@@ -153,7 +260,7 @@ ul.tree li{padding:2px 0}ul.tree summary{cursor:pointer}ul.tree .tf::before{cont
 <script src="hub-data.js"></script>
 <script>
 /*SKILLS:BEGIN*/
-const FORGE = {"version": "v3.0.1", "groups": [
+const FORGE = {"version": "v3.1.0", "groups": [
 {"g": "Planning and delivery", "skills": [["brainstorming", "Clarify materially ambiguous requirements and explore design choices when requested or needed."], ["writing-plans", "Plan complex or dependent work from defined requirements with scope, affected files, acceptance criteria and validation."], ["client-delivery", "Freelance client project flow - discovery brief, scope and acceptance criteria, milestones, change requests, final chec…"], ["git-workflow", "Git habits for clean history - branches, small commits, version-prefixed messages, safe pushes, pull requests, changelo…"]]},
 {"g": "Engineering", "skills": [["backend-architect", "Backend and API architecture: REST, GraphQL and gRPC design, service boundaries, event-driven patterns, resilience and…"], ["frontend-developer", "Frontend component, responsive layout, client-side state, performance and accessibility guidance."], ["coding-standards", "Coding standards and best practices for JavaScript, plus TypeScript, React and Node.js where the project already uses t…"], ["debugging", "Root-cause debugging procedure - reproduce, isolate, form ranked hypotheses, gather evidence, apply the smallest fix an…"], ["i18n-forms", "Multilingual pages and reliable web forms: lang and RTL, text files, Intl formatting, language switcher, labels, valida…"]]},
 {"g": "Design and interface", "skills": [["art-direction", "Art direction and rendered visual critique for websites, web apps, animation, artistic simulations, games and cinematic…"], ["ui-ux-pro-max", "Comprehensive design guide for web and mobile applications."], ["baseline-ui", "Quickly deslop UI code by fixing spacing, hierarchy, typography, and small layout issues."], ["ui-components-21st", "Use 21st.dev (Magic MCP and 21st-dev CLI) to find or generate UI components from a prompt."], ["accessibility", "WCAG 2.2 AA accessibility checks and fixes for web pages and interactive tools - keyboard, focus, names, contrast, form…"], ["art-svg-canvas", "Illustrations, icons, patterns, generative art, backgrounds and simple image assets in plain SVG, CSS and Canvas, with…"], ["canvas-design", "Creates original static visual art (poster, cover, art piece) as a single .png or .pdf, guided by a short written desig…"], ["nano-banana", "Generates and edits raster images (hero art, mockups, icons, textures, product shots) with Google's Nano Banana image m…"], ["data-and-charts", "Charts, KPIs and small dashboards for client sites in plain SVG or Canvas - chart choice, scales, labels, accessible co…"]]},
@@ -202,7 +309,9 @@ if (I.fonts && I.fonts.body) document.body.style.fontFamily = I.fonts.body + ", 
 document.title = (P.name || "Project") + " - Hub";
 $("#pname").textContent = P.name || "Project";
 $("#ptag").textContent = P.tagline || P.goal || "";
-$("#chips").innerHTML = [P.client && "Client: " + P.client, P.status && "Status: " + P.status, P.version && "Version " + P.version, P.updated && "Updated " + P.updated].filter(Boolean).map(t => `<span class="chip">${esc(t)}</span>`).join("");
+$("#chips").innerHTML = [["Client", P.client], ["Status", P.status], ["Version", P.version], ["Updated", P.updated]].filter(c => c[1]).map(c => `<span class="chip"><b>${esc(c[0])}</b>${esc(c[1])}</span>`).join("");
+$("#logo").textContent = String(P.name || "Hub").trim().split(/\s+/).map(w => w[0]).join("").slice(0, 2).toUpperCase();
+try { const th = localStorage.getItem("forgehub:theme"); if (th === "dark" || th === "light") document.documentElement.dataset.theme = th; } catch (e) { }
 
 /* ---------- gaps (explicit + automatic) ---------- */
 const AUTO = [
@@ -226,7 +335,8 @@ const AUTO = [
     mechatronics: [["architecture", "What are the firmware and hardware (schematic, parts list) and how are they structured?", () => !(S.firmware && (HW.bom || HW.summary)), "important"]],
     game: [["architecture", "What are the UI and game code, and how is the project structured?", () => !(S.ui && S.code && arr(HUB.structure).length), "important"], ["assets", "Which assets and libraries does the game use, and under which licenses?", () => !(assets.length || libs.length), "important"]] }[PT] || [])
 ];
-const autoOpen = AUTO.map((g, i) => ({ id: "M" + (i + 1), area: g[0], question: g[1], priority: g[3], auto: true, open: g[2]() })).filter(g => g.open);
+/* an explicit gap with the same id (for example M12 decided) replaces the automatic one */
+const autoOpen = AUTO.map((g, i) => ({ id: "M" + (i + 1), area: g[0], question: g[1], priority: g[3], auto: true, open: g[2]() })).filter(g => g.open && !arr(HUB.gaps).some(x => x.id === g.id));
 const gaps = [...arr(HUB.gaps), ...autoOpen];
 const completeness = Math.round((AUTO.length - autoOpen.length) / AUTO.length * 100);
 
@@ -247,15 +357,95 @@ async function copy(text, msg = "Copied. Paste it into Forge.") { try { await na
 $("#dlgx").addEventListener("click", () => { try { $("#dlg").close(); } catch (e) { $("#dlg").removeAttribute("open"); } });
 
 /* ---------- views ---------- */
-function vProject() { return vProjectBase() + diagCards("Project"); }
-function vProjectBase() {
+/* ---------- dashboard: tiles, timeline, task map, hours chart, quick access ---------- */
+const STAT = ["done", "doing", "blocked", "todo"], STAT_L = { done: "Done", doing: "In progress", blocked: "Blocked", todo: "Not started" };
+const cnt = k => tasks.filter(t => t.status === k).length;
+const initials = n => String(n || "?").trim().split(/\s+/).map(w => w[0]).join("").slice(0, 2).toUpperCase();
+const stOf = ts => !ts.length ? "todo" : ts.every(t => t.status === "done") ? "done" : ts.some(t => t.status === "doing" || t.status === "done") ? "doing" : ts.some(t => t.status === "blocked") ? "blocked" : "todo";
+const legend = () => `<div class="leg">${STAT.map(k => `<span><b class="k-${k}"></b>${STAT_L[k]} ${cnt(k)}</span>`).join("")}</div>`;
+const tile = (label, big, unit, sub, extra = "", cls = "") => `<div class="card tile ${cls}"><div class="tl">${esc(label)}</div><div class="big">${big}${unit ? `<small>${esc(unit)}</small>` : ""}</div><div class="ts">${sub}</div>${extra}</div>`;
+function spark() {
+  let c = 0; const pts = tasks.map(t => (c += t.est)); if (pts.length < 2 || !c) return "";
+  const W = 220, H = 56, xy = pts.map((v, i) => [Math.round(4 + i / (pts.length - 1) * (W - 8)), Math.round(H - 6 - v / c * (H - 14))]), line = xy.map((p, i) => (i ? "L" : "M") + p.join(",")).join(" ");
+  const ends = phases.map(p => { let last = -1; tasks.forEach((t, i) => { if (t.phase === p.name) last = i; }); return last; }).filter(i => i >= 0);
+  return `<svg class="spark" viewBox="0 0 ${W} ${H}" role="img" aria-label="Planned hours add up to ${c} over ${tasks.length} tasks"><path class="sp-a" d="${line} L${W - 4},${H} L4,${H} Z"/><path class="sp-l" d="${line}"/>${ends.map(i => `<circle class="sp-d" cx="${xy[i][0]}" cy="${xy[i][1]}" r="3.2"/>`).join("")}</svg>`;
+}
+function ganttCard() {
+  if (!phases.length || !totalH) return `<div class="card"><h2>Project timeline</h2><p>${TODO}</p></div>`;
+  let off = 0;
+  const rows = phases.map(p => { const ts = tasks.filter(t => t.phase === p.name), h = sumH(ts), r = { p, ts, h, s: off, st: p.status === "done" ? "done" : stOf(ts), pc: phasePct(p) }; off += h; return r; });
+  const step = off > 400 ? 100 : off > 150 ? 50 : off > 60 ? 20 : 10, ticks = []; for (let x = 0; x <= off; x += step) ticks.push(x);
+  const stages = []; rows.forEach(r => { const n = r.p.stage || "", l = stages[stages.length - 1]; if (l && l.n === n) l.h += r.h; else stages.push({ n, h: r.h }); });
+  const pill = r => { const w = r.h / off * 100, o = [...new Set(r.ts.map(t => t.owner).filter(Boolean))]; return (w > 5.5 ? `<em class="av">${esc(initials(o[0]))}</em>` : "") + (w > 14 ? `<span>${r.h} h</span>` : ""); };
+  return `<div class="card gantt"><div class="row"><h2>Project timeline</h2><span class="muted">hours, one task after another</span></div>
+  ${stages.some(s => s.n) ? `<div class="gh stages"><div class="gl"></div><div class="gt2">${stages.map(s => `<span style="width:${s.h / off * 100}%">${esc(s.n)} <i>${s.h} h</i></span>`).join("")}</div></div>` : ""}
+  <div class="gh axis"><div class="gl"></div><div class="gt2">${ticks.map(x => `<span style="left:${x / off * 100}%">${x} h</span>`).join("")}</div></div>
+  ${rows.map(r => `<div class="gr"><div class="gl"><b>${esc(r.p.name)}</b><span class="muted">${r.ts.length} task${r.ts.length === 1 ? "" : "s"} · ${r.h} h</span></div><div class="gt" style="--step:${step / off * 100}%"><span class="gp k-${r.st}" style="left:${r.s / off * 100}%;width:${Math.max(r.h / off * 100, 1.4)}%;--pc:${r.pc}%" title="${esc(r.p.name)}: ${r.h} h, ${r.pc}% done">${pill(r)}</span></div></div>`).join("")}
+  ${legend()}</div>`;
+}
+function taskMap() {
+  if (!tasks.length) return "";
+  return `<div class="card"><div class="row"><h2>Task map</h2><span class="muted">one dot per task, bigger dot = more hours</span></div><div class="dm" role="img" aria-label="${tasks.length} tasks by phase and status">${phases.map(p => `<div class="dr"><span class="dl" title="${esc(p.name)}">${esc(cut(p.name.replace(/^\d+\.\s*/, ""), 20))}</span><span class="dd">${tasks.filter(t => t.phase === p.name).map(t => `<i class="k-${esc(t.status)}" style="--sz:${Math.round(Math.min(7 + t.est * 1.4, 24))}px" title="${esc(t.id + " " + t.t + " (" + t.est + " h, " + t.status + ")")}"></i>`).join("")}</span></div>`).join("")}</div>${legend()}</div>`;
+}
+function hoursChart() {
+  if (!tasks.length) return "";
+  const hs = phases.map(p => { const ts = tasks.filter(t => t.phase === p.name); return { p, h: sumH(ts), d: sumH(ts.filter(t => t.status === "done")), g: sumH(ts.filter(t => t.status === "doing")) }; }), mx = Math.max(1, ...hs.map(x => x.h));
+  return `<div class="card"><div class="row"><h2>Hours by phase</h2><span class="muted">planned · done · in progress</span></div><div class="cap" role="img" aria-label="Planned hours per phase">${hs.map((x, i) => `<div class="cc"><div class="cw"><div class="cp" style="height:${Math.max(x.h / mx * 100, 7)}%"><b>${x.h}</b><div class="cb" title="${esc(x.p.name)}: ${x.h} h planned, ${x.d} done"><i class="k-done" style="height:${x.h ? x.d / x.h * 100 : 0}%"></i><i class="k-doing" style="height:${x.h ? x.g / x.h * 100 : 0}%"></i></div></div></div><span title="${esc(x.p.name)}">P${i + 1}</span></div>`).join("")}</div></div>`;
+}
+const taskRowP = t => `<li class="rp"><em class="av k-${esc(t.status)}">${esc(initials(t.owner))}</em><span class="rt"><b>${esc(t.t)}</b><small class="muted">${[t.id, t.est ? t.est + " h" : ""].filter(Boolean).map(esc).join(" · ")}</small></span>${badge(t.status)}</li>`;
+const RANK = { blocker: 0, important: 1, nice: 2 };
+function dashTiles() {
+  const open = gaps.filter(g => !isDecided(g)), blk = open.filter(g => g.priority === "blocker").length, risks = arr(D.risks), hi = risks.filter(r => r.level === "high").length;
+  return `<div class="kpis">
+    ${tile("Progress", pct, "%", totalH ? doneH + " of " + totalH + " h done" : phases.filter(p => p.status === "done").length + " of " + phases.length + " phases done", prog(pct, "Build progress"))}
+    ${tile("Planned hours", totalH, "h", leftH + " h left · " + spentH + " h spent", spark())}
+    ${tile("Tasks", tasks.length, "", phases.length + " phases", `<div class="sbar" role="img" aria-label="Tasks by status">${STAT.map(k => cnt(k) ? `<i class="k-${k}" style="flex:${cnt(k)}"></i>` : "").join("")}</div><div class="ts">${cnt("done")} done · ${cnt("doing")} in progress · ${cnt("blocked")} blocked</div>`)}
+    ${tile("Open decisions", open.length, "", blk ? blk + " block the work" : "none block the work", `<div class="ts" style="margin-top:8px">Hub completeness ${completeness}%</div>${prog(completeness, "Hub completeness")}`, blk ? "hot" : "")}
+    ${tile("Risks", risks.length, "", hi ? hi + " high" : "none high", `<div class="ts" style="margin-top:8px">${risks.filter(r => r.level === "medium").length} medium · ${risks.filter(r => r.level === "low").length} low</div>`, hi ? "hot" : "")}
+  </div>`;
+}
+function dashLists() {
+  const open = gaps.filter(g => !isDecided(g)).sort((a, b) => (RANK[a.priority] ?? 1) - (RANK[b.priority] ?? 1)), bl = tasks.filter(t => t.status === "blocked"), lv = { high: 0, medium: 1, low: 2 }, risks = [...arr(D.risks)].sort((a, b) => (lv[a.level] ?? 1) - (lv[b.level] ?? 1));
+  return `<div class="grid3">
+    <div class="card"><div class="row"><h2>Next up</h2><button class="btn sm" data-go="WorkPlan">Work plan</button></div>${bl.map(t => `<div class="alert">Blocked: ${esc(t.id)} ${esc(t.t)}${t.note ? " (" + esc(t.note) + ")" : ""}</div>`).join("")}${nextUp.length ? `<ul class="rl">${nextUp.slice(0, 4).map(taskRowP).join("")}</ul>` : `<p>${tasks.length ? "Nothing ready. Check blocked tasks." : TODO}</p>`}</div>
+    <div class="card"><div class="row"><h2>Risks</h2><button class="btn sm" data-go="Plan">Plan</button></div>${risks.length ? `<ul class="rl">${risks.slice(0, 4).map(r => `<li class="rp"><span class="rt"><b>${esc(r.r)}</b><small class="muted">${esc(r.mitigation)}</small></span>${badge(r.level || "medium")}</li>`).join("")}</ul>` : `<p>${TODO}</p>`}</div>
+    <div class="card"><div class="row"><h2>Open decisions</h2><button class="btn sm" data-go="Gaps">All</button></div>${open.length ? `<ul class="rl">${open.slice(0, 5).map(g => `<li class="rp"><span class="rt"><b>${esc(g.question)}</b><small class="muted">${esc(g.id)} · ${esc(g.area)}</small></span>${badge(g.priority || "important")}</li>`).join("")}</ul>` : "<p>All decisions are made.</p>"}</div>
+  </div>`;
+}
+const QS = {
+  Plan: () => `${phases.length} phases · ${totalH} h`, WorkPlan: () => `${tasks.length} tasks · ${leftH} h left`,
+  Hardware: () => `${arr(HW.bom).length} parts · ${arr(HW.pins).length} pins`, Firmware: () => `${arr((S.firmware || {}).items).length} modules`,
+  Software: () => `${arr(SW.modules).length} modules`, Business: () => `${arr(B.milestones).length} milestones`,
+  Docs: () => `${docs.length} documents · ${docs.filter(d => d.status === "approved").length} approved`, Quality: () => `${arr(Q.tests).length} tests · ${arr(Q.checklist).filter(c => c.done).length} of ${arr(Q.checklist).length} checked`,
+  Agent: () => `${arr(A.usedSkills).length} skills used`, Gaps: () => `${openCount()} open · ${gaps.length - openCount()} decided`
+};
+const quick = () => `<div class="qa">${views.slice(1).map(v => { const k = v.parts[0], s = (QS[k] || (() => ""))(); return `<button class="qt" data-go="${esc(k)}"><b>${esc(v.label)}</b><small>${esc(s)}</small></button>`; }).join("")}</div>`;
+
+/* ---------- project details: every section of the context file, drawn as tiles, flows, meters, tables ---------- */
+function meterHtml(m) {
+  const mx = +m.max || 100, pos = v => Math.max(0, Math.min(100, v / mx * 100));
+  return `<div class="meter" role="img" aria-label="${esc(m.label || "scale")}"><div class="mt">${arr(m.zones).map(z => `<span class="mz ${esc(z.tone || "")}" style="left:${pos(z.from)}%;width:${pos(z.to) - pos(z.from)}%">${esc(z.label)}</span>`).join("")}</div><div class="mk">${arr(m.marks).map(k => `<span class="${k.at <= 0 ? "start" : k.at >= mx ? "end" : ""}" style="left:${pos(k.at)}%;top:${8 + (+k.lvl || 0) * 34}px"><i></i>${esc(k.label)}</span>`).join("")}</div></div>`;
+}
+function detailCard(x) {
+  const ps = v => (Array.isArray(v) ? v : v ? [v] : []).map(t => `<p>${esc(t)}</p>`).join("");
+  const list = (a, o) => arr(a).length ? `<${o ? "ol" : "ul"} class="dl-list">${a.map(i => `<li>${esc(i)}</li>`).join("")}</${o ? "ol" : "ul"}>` : "";
+  const flow = arr(x.flow).length ? `<div class="flow">${x.flow.map((s, i) => `${i ? '<span class="fa" aria-hidden="true">→</span>' : ""}<div class="fs"><b>${esc(s.t)}</b>${s.s ? `<small>${esc(s.s)}</small>` : ""}</div>`).join("")}</div>` : "";
+  const tiles = arr(x.tiles).length ? `<div class="ftiles">${x.tiles.map((s, i) => `<div class="ft ${s.tag ? "new" : ""}"><span class="fn">${s.n != null ? esc(s.n) : i + 1}</span><b>${esc(s.t)}</b>${s.d ? `<small>${esc(s.d)}</small>` : ""}${s.tag ? `<span class="badge open">${esc(s.tag)}</span>` : ""}</div>`).join("")}</div>` : "";
+  const stats = arr(x.stats).length ? `<div class="fstats">${x.stats.map(s => `<div><b>${esc(s.n)}</b><small>${esc(s.l)}</small></div>`).join("")}</div>` : "";
+  const split = arr(x.split).length ? `<div class="grid">${x.split.map(c => `<div class="sub"><h3>${esc(c.title)}</h3>${list(c.items)}</div>`).join("")}</div>` : "";
+  const tl = arr(x.timeline).length ? `<ol class="timeline">${x.timeline.map(e => `<li class="done"><b>${esc(e.date)}</b>${esc(e.t)}</li>`).join("")}</ol>` : "";
+  const T = x.table, bc = T && T.badgeCol != null ? T.badgeCol : -1;
+  const tb = T && arr(T.rows).length ? `<div class="tw s"><table>${arr(T.head).length ? `<tr>${T.head.map(h => `<th>${esc(h)}</th>`).join("")}</tr>` : ""}${T.rows.map(r => `<tr>${arr(r).map((c, i) => `<td${i === 0 && String(c).length <= 4 ? ' class="m"' : i === 0 ? ' style="font-weight:600"' : ""}>${i === bc ? badge(c) : esc(c)}</td>`).join("")}</tr>`).join("")}</table></div>` : "";
+  const body = ps(x.text) + flow + stats + meterHtml0(x) + split + tiles + list(x.items, x.ordered) + (arr(x.chips).length ? `<p>${chips(x.chips)}</p>` : "") + tl + tb + (x.note ? `<p class="muted">${esc(x.note)}</p>` : "");
+  const head = `<h2>${esc(x.title)}</h2>${x.added ? badge("added " + x.added) : x.count ? `<span class="muted">${esc(x.count)}</span>` : ""}`;
+  return x.fold ? `<details class="card wide"><summary>${head}</summary>${body}</details>` : `<div class="card ${x.wide ? "wide" : ""}"><div class="row">${head}</div>${body || `<p>${TODO}</p>`}</div>`;
+}
+const meterHtml0 = x => x.meter ? meterHtml(x.meter) : "";
+const detailsHtml = () => arr(C.details).length ? `<h2 class="sec" id="details">Project details<small>${esc(C.detailsSource || "From the project context, the source of truth")}</small></h2><div class="dgrid">${C.details.map(detailCard).join("")}</div>` : "";
+function contextCards() {
   const sc = C.scope || {};
-  return `
-  <div class="grid">
-    <div class="card"><h2>Goal</h2><p>${val(P.goal)}</p><h3>Problem</h3><p>${val(C.problem)}</p><h3>Users</h3><p>${val(C.users)}</p></div>
-    <div class="card" style="text-align:center"><h2>Build progress</h2>${ring(pct, "Build progress")}<p class="muted">${totalH ? doneH + " of " + totalH + " planned hours done" : phases.filter(p => p.status === "done").length + " of " + phases.length + " phases done"}</p></div>
-    <div class="card" style="text-align:center"><h2>Hub completeness</h2>${ring(completeness, "Completeness")}<p class="muted">${gaps.filter(g => !isDecided(g)).length} open gaps</p><button class="btn pri sm" data-go="Gaps">Open the gap page</button></div>
-  </div>
+  return `${arr(C.details).length ? "" : `<div class="card"><h2>Goal</h2><p>${val(P.goal)}</p><h3>Problem</h3><p>${val(C.problem)}</p><h3>Users</h3><p>${val(C.users)}</p></div>`}
+  <h2 class="sec" id="scope">Scope and people</h2>
   <div class="grid">
     <div class="card"><h2>In scope</h2>${bullets(sc.in)}</div>
     <div class="card"><h2>Out of scope</h2>${bullets(sc.out)}</div>
@@ -269,13 +459,24 @@ function vProjectBase() {
     <div class="card"><h2>Links</h2>${arr(P.links).length ? `<ul>${P.links.map(l => `<li><a href="${safeUrl(l.url)}" target="_blank" rel="noopener">${esc(l.label || l.url)}</a></li>`).join("")}</ul>` : TODO}</div>
   </div>`;
 }
+function vProject() {
+  const j = [["Overview", "top"], ["Timeline", "tl"], arr(C.details).length && ["Project details", "details"], ["Scope and people", "scope"], diagrams.some(d => homeFinal(d) === "Project") && ["System", "sys"]].filter(Boolean);
+  return `<div class="jump" id="top">${j.map(([l, id]) => `<button class="btn sm" data-jump="${id}">${esc(l)}</button>`).join("")}</div>
+  ${dashTiles()}
+  <div class="dash2" id="tl"><div class="stk">${taskMap()}${hoursChart()}</div>${ganttCard()}</div>
+  ${dashLists()}
+  <h2 class="sec">Go to</h2>${quick()}
+  ${detailsHtml()}
+  ${contextCards()}
+  <h2 class="sec" id="sys">System overview</h2>${diagCards("Project") || `<div class="card"><p>${TODO}</p></div>`}`;
+}
 
 const TRACK_DEFAULT = { hardware: "H", firmware: "F", backend: "B", frontend: "UI", other: "+" };
 function trackCard(t) {
     const key = x => String(x || "").toLowerCase(), mine = tasks.filter(x => key(x.track) === key(t.key) || key(x.track) === key(t.title)), items = mine.length ? mine.map(i => ({ t: i.t, status: i.status, note: [i.owner, i.est ? i.est + "h" : ""].filter(Boolean).join(", ") })) : arr(t.items), done = items.filter(i => i.status === "done").length, n = items.length ? Math.round(done / items.length * 100) : 0, off = t.applicable === false;
     return `<div class="card tcard ${off ? "off" : ""}"><div class="row"><h2><span class="tracktag">${esc(TRACK_DEFAULT[t.key] || TRACK_DEFAULT.other)}</span>${esc(t.title || t.key)}</h2>${off ? badge("not applicable") : badge(t.status || "todo")}</div>
       ${off ? '<p class="muted">Marked not applicable for this project.</p>' : `<p>${val(t.summary)}</p>${prog(n, t.title)}<p class="muted">${done} of ${items.length} tasks done${mine.length ? " · " + sumH(mine) + " h planned" : ""}${t.owner ? " · owner " + esc(t.owner) : ""}</p>
-      <ul class="plain">${items.map(i => `<li><span class="dot ${esc(i.status)}"></span>${esc(i.t)}${i.note ? ` <span class="muted">(${esc(i.note)})</span>` : ""}</li>`).join("")}</ul>
+      ${(l => items.length > 6 ? `<details class="alt"><summary>Show all ${items.length} tasks</summary>${l}</details>` : l)(`<ul class="plain">${items.map(i => `<li><span class="dot ${esc(i.status)}"></span>${esc(i.t)}${i.note ? ` <span class="muted">(${esc(i.note)})</span>` : ""}</li>`).join("")}</ul>`)}
       <p>${chips(t.stack)}</p>`}</div>`;
 }
 const KEYTAB = { hardware: "Hardware", firmware: "Firmware", backend: "Backend", frontend: "Frontend", database: "Database", app: "App", ui: "UI", code: "Code", assets: "Assets" };
@@ -283,7 +484,7 @@ const homeTab = t => { const k = String(t.key || "").toLowerCase(); return [KEYT
 const trackCards = part => { const ts = tracks.filter(t => homeTab(t) === part); return ts.length ? `<div class="grid">${ts.map(trackCard).join("")}</div>` : ""; };
 
 /* ---------- diagrams (drawn from data: nodes, edges, pins) ---------- */
-const KIND_TAB = { database: "Database", system: "Project", hardware: "Hardware", wiring: "Hardware", software: "Software", dataflow: "Software", state: "Software" };
+const KIND_TAB = { database: "Database", system: "Project", schematic: "Hardware", hardware: "Hardware", wiring: "Hardware", software: "Software", dataflow: "Software", state: "Software" };
 const homeOf = d => d.tab || KIND_TAB[d.kind] || "Software";
 const KCOL = { data: "var(--pt)", power: "var(--bad-t)", signal: "var(--sig)", control: "var(--muted)" };
 const LCOL = ["var(--fill)", "var(--accent)", "var(--ok)", "var(--warn)", "var(--bad)", "var(--muted)"];
@@ -372,18 +573,18 @@ const diagCards = part => diagrams.filter(d => homeFinal(d) === part).map(diagCa
 
 function vHardware() {
   const power = arr(HW.power), bom = arr(HW.bom), pins = arr(HW.pins), cur = HW.currency || B.currency;
-  const bomTotal = bom.reduce((a, b) => a + (+b.unit || 0) * (+b.qty || 1), 0), unpriced = bom.filter(b => b.unit == null).length;
+  const bomTotal = bom.reduce((a, b) => a + (+b.unit || 0) * (+b.qty || 1), 0), unpriced = bom.filter(b => b.unit == null).length, priced = bom.some(b => b.unit != null);
   const m2 = n => n == null || n === "" || isNaN(n) ? TODO : new Intl.NumberFormat(undefined, { style: "currency", currency: cur || "EUR", maximumFractionDigits: 2 }).format(n);
   const rail = r => { const used = arr(r.loads).reduce((a, l) => a + (+l.mA || 0), 0), cap = +r.capacity || 0, p = cap ? Math.round(used / cap * 100) : 0, cls = p > 100 ? "bad" : p > 80 ? "warn" : "";
     return `<div style="margin:12px 0"><div class="row"><b>${esc(r.rail)} <span class="muted">${esc(r.source || "")}</span></b><span class="${p > 100 ? "over" : ""}">${used} of ${cap || "?"} mA${cap ? " (" + p + "%)" : ""}</span></div><div class="bar ${cls}" role="progressbar" aria-label="${esc(r.rail)} load" aria-valuenow="${Math.min(p, 100)}" aria-valuemin="0" aria-valuemax="100"><i style="width:${Math.min(100, p)}%"></i></div><div class="muted">${arr(r.loads).map(l => esc(l.name) + " " + esc(l.mA) + " mA").join(" · ")}</div></div>`; };
   const out = [trackCards("Hardware"), HW.summary ? `<div class="card" style="margin-top:16px"><h2>Hardware summary</h2><p>${esc(HW.summary)}</p>${arr(HW.interfaces).length ? `<p>${chips(HW.interfaces)}</p>` : ""}</div>` : "", diagCards("Hardware"),
     power.length ? `<div class="card" style="margin-top:16px"><h2>Power budget</h2>${power.map(rail).join("")}<p class="muted">Amber above 80%, red above 100% of the rail capacity. Loads are the figures entered, not measurements.</p></div>` : "",
-    bom.length ? `<div class="card" style="margin-top:16px"><h2>Bill of materials</h2><div class="tw"><table><tr><th>Ref</th><th>Part</th><th class="num">Qty</th><th class="num">Unit</th><th class="num">Line</th><th>Status</th></tr>${bom.map(b => `<tr><td class="m">${esc(b.ref)}</td><td>${esc(b.part)}${b.note ? `<div class="muted">${esc(b.note)}</div>` : ""}</td><td class="num">${esc(b.qty || 1)}</td><td class="num">${m2(b.unit)}</td><td class="num">${b.unit == null ? TODO : m2((+b.unit || 0) * (+b.qty || 1))}</td><td>${b.status ? badge(b.status) : ""}</td></tr>`).join("")}<tr><td></td><td><b>Total</b>${unpriced ? ` <span class="muted">(${unpriced} unpriced)</span>` : ""}</td><td></td><td></td><td class="num"><b>${m2(bomTotal)}</b></td><td></td></tr></table></div></div>` : "",
+    bom.length ? `<div class="card" style="margin-top:16px"><h2>Bill of materials</h2><div class="tw"><table><tr><th>Ref</th><th>Part</th><th class="num">Qty</th>${priced ? '<th class="num">Unit</th><th class="num">Line</th>' : ""}<th>Status</th></tr>${bom.map(b => `<tr><td class="m">${esc(b.ref)}</td><td>${esc(b.part)}${b.note ? `<div class="muted">${esc(b.note)}</div>` : ""}</td><td class="num">${esc(b.qty || 1)}</td>${priced ? `<td class="num">${m2(b.unit)}</td><td class="num">${b.unit == null ? TODO : m2((+b.unit || 0) * (+b.qty || 1))}</td>` : ""}<td>${b.status ? badge(b.status) : ""}</td></tr>`).join("")}${priced ? `<tr><td></td><td><b>Total</b>${unpriced ? ` <span class="muted">(${unpriced} unpriced)</span>` : ""}</td><td></td><td></td><td class="num"><b>${m2(bomTotal)}</b></td><td></td></tr>` : ""}</table></div></div>` : "",
     pins.length ? `<div class="card" style="margin-top:16px"><h2>Pin map</h2><div class="tw s"><table><tr><th>Pin</th><th>Signal</th><th>Connects to</th><th>Note</th></tr>${pins.map(x => `<tr><td class="m">${esc(x.pin)}</td><td>${esc(x.signal)}</td><td>${esc(x.connects)}</td><td class="muted">${esc(x.note)}</td></tr>`).join("")}</table></div></div>` : "", treeCard(HW.tree, "Hardware project structure")].join("");
   return out.trim() ? out : `<div class="card"><h2>Hardware</h2><p>${TODO}</p><p class="muted">Block-level schematic, power budget, parts list and pin map appear here once the hardware is defined. See the Gaps page.</p></div>`;
 }
 
-const layersCard = layers => arr(layers).length ? `<div class="card" style="margin-top:16px"><h2>Architecture layers</h2><div class="layers">${layers.map((l, i) => `<div class="layer" style="--c:${LCOL[i % LCOL.length]}"><div class="lname"><b>${esc(l.name)}</b><span class="muted">${esc(l.tech)}</span></div><div class="litems">${arr(l.items).map(x => `<span class="lit">${esc(x)}</span>`).join("")}</div></div>`).join("")}</div><p class="muted">Top to bottom: what the visitor sees down to the device.</p></div>` : "";
+const layersCard = layers => arr(layers).length ? `<div class="card" style="margin-top:16px"><h2>Architecture layers</h2><div class="layers">${layers.map((l, i) => `<div class="layer" style="--c:${LCOL[i % LCOL.length]}"><div class="lname"><b>${esc(l.name)}</b><span class="muted">${esc(l.tech)}</span></div><div class="litems">${arr(l.items).map(x => `<span class="lit">${esc(x)}</span>`).join("")}</div></div>`).join("")}</div><p class="muted">Top to bottom: each layer builds on the one below.</p></div>` : "";
 function vSoftware() {
   const layers = arr(SW.layers), mods = arr(SW.modules), eps = arr(SW.endpoints), data = arr(SW.data);
   const out = [trackCards("Software"), SW.summary ? `<div class="card" style="margin-top:16px"><h2>Software summary</h2><p>${esc(SW.summary)}</p></div>` : "",
@@ -400,37 +601,41 @@ function taskRow(t) {
   return `<tr class="s-${esc(t.status)}"><td class="c-dot"><span class="dot ${esc(t.status)}" title="${esc(t.status)}"></span></td><td class="num c-id">${esc(t.id)}</td><td class="c-task"><b>${esc(t.t)}</b>${t.note ? `<div class="muted">${esc(t.note)}</div>` : ""}${arr(t.after).length ? `<div class="muted">after ${esc(t.after.join(", "))}${ready(t) || t.status === "done" ? "" : " (waiting)"}</div>` : ""}<div class="meta">${[t.id, t.owner || "unassigned", t.due, t.est ? "est. " + t.est + " h" : "est. ?"].filter(Boolean).map(esc).join(" · ")}${t.spent ? ` · <span class="${over ? "over" : ""}">spent ${esc(t.spent)} h</span>` : ""}</div></td><td class="c-own">${t.owner ? esc(t.owner) : '<span class="tbd">unassigned</span>'}</td><td class="c-due">${esc(t.due)}</td><td class="num c-est">${t.est ? t.est + " h" : "?"}</td><td class="num c-sp ${over ? "over" : ""}">${t.spent ? t.spent + " h" : "-"}</td><td class="c-st">${badge(t.status)}</td></tr>`;
 }
 function vPlan() {
-  const vis = tasks.filter(t => (!planOwner || t.owner === planOwner) && (planStatus === "all" || t.status === planStatus));
-  const seg = (attr, k, label, on) => `<button class="btn sm" data-${attr}="${esc(k)}" aria-pressed="${on}">${esc(label)}</button>`;
   const maxH = Math.max(1, ...owners.map(o => sumH(tasks.filter(t => t.owner === o))));
   const bar = o => { const ts = tasks.filter(t => t.owner === o), h = sumH(ts), d = sumH(ts.filter(t => t.status === "done")); return `<div class="wl"><span>${esc(o)}</span><div class="wlb" style="width:${Math.round(h / maxH * 100)}%" title="${d} of ${h} h done"><i style="width:${h ? Math.round(d / h * 100) : 0}%"></i></div><b>${h} h</b></div>`; };
-  const phaseBlock = p => { const ts = vis.filter(t => t.phase === p.name), all = tasks.filter(t => t.phase === p.name);
-    return `<div class="card" style="margin-top:16px"><div class="row"><h3>${esc(p.name)}</h3>${badge(p.status || "todo")}</div><div class="muted">${esc([p.start, p.end].filter(Boolean).join(" to "))}${all.length ? " · " + sumH(all) + " h · " + all.filter(t => t.status === "done").length + " of " + all.length + " tasks done" : ""}</div>${prog(phasePct(p), p.name)}
-      ${!all.length ? '<p class="tbd" style="margin-top:10px">No tasks yet</p>' : ts.length ? `<div class="tw"><table class="tasks"><tr><th></th><th>ID</th><th>Task</th><th>Owner</th><th>Due</th><th class="num">Est.</th><th class="num">Spent</th><th>Status</th></tr>${ts.map(taskRow).join("")}</table></div>` : '<p class="muted" style="margin-top:10px">No task matches the filter.</p>'}</div>`; };
-  const board = ["todo", "doing", "blocked", "done"].map(k => `<div class="col"><h3>${k} (${vis.filter(t => t.status === k).length})</h3>${vis.filter(t => t.status === k).map(t => `<div class="ticket ${t.est > 0 && t.spent > t.est ? "high" : ""}"><b>${esc(t.t)}</b><div class="muted">${[t.id, t.owner, t.est ? t.est + " h" : "", t.due].filter(Boolean).map(esc).join(" · ")}</div></div>`).join("") || '<span class="tbd">empty</span>'}</div>`).join("");
   return `
   ${trackCards("Plan")}
-  <div class="grid" style="margin-top:16px">
-    <div class="card stat"><h2>Planned</h2><div class="kpi">${totalH}<small> h</small></div><span class="muted">${tasks.length} tasks in ${phases.length} phases</span></div>
-    <div class="card stat"><h2>Done</h2><div class="kpi">${doneH}<small> h</small></div>${prog(pct, "Done by hours")}<span class="muted">${pct}% of planned hours</span></div>
-    <div class="card stat"><h2>Remaining</h2><div class="kpi">${leftH}<small> h</small></div><span class="muted">estimate minus time spent, open tasks</span></div>
-    <div class="card stat"><h2>Spent</h2><div class="kpi ${spentH > totalH && totalH ? "over" : ""}">${spentH}<small> h</small></div><span class="muted">logged so far</span></div>
+  <div class="kpis">
+    ${tile("Planned", totalH, "h", tasks.length + " tasks in " + phases.length + " phases")}
+    ${tile("Done", doneH, "h", pct + "% of planned hours", prog(pct, "Done by hours"))}
+    ${tile("Remaining", leftH, "h", "estimate minus time spent, open tasks")}
+    ${tile("Spent", spentH, "h", "logged so far", "", spentH > totalH && totalH ? "hot" : "")}
   </div>
   ${D.estimateNote ? `<p class="muted" style="margin:12px 0 0"><b>Estimates:</b> ${esc(D.estimateNote)}</p>` : ""}
-  <div class="grid" style="margin-top:16px">
-    <div class="card"><h2>Next up</h2>${nextUp.length ? `<ol class="next plain">${nextUp.map(t => `<li><b>${esc(t.t)}</b> <span class="muted">${[t.id, t.owner, t.est ? t.est + " h" : "", t.due].filter(Boolean).map(esc).join(" · ")}</span></li>`).join("")}</ol>` : `<p>${tasks.length ? "Nothing ready. Check blocked tasks and dependencies." : TODO}</p>`}${tasks.filter(t => t.status === "blocked").length ? `<p class="over">Blocked: ${tasks.filter(t => t.status === "blocked").map(t => esc(t.id)).join(", ")}</p>` : ""}</div>
-    <div class="card"><h2>Team workload</h2>${owners.length ? owners.map(bar).join("") + '<p class="muted">Bar length: planned hours. Dark part: done.</p>' : `<p>${TODO}</p>`}</div>
+  <div style="margin-top:16px">${ganttCard()}</div>
+  <div class="grid3">
+    <div class="card"><h2>Next up</h2>${nextUp.length ? `<ul class="rl">${nextUp.map(taskRowP).join("")}</ul>` : `<p>${tasks.length ? "Nothing ready. Check blocked tasks and dependencies." : TODO}</p>`}${tasks.filter(t => t.status === "blocked").length ? `<p class="over">Blocked: ${tasks.filter(t => t.status === "blocked").map(t => esc(t.id)).join(", ")}</p>` : ""}</div>
+    <div class="card"><h2>Team workload</h2>${owners.length ? owners.map(bar).join("") + '<p class="muted">Bar length: planned hours. Colored part: done.</p>' : `<p>${TODO}</p>`}</div>
+    <div class="card"><div class="row"><h2>Task by task</h2></div><p class="muted">Every task with owner, hours, dependencies and status, as a list or a board.</p><button class="btn pri" data-go="WorkPlan">Open the work plan</button></div>
   </div>
-  ${tasks.length ? `<div class="card" style="margin-top:16px"><h2>Work plan, task by task</h2>
-    <div class="seg" role="group" aria-label="View">${seg("pv", "list", "List", planView === "list")}${seg("pv", "board", "Board", planView === "board")}</div>
-    <div class="seg" role="group" aria-label="Filter by person"><label>Person</label>${seg("po", "", "Everyone", !planOwner)}${owners.map(o => seg("po", o, o, planOwner === o)).join("")}</div>
-    <div class="seg" role="group" aria-label="Filter by status"><label>Status</label>${["all", "todo", "doing", "blocked", "done"].map(k => seg("ps", k, k === "all" ? "All" : k, planStatus === k)).join("")}</div>
-    <p class="muted">${vis.length} tasks shown · ${sumH(vis)} h estimated</p></div>
-  ${planView === "board" ? `<div class="board" style="margin-top:16px">${board}</div>` : phases.map(phaseBlock).join("")}` : `<div class="card" style="margin-top:16px"><h2>Work plan</h2><p>${TODO}</p></div>`}
   <div class="grid" style="margin-top:16px">
     <div class="card"><h2>Risks</h2>${arr(D.risks).length ? `<div class="tw s"><table><tr><th>Risk</th><th>Level</th><th>Mitigation</th></tr>${D.risks.map(r => `<tr><td>${esc(r.r)}</td><td>${badge(r.level || "medium")}</td><td>${esc(r.mitigation)}</td></tr>`).join("")}</table></div>` : `<p>${TODO}</p>`}</div>
     <div class="card"><h2>Decisions</h2>${arr(D.decisions).length ? `<div class="tw s"><table><tr><th>Decision</th><th>Why</th><th>Date</th></tr>${D.decisions.map(d => `<tr><td>${esc(d.d)}</td><td>${esc(d.why)}</td><td class="num">${esc(d.date)}</td></tr>`).join("")}</table></div>` : `<p>${TODO}</p>`}</div>
   </div>`;
+}
+function vWorkPlan() {
+  const vis = tasks.filter(t => (!planOwner || t.owner === planOwner) && (planStatus === "all" || t.status === planStatus));
+  const seg = (attr, k, label, on) => `<button class="btn sm" data-${attr}="${esc(k)}" aria-pressed="${on}">${esc(label)}</button>`;
+  const phaseBlock = p => { const ts = vis.filter(t => t.phase === p.name), all = tasks.filter(t => t.phase === p.name);
+    return `<div class="card" style="margin-top:16px"><div class="row"><h3>${esc(p.name)}</h3>${badge(stOf(all))}</div><div class="muted">${esc([p.start, p.end].filter(Boolean).join(" to "))}${all.length ? " · " + sumH(all) + " h · " + all.filter(t => t.status === "done").length + " of " + all.length + " tasks done" : ""}</div>${prog(phasePct(p), p.name)}
+      ${!all.length ? '<p class="tbd" style="margin-top:10px">No tasks yet</p>' : ts.length ? `<div class="tw"><table class="tasks"><tr><th></th><th>ID</th><th>Task</th><th>Owner</th><th>Due</th><th class="num">Est.</th><th class="num">Spent</th><th>Status</th></tr>${ts.map(taskRow).join("")}</table></div>` : '<p class="muted" style="margin-top:10px">No task matches the filter.</p>'}</div>`; };
+  const board = ["todo", "doing", "blocked", "done"].map(k => `<div class="col"><h3>${STAT_L[k]} (${vis.filter(t => t.status === k).length})</h3>${vis.filter(t => t.status === k).map(t => `<div class="ticket ${t.est > 0 && t.spent > t.est ? "high" : ""}"><b>${esc(t.t)}</b><div class="muted">${[t.id, t.owner, t.est ? t.est + " h" : "", t.due].filter(Boolean).map(esc).join(" · ")}</div></div>`).join("") || '<span class="tbd">empty</span>'}</div>`).join("");
+  return tasks.length ? `<div class="card"><h2>Work plan, task by task</h2>
+    <div class="seg" role="group" aria-label="View">${seg("pv", "list", "List", planView === "list")}${seg("pv", "board", "Board", planView === "board")}</div>
+    <div class="seg" role="group" aria-label="Filter by person"><label>Person</label>${seg("po", "", "Everyone", !planOwner)}${owners.map(o => seg("po", o, o, planOwner === o)).join("")}</div>
+    <div class="seg" role="group" aria-label="Filter by status"><label>Status</label>${["all", ...STAT].map(k => seg("ps", k, k === "all" ? "All" : k, planStatus === k)).join("")}</div>
+    <p class="muted">${vis.length} tasks shown · ${sumH(vis)} h estimated. Statuses and spent hours are updated by Forge from real progress.</p></div>
+  ${planView === "board" ? `<div class="board" style="margin-top:16px">${board}</div>` : phases.map(phaseBlock).join("")}` : `<div class="card"><h2>Work plan</h2><p>${TODO}</p></div>`;
 }
 
 /* ---------- project-type sections: frontend, backend, database, firmware, app, ui, code (HUB.sections) ---------- */
@@ -610,7 +815,7 @@ function vIdentity() {
 }
 
 /* ---------- shell: the tabs are generated from the project (HUB.ui.tabs overrides) ---------- */
-const PARTS = { Project: vProject, Plan: vPlan, Hardware: vHardware, Software: vSoftware, Business: vBusiness, Docs: vDocs, Quality: vQuality, Agent: vAgent, Gaps: vGaps, Identity: vIdentity, Assets: vAssets, Structure: vStructure };
+const PARTS = { Project: vProject, Plan: vPlan, WorkPlan: vWorkPlan, Hardware: vHardware, Software: vSoftware, Business: vBusiness, Docs: vDocs, Quality: vQuality, Agent: vAgent, Gaps: vGaps, Identity: vIdentity, Assets: vAssets, Structure: vStructure };
 Object.keys(SEC).forEach(k => { PARTS[k] = () => vSection(k); });
 const hasKey = ks => tracks.some(t => ks.includes(String(t.key || "").toLowerCase()) && t.applicable !== false);
 const hasHW = !!(Object.keys(HW).length || diagrams.some(d => homeOf(d) === "Hardware") || hasKey(["hardware", "firmware"]));
@@ -623,14 +828,16 @@ const TYPE_TABS = {
   game: ["UI", "Code", "Structure", { label: "Assets", parts: ["Assets", "Identity"] }]
 };
 const middle = TYPE_TABS[PT] || [hasHW && "Hardware", hasSW && "Software", "Identity", (assets.length || libs.length) && "Assets"];
-const spec = arr((HUB.ui || {}).tabs).length ? HUB.ui.tabs : ["Project", "Plan", ...middle, "Business", { label: "Docs and quality", parts: ["Docs", "Quality"] }, "Agent", "Gaps"].filter(Boolean);
+const spec = arr((HUB.ui || {}).tabs).length ? HUB.ui.tabs : [{ label: "Dashboard", parts: ["Project"] }, "Plan", ...middle, "Business", { label: "Docs and quality", parts: ["Docs", "Quality"] }, "Agent", "Gaps"].filter(Boolean);
 const views = spec.map(t => typeof t === "string" ? { label: t, parts: [t] } : { label: t.label || arr(t.parts).join(" + "), parts: arr(t.parts) }).map(v => ({ ...v, parts: v.parts.filter(p => PARTS[p]) })).filter(v => v.parts.length);
 if (!views.some(v => v.parts.includes("Gaps"))) views.push({ label: "Gaps", parts: ["Gaps"] });
+/* the task-by-task plan has its own tab, placed after Plan, whenever there are tasks */
+if (tasks.length && !views.some(v => v.parts.includes("WorkPlan"))) { const pi = views.findIndex(v => v.parts.includes("Plan")); views.splice(pi < 0 ? Math.min(1, views.length) : pi + 1, 0, { label: "Work plan", parts: ["WorkPlan"] }); }
 const tabOf = part => views.findIndex(v => v.parts.includes(part));
 function partShown(part) { return tabOf(part) >= 0; }
 const openCount = () => gaps.filter(g => !isDecided(g)).length;
 let cur = 0;
-const tabsHtml = () => views.map((v, i) => `<button role="tab" id="t${i}" aria-selected="${i === cur}" aria-controls="p${i}">${esc(v.label)}${v.parts.includes("Gaps") && openCount() ? `<span class="n">${openCount()}</span>` : ""}</button>`).join("") + '<button class="theme" id="theme" aria-label="Toggle dark mode">Light / Dark</button>';
+const tabsHtml = () => views.map((v, i) => `<button role="tab" id="t${i}" aria-selected="${i === cur}" aria-controls="p${i}">${esc(v.label)}${v.parts.includes("Gaps") && openCount() ? `<span class="n">${openCount()}</span>` : ""}</button>`).join("");
 const panelHtml = v => v.parts.map(p => `<div class="part">${v.parts.length > 1 ? `<h2 class="ph">${esc(p)}</h2>` : ""}${PARTS[p]()}</div>`).join("");
 /* panels are drawn when first opened (a light first load); printing draws them all */
 const drawn = new Set();
@@ -638,14 +845,16 @@ function draw(i) { if (drawn.has(i)) return; drawn.add(i); $("#p" + i).innerHTML
 $("#main").innerHTML = views.map((v, i) => `<section class="panel" role="tabpanel" id="p${i}" aria-labelledby="t${i}" ${i ? "hidden" : ""}></section>`).join("");
 draw(0);
 addEventListener("beforeprint", () => views.forEach((_, i) => draw(i)));
-function show(i) { if (i < 0) return; cur = i; draw(i); $("#tabs").innerHTML = tabsHtml(); views.forEach((_, k) => { $("#p" + k).hidden = k !== i; }); window.scrollTo(0, 0); }
+function show(i) { if (i < 0) return; cur = i; draw(i); $("#tabs").innerHTML = tabsHtml(); const sel = $("#tabs [aria-selected=true]"); if (sel) $("#tabs").scrollLeft = sel.offsetLeft - ($("#tabs").clientWidth - sel.offsetWidth) / 2; views.forEach((_, k) => { $("#p" + k).hidden = k !== i; }); window.scrollTo(0, 0); }
 function refreshPart(part) { const i = tabOf(part); if (i < 0) return; const y = window.scrollY; drawn.add(i); $("#p" + i).innerHTML = panelHtml(views[i]); if ($("#dq")) { $("#dq").value = docQ; applyDocs(); } $("#tabs").innerHTML = tabsHtml(); window.scrollTo(0, y); }
-const refreshPlan = () => refreshPart("Plan"), refreshGaps = () => refreshPart("Gaps");
+const refreshPlan = () => refreshPart("WorkPlan"), refreshGaps = () => refreshPart("Gaps");
 $("#tabs").innerHTML = tabsHtml();
-$("#tabs").addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return; if (b.id === "theme") { const dark = matchMedia("(prefers-color-scheme:dark)").matches; const c = document.documentElement.dataset.theme || (dark ? "dark" : "light"); document.documentElement.dataset.theme = c === "dark" ? "light" : "dark"; } else if (b.role === "tab" || b.getAttribute("role") === "tab") show(+b.id.slice(1)); });
+$("#tabs").addEventListener("click", e => { const b = e.target.closest("button"); if (b && b.getAttribute("role") === "tab") show(+b.id.slice(1)); });
+$("#theme").addEventListener("click", () => { const dark = matchMedia("(prefers-color-scheme:dark)").matches, c = document.documentElement.dataset.theme || (dark ? "dark" : "light"), n = c === "dark" ? "light" : "dark"; document.documentElement.dataset.theme = n; try { localStorage.setItem("forgehub:theme", n); } catch (e) { } });
 $("#main").addEventListener("click", e => {
   const b = e.target.closest("button"); if (!b) return; const d = b.dataset;
   if (d.go) show(tabOf(d.go));
+  else if (d.jump) { const el = document.getElementById(d.jump); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }); }
   else if (d.po !== undefined) { planOwner = d.po; try { localStorage.setItem(KEY + ":me", d.po); } catch (e) { } refreshPlan(); }
   else if (d.ps) { planStatus = d.ps; refreshPlan(); }
   else if (d.pv) { planView = d.pv; refreshPlan(); }

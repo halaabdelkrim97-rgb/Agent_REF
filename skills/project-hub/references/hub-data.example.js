@@ -10,7 +10,12 @@ const HUB = {
     users: "Garden-shop visitors on phones and desktops; the client's sales team.",
     scope: { in: ["3D planter with live soil-moisture simulation", "Pump on/off logic shown step by step", "Dashboard with a moisture chart", "Working hardware test board"], out: ["Real cloud connection", "Checkout", "Native app"] },
     constraints: ["Runs on a 3-year-old phone", "Delivery 2026-11-20", "Budget fixed by the quote"], assumptions: ["Client sends final logo by Oct 16", "CAD export as STEP is available"],
-    stakeholders: [{ name: "Alex", role: "lead, client contact" }, { name: "Lina", role: "hardware and CAD" }, { name: "Omar", role: "firmware and backend" }, { name: "Sara", role: "frontend and 3D" }] },
+    stakeholders: [{ name: "Alex", role: "lead, client contact" }, { name: "Lina", role: "hardware and CAD" }, { name: "Omar", role: "firmware and backend" }, { name: "Sara", role: "frontend and 3D" }],
+    detailsSource: "From docs/PROJECT_CONTEXT.md and docs/source-of-truth/ (fictional).",
+    details: [   // the Dashboard shows these cards below the monitoring tiles; see "Dashboard and project details" in SKILL.md
+      { title: "How it works", wide: true, text: "The planter reads soil moisture and waters by itself; the demo shows it on a simulated device.", flow: [{ t: "Soil sensor", s: "reads moisture" }, { t: "Controller", s: "decides" }, { t: "Pump", s: "waters" }] },
+      { title: "What the demo does", wide: true, tiles: [{ t: "Live moisture", d: "A chart follows the simulation." }, { t: "Pump logic", d: "Shown step by step." }, { t: "Test board", d: "Real hardware next to the demo.", tag: "added Oct 13" }] },
+      { title: "Parts list", fold: true, count: "2 items", table: { head: ["#", "Item", "Qty"], rows: [["1", "Soil-moisture sensor", "1"], ["2", "Mini pump 5 V", "1"]] }, note: "Supplied by the client." }] },
   tracks: [  // key: hardware | firmware | backend | frontend | other. Tasks join a track through their "track" field.
     { key: "hardware", title: "Hardware", applicable: true, status: "doing", owner: "Lina", stack: ["KiCad", "STEP / glTF export"], summary: "Sensor board, pump driver, simplified enclosure for the web." },
     { key: "firmware", title: "Firmware", applicable: true, status: "doing", owner: "Omar", stack: ["ESP32", "C++"], summary: "Moisture read, hysteresis, pump control, serial log." },
@@ -21,7 +26,7 @@ const HUB = {
     estimateNote: "First estimates by Forge from the brief. Not yet confirmed by the team; confirm in the next planning call.",
     // task: { id, t, owner, est (hours), spent (hours), status: todo|doing|blocked|done, due, after: [ids], track, note }
     phases: [
-      { name: "1. Discovery", status: "done", start: "Oct 1", end: "Oct 4", tasks: [
+      { stage: "Stage 1", name: "1. Discovery", status: "done", start: "Oct 1", end: "Oct 4", tasks: [
         { id: "T1.1", t: "Kickoff call and brief", owner: "Alex", est: 2, spent: 2, status: "done", due: "Oct 1", track: "project" },
         { id: "T1.2", t: "Collect product specs and CAD from the client", owner: "Alex", est: 3, spent: 4, status: "done", due: "Oct 3", track: "hardware", note: "client sent files in two rounds" },
         { id: "T1.3", t: "Write scope and acceptance criteria", owner: "Alex", est: 3, spent: 3, status: "done", due: "Oct 4", track: "project" } ] },

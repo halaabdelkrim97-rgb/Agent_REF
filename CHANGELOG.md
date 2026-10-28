@@ -3,6 +3,13 @@
 Versions follow `vMAJOR.MINOR.PATCH`. Every commit on `main` starts with the version it belongs to, for example `v1.2.0: summary`.
 Git tags cannot be pushed from the environment these updates were made in, so the commit prefix and this file are the version record.
 
+## v3.1.0 (Hub dashboard)
+
+- Restyle the project-hub template as a monitoring dashboard: dark and light themes with a saved toggle, KPI tiles, task map, hours chart, hours-based Gantt and quick-access tiles.
+- Add `context.details` (visual project-context cards: flow, tiles, stats, meter, split, table, timeline, fold) so the first page carries the project context. Add optional `stage` on phases and a separate Work plan tab.
+- An explicit gap with the same id now overrides the automatic one. Schematic diagrams open under Hardware. BOM price columns show only when prices exist. Long track lists collapse.
+- Tested: Playwright on desktop and a narrow viewport, light and dark, all tabs viewed, no console errors, no horizontal scroll, `node --check` on the example data. Not tested: screen readers, web and game project types, hubs built by Forge on other projects.
+
 ## v3.0.1 (README refresh)
 
 - Rebuild the README with clearer setup guidance, a task-based skill finder, and direct links to the skill catalog.
