@@ -11,6 +11,7 @@ const HUB = {
     scope: { in: ["3D planter with live soil-moisture simulation", "Pump on/off logic shown step by step", "Dashboard with a moisture chart", "Working hardware test board"], out: ["Real cloud connection", "Checkout", "Native app"] },
     constraints: ["Runs on a 3-year-old phone", "Delivery 2026-11-20", "Budget fixed by the quote"], assumptions: ["Client sends final logo by Oct 16", "CAD export as STEP is available"],
     stakeholders: [{ name: "Alex", role: "lead, client contact" }, { name: "Lina", role: "hardware and CAD" }, { name: "Omar", role: "firmware and backend" }, { name: "Sara", role: "frontend and 3D" }],
+    brief: { title: "Smart Planter Demo in short", text: ["A web demo that shows how the planter reads soil moisture and waters by itself.", "Delivery is 2026-11-20; the client supplies the logo and CAD."], points: [{ t: "Scope", d: "3D planter, simulation, dashboard, test board." }, { t: "Main risk", d: "Client logo arrives late." }] },   // last block of the Dashboard
     detailsSource: "From docs/PROJECT_CONTEXT.md and docs/source-of-truth/ (fictional).",
     details: [   // the Dashboard shows these cards below the monitoring tiles; see "Dashboard and project details" in SKILL.md
       { title: "How it works", wide: true, text: "The planter reads soil moisture and waters by itself; the demo shows it on a simulated device.", flow: [{ t: "Soil sensor", s: "reads moisture" }, { t: "Controller", s: "decides" }, { t: "Pump", s: "waters" }] },

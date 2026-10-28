@@ -4,7 +4,7 @@
 
 Forge helps an AI assistant understand a project, work within its existing stack, document decisions, and report what it checked. This repository contains the agent instructions, 39 skills, templates, and Claude Code commands.
 
-**Current version:** 3.1.0 · [Changelog](CHANGELOG.md) · [Documentation guide](templates/DOCUMENTATION.md) · [Skills](skills/)
+**Current version:** 3.1.1 · [Changelog](CHANGELOG.md) · [Documentation guide](templates/DOCUMENTATION.md) · [Skills](skills/)
 
 ---
 

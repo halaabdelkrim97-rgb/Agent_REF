@@ -243,7 +243,13 @@ details.card>summary::after{content:"+";font-weight:800;color:var(--muted)}detai
 .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.gp span{display:none}
 .gr,.gh{grid-template-columns:minmax(0,1fr);gap:4px}.gh .gl{display:none}.gl{display:flex;justify-content:space-between;gap:8px}
 .dr{grid-template-columns:86px minmax(0,1fr)}.big{font-size:2.2rem}.sec{font-size:1.4rem}.card{padding:16px}.topbar{gap:8px}}
-@media print{.top,.jump{display:none}}
+.cpbar{display:flex;justify-content:flex-end;margin:0 0 6px}.cpbar .btn{opacity:.75}.cpbar .btn:hover{opacity:1}
+.brief{display:grid;gap:16px;grid-template-columns:minmax(0,3fr) minmax(0,2fr);align-items:start}
+.brief p{max-width:70ch}.ftiles.bk{grid-template-columns:repeat(auto-fill,minmax(220px,1fr));margin-top:12px}
+.upd textarea{width:100%;font:inherit;background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:12px;padding:10px;margin:10px 0;resize:vertical}
+.attn .alert{margin-top:8px}
+@media(max-width:1000px){.brief{grid-template-columns:1fr}}
+@media print{.top,.jump,.cpbar,.upd{display:none}}
 .av.k-done{background-color:var(--done);color:var(--on-done)}.av.k-doing{background-color:var(--accent);color:var(--on-accent)}.av.k-blocked{background-color:var(--bad);color:var(--on-bad)}.av.k-todo{background-color:var(--idle);color:var(--on-idle)}
 </style>
 </head>
@@ -260,7 +266,7 @@ details.card>summary::after{content:"+";font-weight:800;color:var(--muted)}detai
 <script src="hub-data.js"></script>
 <script>
 /*SKILLS:BEGIN*/
-const FORGE = {"version": "v3.1.0", "groups": [
+const FORGE = {"version": "v3.1.1", "groups": [
 {"g": "Planning and delivery", "skills": [["brainstorming", "Clarify materially ambiguous requirements and explore design choices when requested or needed."], ["writing-plans", "Plan complex or dependent work from defined requirements with scope, affected files, acceptance criteria and validation."], ["client-delivery", "Freelance client project flow - discovery brief, scope and acceptance criteria, milestones, change requests, final chec…"], ["git-workflow", "Git habits for clean history - branches, small commits, version-prefixed messages, safe pushes, pull requests, changelo…"]]},
 {"g": "Engineering", "skills": [["backend-architect", "Backend and API architecture: REST, GraphQL and gRPC design, service boundaries, event-driven patterns, resilience and…"], ["frontend-developer", "Frontend component, responsive layout, client-side state, performance and accessibility guidance."], ["coding-standards", "Coding standards and best practices for JavaScript, plus TypeScript, React and Node.js where the project already uses t…"], ["debugging", "Root-cause debugging procedure - reproduce, isolate, form ranked hypotheses, gather evidence, apply the smallest fix an…"], ["i18n-forms", "Multilingual pages and reliable web forms: lang and RTL, text files, Intl formatting, language switcher, labels, valida…"]]},
 {"g": "Design and interface", "skills": [["art-direction", "Art direction and rendered visual critique for websites, web apps, animation, artistic simulations, games and cinematic…"], ["ui-ux-pro-max", "Comprehensive design guide for web and mobile applications."], ["baseline-ui", "Quickly deslop UI code by fixing spacing, hierarchy, typography, and small layout issues."], ["ui-components-21st", "Use 21st.dev (Magic MCP and 21st-dev CLI) to find or generate UI components from a prompt."], ["accessibility", "WCAG 2.2 AA accessibility checks and fixes for web pages and interactive tools - keyboard, focus, names, contrast, form…"], ["art-svg-canvas", "Illustrations, icons, patterns, generative art, backgrounds and simple image assets in plain SVG, CSS and Canvas, with…"], ["canvas-design", "Creates original static visual art (poster, cover, art piece) as a single .png or .pdf, guided by a short written desig…"], ["nano-banana", "Generates and edits raster images (hero art, mockups, icons, textures, product shots) with Google's Nano Banana image m…"], ["data-and-charts", "Charts, KPIs and small dashboards for client sites in plain SVG or Canvas - chart choice, scales, labels, accessible co…"]]},
@@ -404,13 +410,10 @@ function dashTiles() {
     ${tile("Risks", risks.length, "", hi ? hi + " high" : "none high", `<div class="ts" style="margin-top:8px">${risks.filter(r => r.level === "medium").length} medium · ${risks.filter(r => r.level === "low").length} low</div>`, hi ? "hot" : "")}
   </div>`;
 }
-function dashLists() {
-  const open = gaps.filter(g => !isDecided(g)).sort((a, b) => (RANK[a.priority] ?? 1) - (RANK[b.priority] ?? 1)), bl = tasks.filter(t => t.status === "blocked"), lv = { high: 0, medium: 1, low: 2 }, risks = [...arr(D.risks)].sort((a, b) => (lv[a.level] ?? 1) - (lv[b.level] ?? 1));
-  return `<div class="grid3">
-    <div class="card"><div class="row"><h2>Next up</h2><button class="btn sm" data-go="WorkPlan">Work plan</button></div>${bl.map(t => `<div class="alert">Blocked: ${esc(t.id)} ${esc(t.t)}${t.note ? " (" + esc(t.note) + ")" : ""}</div>`).join("")}${nextUp.length ? `<ul class="rl">${nextUp.slice(0, 4).map(taskRowP).join("")}</ul>` : `<p>${tasks.length ? "Nothing ready. Check blocked tasks." : TODO}</p>`}</div>
-    <div class="card"><div class="row"><h2>Risks</h2><button class="btn sm" data-go="Plan">Plan</button></div>${risks.length ? `<ul class="rl">${risks.slice(0, 4).map(r => `<li class="rp"><span class="rt"><b>${esc(r.r)}</b><small class="muted">${esc(r.mitigation)}</small></span>${badge(r.level || "medium")}</li>`).join("")}</ul>` : `<p>${TODO}</p>`}</div>
-    <div class="card"><div class="row"><h2>Open decisions</h2><button class="btn sm" data-go="Gaps">All</button></div>${open.length ? `<ul class="rl">${open.slice(0, 5).map(g => `<li class="rp"><span class="rt"><b>${esc(g.question)}</b><small class="muted">${esc(g.id)} · ${esc(g.area)}</small></span>${badge(g.priority || "important")}</li>`).join("")}</ul>` : "<p>All decisions are made.</p>"}</div>
-  </div>`;
+function dashAttention() {
+  const open = gaps.filter(g => !isDecided(g)), blk = open.filter(g => g.priority === "blocker"), bl = tasks.filter(t => t.status === "blocked");
+  const items = [...bl.map(t => `Blocked: ${t.id} ${t.t}${t.note ? " (" + t.note + ")" : ""}`), ...blk.map(g => `Blocking decision ${g.id}: ${g.question}`)];
+  return items.length ? `<div class="card attn"><div class="row"><h2>Needs attention</h2><span><button class="btn sm" data-go="WorkPlan">Work plan</button> <button class="btn sm" data-go="Gaps">Gaps</button></span></div>${items.slice(0, 4).map(i => `<div class="alert">${esc(i)}</div>`).join("")}</div>` : "";
 }
 const QS = {
   Plan: () => `${phases.length} phases · ${totalH} h`, WorkPlan: () => `${tasks.length} tasks · ${leftH} h left`,
@@ -453,22 +456,47 @@ function contextCards() {
     <div class="card"><h2>Assumptions</h2>${bullets(C.assumptions)}</div>
   </div>
   <div class="grid">
-    <div class="card"><h2>Stack</h2>${chips(P.stack)}</div>
     <div class="card"><h2>People</h2>${arr(C.stakeholders).length ? `<ul class="plain">${C.stakeholders.map(s => `<li><b>${esc(s.name)}</b> <span class="muted">${esc(s.role)}</span></li>`).join("")}</ul>` : TODO}</div>
-    <div class="card"><h2>Next steps</h2>${arr(D.next).length ? `<ol>${D.next.map(n => `<li>${esc(n)}</li>`).join("")}</ol>` : nextUp.length ? `<ol>${nextUp.map(t => `<li>${esc(t.t)} <span class="muted">${esc(t.owner)} ${t.est ? t.est + "h" : ""}</span></li>`).join("")}</ol>` : TODO}${D.resume ? `<p class="muted"><b>Resume:</b> ${esc(D.resume)}</p>` : ""}</div>
     <div class="card"><h2>Links</h2>${arr(P.links).length ? `<ul>${P.links.map(l => `<li><a href="${safeUrl(l.url)}" target="_blank" rel="noopener">${esc(l.label || l.url)}</a></li>`).join("")}</ul>` : TODO}</div>
   </div>`;
 }
+
+/* ---------- project brief and update box (last block of the dashboard) ---------- */
+const UPD_KINDS = ["Inform", "Update", "Change", "Decision"];
+let updKind = "Update", updText = ""; try { updText = localStorage.getItem(KEY + ":upd") || ""; } catch (e) { }
+function briefHtml() {
+  const B0 = C.brief || {}, sc = C.scope || {};
+  const paras = arr(B0.text).length ? B0.text : [P.goal, C.problem && "The problem: " + C.problem, C.users && "Who uses it: " + C.users].filter(Boolean);
+  const pts = arr(B0.points).length ? B0.points : [...arr(sc.in).slice(0, 3).map(t => ({ t: "In scope", d: t })), ...arr(sc.out).slice(0, 2).map(t => ({ t: "Not in scope", d: t })), ...arr(C.constraints).slice(0, 2).map(t => ({ t: "Constraint", d: t }))];
+  return `<h2 class="sec" id="brief">Project brief<small>${esc(B0.source || "The short version, in plain words")}</small></h2>
+  <div class="brief"><div class="card"><h2>${esc(B0.title || P.name || "The project")}</h2>${paras.map(t => `<p>${esc(t)}</p>`).join("")}${pts.length ? `<div class="ftiles bk">${pts.map(x => `<div class="ft"><b>${esc(x.t)}</b>${x.d ? `<small>${esc(x.d)}</small>` : ""}</div>`).join("")}</div>` : ""}</div>
+  <div class="card upd"><h2>Tell Forge</h2><p class="muted">Write what changed, what you decided or what to correct. Copy it, paste it into the project chat, and Forge updates the docs and this hub.</p>
+    <div class="filters">${UPD_KINDS.map(k => `<button class="btn sm" data-uk="${k}" aria-pressed="${updKind === k}">${k}</button>`).join("")}</div>
+    <textarea id="upd" rows="6" placeholder="Example: the client moved delivery of Stage 1 to 20 Nov. Or: add a status LED to the bench rig.">${esc(updText)}</textarea>
+    <p><button class="btn pri" data-ucopy="1">Copy for Forge</button> <button class="btn sm" data-uclear="1">Clear</button> <span class="muted">Saved in this browser until you clear it.</span></p></div></div>`;
+}
+const updMessage = () => `Forge, project update (${new Date().toISOString().slice(0, 10)}), type: ${updKind}.\n${updText.trim()}\nRecord it in docs/PROJECT_CONTEXT.md and the source-of-truth files, then update the hub (plan, gaps and the brief) and tell me what changed.`;
+
+/* ---------- copy as a spreadsheet: every table and list gets a button (tab-separated, pastes into Excel) ---------- */
+const cellTxt = n => (n.innerText || n.textContent || "").replace(/\s+/g, " ").trim();
+function tableTsv(t) { const rows = [...t.rows].filter(r => !r.hidden && r.offsetParent !== null).map(r => [...r.cells].map(cellTxt)), keep = []; rows.forEach(r => r.forEach((c, i) => { if (c) keep[i] = true; })); return rows.map(r => r.filter((c, i) => keep[i]).join("\t")).join("\n"); }
+function listTsv(l) { return [...l.children].filter(li => li.tagName === "LI" && !li.hidden).map(li => { const kids = [...li.children].map(cellTxt).filter(Boolean); return (kids.length > 1 ? kids : [cellTxt(li)]).join("\t"); }).join("\n"); }
+function addCopyButtons(root) {
+  root.querySelectorAll("table").forEach(t => { if (t.dataset.cp || t.rows.length < 2) return; t.dataset.cp = "1"; const host = t.closest(".tw") || t; host.insertAdjacentHTML("beforebegin", '<div class="cpbar"><button class="btn sm" data-ctab="1">Copy table</button></div>'); host.previousElementSibling._t = t; });
+  root.querySelectorAll("ul,ol").forEach(l => { if (l.dataset.cp || l.closest("table,.qa,.cpbar") || l.children.length < 4) return; l.dataset.cp = "1"; l.insertAdjacentHTML("beforebegin", '<div class="cpbar"><button class="btn sm" data-ctab="1">Copy list</button></div>'); l.previousElementSibling._t = l; });
+}
+const gapsTsv = () => ["ID\tArea\tPriority\tStatus\tQuestion\tDecision", ...gaps.map(g => [g.id, g.area, g.priority || "", isDecided(g) ? "decided" : "open", g.question, decisionOf(g) || ""].map(x => String(x ?? "").replace(/\s+/g, " ")).join("\t"))].join("\n");
 function vProject() {
-  const j = [["Overview", "top"], ["Timeline", "tl"], arr(C.details).length && ["Project details", "details"], ["Scope and people", "scope"], diagrams.some(d => homeFinal(d) === "Project") && ["System", "sys"]].filter(Boolean);
+  const j = [["Overview", "top"], ["Timeline", "tl"], arr(C.details).length && ["Project details", "details"], ["Scope and people", "scope"], diagrams.some(d => homeFinal(d) === "Project") && ["System", "sys"], ["Brief", "brief"]].filter(Boolean);
   return `<div class="jump" id="top">${j.map(([l, id]) => `<button class="btn sm" data-jump="${id}">${esc(l)}</button>`).join("")}</div>
   ${dashTiles()}
   <div class="dash2" id="tl"><div class="stk">${taskMap()}${hoursChart()}</div>${ganttCard()}</div>
-  ${dashLists()}
+  ${dashAttention()}
   <h2 class="sec">Go to</h2>${quick()}
   ${detailsHtml()}
   ${contextCards()}
-  <h2 class="sec" id="sys">System overview</h2>${diagCards("Project") || `<div class="card"><p>${TODO}</p></div>`}`;
+  ${diagCards("Project") ? `<h2 class="sec" id="sys">System overview</h2>${diagCards("Project")}` : ""}
+  ${briefHtml()}`;
 }
 
 const TRACK_DEFAULT = { hardware: "H", firmware: "F", backend: "B", frontend: "UI", other: "+" };
@@ -790,7 +818,7 @@ function vGaps() {
   const list = gaps.filter(g => gapFilter === "all" || (gapFilter === "open" && (!isDecided(g) || touched.has(g.id))) || (gapFilter === "blocker" && g.priority === "blocker" && (!isDecided(g) || touched.has(g.id))) || (gapFilter === "decided" && isDecided(g)));
   const f = (k, l) => `<button class="btn sm" data-f="${k}" aria-pressed="${gapFilter === k}">${l}</button>`;
   return `
-  <div class="card"><div class="row"><h2>Gaps to fill and decide</h2><button class="btn pri" data-all="1">Copy all decisions for Forge</button></div>
+  <div class="card"><div class="row"><h2>Gaps to fill and decide</h2><span><button class="btn sm" data-cgaps="1">Copy table</button> <button class="btn pri" data-all="1">Copy all decisions for Forge</button></span></div>
     <p class="muted">${gaps.length - open.length} of ${gaps.length} closed · ${blockers} blocking. Pick an option or type your own answer, then copy the decisions into Forge. Your picks are kept in this browser only; Forge writes them into the project when you paste them.</p>
     ${prog(gaps.length ? Math.round((gaps.length - open.length) / gaps.length * 100) : 100, "Gaps closed")}
     <div class="filters">${f("open", "Open (" + open.length + ")")}${f("blocker", "Blocking (" + blockers + ")")}${f("decided", "Decided (" + (gaps.length - open.length) + ")")}${f("all", "All")}</div></div>
@@ -841,19 +869,24 @@ const tabsHtml = () => views.map((v, i) => `<button role="tab" id="t${i}" aria-s
 const panelHtml = v => v.parts.map(p => `<div class="part">${v.parts.length > 1 ? `<h2 class="ph">${esc(p)}</h2>` : ""}${PARTS[p]()}</div>`).join("");
 /* panels are drawn when first opened (a light first load); printing draws them all */
 const drawn = new Set();
-function draw(i) { if (drawn.has(i)) return; drawn.add(i); $("#p" + i).innerHTML = panelHtml(views[i]); if ($("#dq")) { $("#dq").value = docQ; applyDocs(); } }
+function draw(i) { if (drawn.has(i)) return; drawn.add(i); $("#p" + i).innerHTML = panelHtml(views[i]); if ($("#dq")) { $("#dq").value = docQ; applyDocs(); } addCopyButtons($("#p" + i)); }
 $("#main").innerHTML = views.map((v, i) => `<section class="panel" role="tabpanel" id="p${i}" aria-labelledby="t${i}" ${i ? "hidden" : ""}></section>`).join("");
 draw(0);
 addEventListener("beforeprint", () => views.forEach((_, i) => draw(i)));
 function show(i) { if (i < 0) return; cur = i; draw(i); $("#tabs").innerHTML = tabsHtml(); const sel = $("#tabs [aria-selected=true]"); if (sel) $("#tabs").scrollLeft = sel.offsetLeft - ($("#tabs").clientWidth - sel.offsetWidth) / 2; views.forEach((_, k) => { $("#p" + k).hidden = k !== i; }); window.scrollTo(0, 0); }
-function refreshPart(part) { const i = tabOf(part); if (i < 0) return; const y = window.scrollY; drawn.add(i); $("#p" + i).innerHTML = panelHtml(views[i]); if ($("#dq")) { $("#dq").value = docQ; applyDocs(); } $("#tabs").innerHTML = tabsHtml(); window.scrollTo(0, y); }
+function refreshPart(part) { const i = tabOf(part); if (i < 0) return; const y = window.scrollY; drawn.add(i); $("#p" + i).innerHTML = panelHtml(views[i]); if ($("#dq")) { $("#dq").value = docQ; applyDocs(); } addCopyButtons($("#p" + i)); $("#tabs").innerHTML = tabsHtml(); window.scrollTo(0, y); }
 const refreshPlan = () => refreshPart("WorkPlan"), refreshGaps = () => refreshPart("Gaps");
 $("#tabs").innerHTML = tabsHtml();
 $("#tabs").addEventListener("click", e => { const b = e.target.closest("button"); if (b && b.getAttribute("role") === "tab") show(+b.id.slice(1)); });
 $("#theme").addEventListener("click", () => { const dark = matchMedia("(prefers-color-scheme:dark)").matches, c = document.documentElement.dataset.theme || (dark ? "dark" : "light"), n = c === "dark" ? "light" : "dark"; document.documentElement.dataset.theme = n; try { localStorage.setItem("forgehub:theme", n); } catch (e) { } });
 $("#main").addEventListener("click", e => {
   const b = e.target.closest("button"); if (!b) return; const d = b.dataset;
-  if (d.go) show(tabOf(d.go));
+  if (d.ctab) { const bar = b.closest(".cpbar"), t = bar && bar._t; if (t) copy(t.tagName === "TABLE" ? tableTsv(t) : listTsv(t), "Copied. Paste it into Excel."); }
+  else if (d.cgaps) copy(gapsTsv(), "Copied. Paste it into Excel.");
+  else if (d.uk) { updKind = d.uk; document.querySelectorAll("[data-uk]").forEach(x => x.setAttribute("aria-pressed", x.dataset.uk === updKind)); }
+  else if (d.ucopy) { if (!updText.trim()) { toast("Write the update first."); return; } copy(updMessage()); }
+  else if (d.uclear) { updText = ""; try { localStorage.removeItem(KEY + ":upd"); } catch (e) { } const u = $("#upd"); if (u) u.value = ""; }
+  else if (d.go) show(tabOf(d.go));
   else if (d.jump) { const el = document.getElementById(d.jump); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }); }
   else if (d.po !== undefined) { planOwner = d.po; try { localStorage.setItem(KEY + ":me", d.po); } catch (e) { } refreshPlan(); }
   else if (d.ps) { planStatus = d.ps; refreshPlan(); }
@@ -867,7 +900,7 @@ $("#main").addEventListener("click", e => {
   else if (d.all) { const done = gaps.filter(isDecided); if (!done.length) { toast("No decisions yet."); return; } copy("Forge, record these project decisions in the context file (section 7) and update the hub (gaps to decided, plan and business fields they affect):\n" + done.map(g => `- ${g.id} (${g.area}) ${g.question} -> ${decisionOf(g)}`).join("\n")); }
 });
 $("#main").addEventListener("change", e => { const t = e.target; if (t.dataset && t.dataset.t) { const s = st[t.dataset.t] || (st[t.dataset.t] = {}); s.text = t.value.trim(); if (s.text) s.choice = null; touched.add(t.dataset.t); save(); refreshGaps(); } });
-$("#main").addEventListener("input", e => { if (e.target.id === "dq") { docQ = e.target.value.toLowerCase(); applyDocs(); } if (e.target.id === "skq") { const q = e.target.value.toLowerCase(); document.querySelectorAll("#skl .sk").forEach(r => { r.hidden = !!q && !r.dataset.t.includes(q); }); } });
+$("#main").addEventListener("input", e => { if (e.target.id === "upd") { updText = e.target.value; try { localStorage.setItem(KEY + ":upd", updText); } catch (x) { } } if (e.target.id === "dq") { docQ = e.target.value.toLowerCase(); applyDocs(); } if (e.target.id === "skq") { const q = e.target.value.toLowerCase(); document.querySelectorAll("#skl .sk").forEach(r => { r.hidden = !!q && !r.dataset.t.includes(q); }); } });
 $("#foot").textContent = "Generated by Forge from the project and docs/PROJECT_CONTEXT.md, which stays the source of truth. Diagrams show what the project data says, marked proposed until decided. Empty fields are left empty on purpose.";
 </script>
 </body>

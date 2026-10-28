@@ -11,7 +11,7 @@
       "name": "forge",
       "source": "./",
       "description": "Forge, the development agent: rules, skills and commands (start, stop, context, improve, report, hub)",
-      "version": "3.1.0"
+      "version": "3.1.1"
     }
   ]
 }

@@ -3,6 +3,13 @@
 Versions follow `vMAJOR.MINOR.PATCH`. Every commit on `main` starts with the version it belongs to, for example `v1.2.0: summary`.
 Git tags cannot be pushed from the environment these updates were made in, so the commit prefix and this file are the version record.
 
+## v3.1.1 (Dashboard without repeats, copy buttons, brief)
+
+- The dashboard shows each fact once: risks, decisions, next steps, parts, tests and the stack card are left to their own tabs; a short "Needs attention" strip appears only when something is blocked.
+- Every table and list of four or more items gets a Copy button (tab-separated, pastes into Excel); Gaps has a table copy too.
+- New last block on the dashboard: the project brief (`context.brief`, or written from goal, problem, users and scope) and a "Tell Forge" box with Inform, Update, Change and Decision types that copies a ready message for the chat. The page is static, so it cannot send the message itself.
+- Tested: Playwright desktop and narrow, light and dark, all tabs, copy to the clipboard of a table and the update message, no console errors. Not tested: pasting into Excel itself, other project types.
+
 ## v3.1.0 (Hub dashboard)
 
 - Restyle the project-hub template as a monitoring dashboard: dark and light themes with a saved toggle, KPI tiles, task map, hours chart, hours-based Gantt and quick-access tiles.
