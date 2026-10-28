@@ -45,6 +45,7 @@ The hub is built for this project, not from a fixed form.
 - Phases may carry `stage` (for example "Stage 1"); the timeline groups them under stage bands. The timeline is drawn in hours, one task after another, from the task data.
 - The dashboard shows each fact once. Keep out of `context.details` anything that has its own tab: parts and BOM (Hardware), tests (Quality), risks and decisions (Plan, Gaps), tasks and next steps (Work plan). Do not add a diagram card and a flow card for the same thing.
 - The last block is the project brief: `context.brief = { title, source, text: [paragraphs], points: [{ t, d }] }`. Without it the page writes a brief from goal, problem, users, scope and constraints. Next to it is the "Tell Forge" box: the user writes an update, picks Inform, Update, Change or Decision, and copies a ready message to paste into the chat. When you receive one, record it in the context file first, then update the hub and the brief.
+- A parts list per stage: give each `hardware.bom` item a `list` name (for example "List A: test kit (Stage 1)"); the Hardware tab draws one table per list, with an optional note in `hardware.bomNotes[list]`. Without `list` there is one "Bill of materials" table.
 - Every table and list of four or more items has a Copy button (tab-separated, pastes into Excel); Gaps has its own. This is automatic: do not add copy controls to the data.
 - Never put a fact in `context.details` that the context index or source-of-truth files do not hold. When a fact changes, change the file first, then the card.
 
