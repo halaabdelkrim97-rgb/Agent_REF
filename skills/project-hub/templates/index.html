@@ -243,6 +243,7 @@ details.card>summary::after{content:"+";font-weight:800;color:var(--muted)}detai
 .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.gp span{display:none}
 .gr,.gh{grid-template-columns:minmax(0,1fr);gap:4px}.gh .gl{display:none}.gl{display:flex;justify-content:space-between;gap:8px}
 .dr{grid-template-columns:86px minmax(0,1fr)}.big{font-size:2.2rem}.sec{font-size:1.4rem}.card{padding:16px}.topbar{gap:8px}}
+.stagehead small{display:block;margin-top:6px;font:500 .9rem/1.3 var(--body, inherit);text-transform:none;letter-spacing:0;color:var(--muted)}.stagebar{margin-top:8px}
 .cpbar{display:flex;justify-content:flex-end;margin:0 0 6px}.cpbar .btn{opacity:.75}.cpbar .btn:hover{opacity:1}
 .brief{display:grid;gap:16px;grid-template-columns:minmax(0,3fr) minmax(0,2fr);align-items:start}
 .brief p{max-width:70ch}.ftiles.bk{grid-template-columns:repeat(auto-fill,minmax(220px,1fr));margin-top:12px}
@@ -353,7 +354,7 @@ const decisionOf = g => { const s = st[g.id] || {}; if (s.text) return s.text; i
 const isDecided = g => !!decisionOf(g);
 let gapFilter = "open"; const touched = new Set();
 let planOwner = ""; try { planOwner = localStorage.getItem(KEY + ":me") || ""; } catch (e) { }
-let planStatus = "all", planView = "list", docQ = "", docS = "all";
+let planStatus = "all", planStage = "all", planView = "list", docQ = "", docS = "all";
 
 /* ---------- helpers ---------- */
 const ring = (p, label) => { const r = 42, c = 2 * Math.PI * r; return `<svg viewBox="0 0 100 100" width="110" height="110" role="img" aria-label="${esc(label)} ${p}%"><circle cx="50" cy="50" r="${r}" fill="none" stroke="var(--line)" stroke-width="10"/><circle cx="50" cy="50" r="${r}" fill="none" stroke="var(--primary)" stroke-width="10" stroke-linecap="round" stroke-dasharray="${c * p / 100} ${c}" transform="rotate(-90 50 50)"/><text x="50" y="56" text-anchor="middle" font-size="22" font-weight="800" fill="var(--text)">${p}%</text></svg>`; };
@@ -653,7 +654,8 @@ function vPlan() {
   </div>`;
 }
 function vWorkPlan() {
-  const vis = tasks.filter(t => (!planOwner || t.owner === planOwner) && (planStatus === "all" || t.status === planStatus));
+  const stageOf = n => (phases.find(p => p.name === n) || {}).stage || "", stageList = [...new Set(phases.map(p => p.stage).filter(Boolean))], stageTitle = n => ((arr(D.stages).find(x => x.name === n) || {}).title || "");
+  const vis = tasks.filter(t => (!planOwner || t.owner === planOwner) && (planStatus === "all" || t.status === planStatus) && (planStage === "all" || stageOf(t.phase) === planStage));
   const seg = (attr, k, label, on) => `<button class="btn sm" data-${attr}="${esc(k)}" aria-pressed="${on}">${esc(label)}</button>`;
   const phaseBlock = p => { const ts = vis.filter(t => t.phase === p.name), all = tasks.filter(t => t.phase === p.name);
     return `<div class="card" style="margin-top:16px"><div class="row"><h3>${esc(p.name)}</h3>${badge(stOf(all))}</div><div class="muted">${esc([p.start, p.end].filter(Boolean).join(" to "))}${all.length ? " · " + sumH(all) + " h · " + all.filter(t => t.status === "done").length + " of " + all.length + " tasks done" : ""}</div>${prog(phasePct(p), p.name)}
@@ -662,9 +664,10 @@ function vWorkPlan() {
   return tasks.length ? `<div class="card"><h2>Work plan, task by task</h2>
     <div class="seg" role="group" aria-label="View">${seg("pv", "list", "List", planView === "list")}${seg("pv", "board", "Board", planView === "board")}</div>
     <div class="seg" role="group" aria-label="Filter by person"><label>Person</label>${seg("po", "", "Everyone", !planOwner)}${owners.map(o => seg("po", o, o, planOwner === o)).join("")}</div>
+    ${stageList.length > 1 ? `<div class="seg" role="group" aria-label="Filter by stage"><label>Stage</label>${seg("pg", "all", "All", planStage === "all")}${stageList.map(n => seg("pg", n, n, planStage === n)).join("")}</div>` : ""}
     <div class="seg" role="group" aria-label="Filter by status"><label>Status</label>${["all", ...STAT].map(k => seg("ps", k, k === "all" ? "All" : k, planStatus === k)).join("")}</div>
     <p class="muted">${vis.length} tasks shown · ${sumH(vis)} h estimated. Statuses and spent hours are updated by Forge from real progress.</p></div>
-  ${planView === "board" ? `<div class="board" style="margin-top:16px">${board}</div>` : phases.map(phaseBlock).join("")}` : `<div class="card"><h2>Work plan</h2><p>${TODO}</p></div>`;
+  ${planView === "board" ? `<div class="board" style="margin-top:16px">${board}</div>` : stageList.length ? stageList.filter(n => planStage === "all" || planStage === n).map(n => { const ph = phases.filter(p => p.stage === n), all = tasks.filter(t => stageOf(t.phase) === n), done = all.filter(t => t.status === "done"); return `<h2 class="sec stagehead">${esc(n)}<small>${esc(stageTitle(n))}</small></h2><div class="card stagebar"><b>${sumH(all)} h</b> <span class="muted">${all.length} tasks · ${ph.length} phases · ${done.length} done</span>${prog(all.length ? Math.round(sumH(done) / sumH(all) * 100) : 0, n)}</div>${ph.map(phaseBlock).join("")}`; }).join("") + phases.filter(p => !p.stage).map(phaseBlock).join("") : phases.map(phaseBlock).join("")}` : `<div class="card"><h2>Work plan</h2><p>${TODO}</p></div>`;
 }
 
 /* ---------- project-type sections: frontend, backend, database, firmware, app, ui, code (HUB.sections) ---------- */
@@ -890,6 +893,7 @@ $("#main").addEventListener("click", e => {
   else if (d.go) show(tabOf(d.go));
   else if (d.jump) { const el = document.getElementById(d.jump); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }); }
   else if (d.po !== undefined) { planOwner = d.po; try { localStorage.setItem(KEY + ":me", d.po); } catch (e) { } refreshPlan(); }
+  else if (d.pg) { planStage = d.pg; refreshPlan(); }
   else if (d.ps) { planStatus = d.ps; refreshPlan(); }
   else if (d.pv) { planView = d.pv; refreshPlan(); }
   else if (d.cp) copy(d.cp, "Path copied.");

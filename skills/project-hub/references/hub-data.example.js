@@ -24,6 +24,7 @@ const HUB = {
     { key: "frontend", title: "Frontend", applicable: true, status: "doing", owner: "Sara", stack: ["HTML", "CSS", "JS", "Three.js"], summary: "3D scene, simulation, dashboard, responsive layout." }
   ],
   plan: {
+    stages: [{ name: "Stage 1", title: "Discovery and design" }],   // optional titles for the stage sections
     estimateNote: "First estimates by Forge from the brief. Not yet confirmed by the team; confirm in the next planning call.",
     // task: { id, t, owner, est (hours), spent (hours), status: todo|doing|blocked|done, due, after: [ids], track, note }
     phases: [
