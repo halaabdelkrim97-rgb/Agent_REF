@@ -9,6 +9,7 @@ Git tags cannot be pushed from the environment these updates were made in, so th
 - Every table and list of four or more items gets a Copy button (tab-separated, pastes into Excel); Gaps has a table copy too.
 - New last block on the dashboard: the project brief (`context.brief`, or written from goal, problem, users and scope) and a "Tell Forge" box with Inform, Update, Change and Decision types that copies a ready message for the chat. The page is static, so it cannot send the message itself.
 - The Work plan tab groups phases under their stage with hours and progress per stage, and has a Stage filter; `plan.stages` gives each stage a title.
+- Phases, stages and tasks can carry `what` and `goal` (a one-line description and its goal), shown in the Work plan.
 - Hardware draws one bill of materials per `list` (for example one per stage), each with its own note.
 - Tested: Playwright desktop and narrow, light and dark, all tabs, copy to the clipboard of a table and the update message, no console errors. Not tested: pasting into Excel itself, other project types.
 
