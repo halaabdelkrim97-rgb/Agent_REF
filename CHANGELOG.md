@@ -3,6 +3,13 @@
 Versions follow `vMAJOR.MINOR.PATCH`. Every commit on `main` starts with the version it belongs to, for example `v1.2.0: summary`.
 Git tags cannot be pushed from the environment these updates were made in, so the commit prefix and this file are the version record.
 
+## v3.2.0 (Same hub in every project, hours report)
+
+- New `references/house-style.md` in project-hub: the rules from a hub the user approved on a client project, so every project gets the same layout, order and writing: fixed tabs, dashboard without repeats, stages with short names, `what` and `goal` everywhere, plain English with no jargon, real owner names, statuses only from real progress, hours only with no prices, one parts list per stage, local folder sync.
+- New `templates/report.html`: an A4 portrait hours report read from the same `hub-data.js`: summary page, one-page task map with a short description per group, one timeline per stage (each restarting at day 1, counted in working days). New optional fields `plan.stages[].short`, `plan.reserve`, `plan.pace` (never printed), `plan.reportIntro`, `plan.reportNotes`.
+- SKILL.md: the layout is fixed and `ui.tabs` is only for an explicit user request; the legacy-shape and diagram text moved to `references/profiles.md` unchanged.
+- Tested: the report rendered to PDF with Playwright on a real mechatronics hub (45 tasks, 2 stages, 2 owners): 4 A4 pages, totals and working days match the hand-made PDF the user approved, no console errors; `node --check` on the example data. Not tested: web and game projects, a plan without stages, printing from a browser by hand.
+
 ## v3.1.1 (Dashboard without repeats, copy buttons, brief)
 
 - The dashboard shows each fact once: risks, decisions, next steps, parts, tests and the stack card are left to their own tabs; a short "Needs attention" strip appears only when something is blocked.

@@ -62,3 +62,6 @@ A diagram can look like a real system drawing. All fields are optional; the page
 - Routing: blocks are reordered inside each column to cut crossings (zone first), every wire between neighbouring columns gets its own vertical channel with square corners, the gap widens when many wires share it, and labels move along the wire (or just above or below it) to avoid each other and never sit on a block.
 - Wires between blocks in the same column loop out on the right. A rail shared by many blocks is shown as one labelled power wire per consumer.
 - Facts only: baud rates, pins, voltages and test dates come from the user or the files; a block not built yet gets `status: "planned"`.
+
+## Legacy shape and diagrams
+For the legacy shape: **Hardware tab** only if there is hardware or firmware; **Software tab** only if there is backend or frontend; a **System overview** diagram always (4 to 10 blocks, written to the Project tab); a **block schematic** for the board or wiring; a **state diagram** where firmware or UI logic has states; **layers and a data-flow diagram** for software. Small projects merge sections with `ui.tabs` (for example one "Build" tab with `parts: ["Hardware","Software"]`) only when the user asks (see `house-style.md`). Without `ui.tabs` the page picks tabs from the data.

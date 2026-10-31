@@ -4,7 +4,7 @@
 
 Forge helps an AI assistant understand a project, work within its existing stack, document decisions, and report what it checked. This repository contains the agent instructions, 39 skills, templates, and Claude Code commands.
 
-**Current version:** 3.1.1 · [Changelog](CHANGELOG.md) · [Documentation guide](templates/DOCUMENTATION.md) · [Skills](skills/)
+**Current version:** 3.2.0 · [Changelog](CHANGELOG.md) · [Documentation guide](templates/DOCUMENTATION.md) · [Skills](skills/)
 
 ---
 
@@ -105,7 +105,7 @@ Claude Code users can use the plugin commands. In other hosts, ask for the same 
 
 ## Project Hub
 
-The optional Project Hub is a local HTML view of project context, plans, documentation, open questions, and agent information. Its pages adapt to the project type, including software, mechatronics, and games. Forge offers to create it when missing and updates affected information as the project changes. Unknown facts remain open; diagrams and estimates need appropriate evidence or confirmation.
+The optional Project Hub is a local HTML view of project context, plans, documentation, open questions, and agent information. Every project gets the same layout and house style (plain English, stages, hours only); the middle pages adapt to the project type, including software, mechatronics, and games. A matching A4 hours report (`report.html`) prints the plan as a PDF: summary, task map and one timeline per stage. Forge offers to create it when missing and updates affected information as the project changes. Unknown facts remain open; diagrams and estimates need appropriate evidence or confirmation.
 
 Read the [`project-hub` skill](skills/project-hub/SKILL.md) for the details.
 

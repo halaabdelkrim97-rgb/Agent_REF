@@ -24,7 +24,10 @@ const HUB = {
     { key: "frontend", title: "Frontend", applicable: true, status: "doing", owner: "Sara", stack: ["HTML", "CSS", "JS", "Three.js"], summary: "3D scene, simulation, dashboard, responsive layout." }
   ],
   plan: {
-    stages: [{ name: "Stage 1", title: "Discovery and design" }],   // optional titles for the stage sections
+    stages: [{ name: "Stage 1", short: "Discovery", title: "Discovery and design", what: "Learn what users need and design the screens.", goal: "A design the client accepts." }],   // optional titles for the stage sections
+    reserve: 10,                       // percent reserve for the unexpected, shown in the hours report
+    pace: { "Omar": 6 },                // hours per day per owner for the report timeline (default 8), never printed
+    reportNotes: ["Hours are working hours."],   // "Good to know" lines of the hours report
     estimateNote: "First estimates by Forge from the brief. Not yet confirmed by the team; confirm in the next planning call.",
     // task: { id, t, owner, est (hours), spent (hours), status: todo|doing|blocked|done, due, after: [ids], track, note }
     phases: [

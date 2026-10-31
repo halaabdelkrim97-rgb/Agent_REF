@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Work plan and hours</title>
+<style>
+/* Forge hours report: A4 portrait, printed to PDF. Static page: never edit it per project. Content comes from hub-data.js. */
+@page { size: A4; margin: 0 0 10mm; @bottom-left { content: "Work plan and hours"; font: 7pt system-ui, sans-serif; color: #9AA5B1; margin-left: 16mm; } @bottom-right { content: "Page " counter(page) " of " counter(pages); font: 7pt system-ui, sans-serif; color: #9AA5B1; margin-right: 16mm; } }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Inter, system-ui, "Segoe UI", sans-serif; color: #1F2933; font-size: 9pt; line-height: 1.35; background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+@media screen { body { background: #E4E7EB; } .page { margin: 12px auto; box-shadow: 0 1px 4px rgba(0,0,0,.15); background: #fff; } .hint { max-width: 210mm; margin: 12px auto 0; font: 13px system-ui, sans-serif; color: #52606D; } }
+@media print { .hint { display: none; } }
+.page { width: 210mm; min-height: 287mm; padding: 16mm 16mm 8mm; page-break-after: always; }
+.page:last-child { page-break-after: auto; }
+.bar-accent { width: 14mm; height: 1.6mm; background: #D7263D; margin-bottom: 4mm; }
+h1 { font-size: 20pt; font-weight: 700; letter-spacing: -0.3pt; color: #2E3A48; margin-bottom: 2mm; }
+h2 { font-size: 10.5pt; font-weight: 700; color: #2E3A48; margin: 6mm 0 2mm; text-transform: uppercase; letter-spacing: 0.6pt; }
+.lead { color: #52606D; font-size: 9.5pt; max-width: 165mm; }
+.small { color: #52606D; font-size: 8.5pt; margin: 3mm 0 2mm; }
+.eyebrow { font-size: 8pt; text-transform: uppercase; letter-spacing: 1pt; color: #D7263D; font-weight: 700; margin-bottom: 1mm; }
+.phead { margin-bottom: 5mm; }
+.figs { display: flex; gap: 4mm; margin: 2mm 0 4mm; }
+.figs div { flex: 1; border-top: 0.6mm solid #2E3A48; padding-top: 2mm; color: #52606D; font-size: 8.5pt; }
+.figs b { display: block; font-size: 18pt; color: #2E3A48; } .figs .acc { border-top-color: #D7263D; } .figs .acc b { color: #D7263D; }
+table.wp { width: 100%; border-collapse: collapse; }
+.wp th { text-align: left; font-size: 7.5pt; text-transform: uppercase; letter-spacing: 0.5pt; color: #fff; background: #2E3A48; padding: 2mm; }
+.wp td { padding: 1.6mm 2mm; border-bottom: 0.2mm solid #E6E9ED; vertical-align: top; }
+.wp .h { text-align: right; white-space: nowrap; } .wp td.h { font-weight: 700; }
+.wp tr.tot td { border-top: 0.6mm solid #D7263D; border-bottom: none; font-weight: 700; font-size: 10pt; color: #2E3A48; padding-top: 2.5mm; }
+.wp .by { color: #52606D; } .tt { font-weight: 600; }
+.notes { padding-left: 4mm; color: #52606D; } .notes li { margin-bottom: 1.2mm; }
+.legend { display: flex; flex-wrap: wrap; gap: 2mm 5mm; font-size: 8pt; color: #52606D; margin: 1mm 0 3mm; }
+.legend i { display: inline-block; width: 3mm; height: 3mm; margin-right: 1.5mm; vertical-align: -0.4mm; }
+.legend i.ck { width: 0.9mm; height: 3.2mm; } .legend i.w { width: 3mm; background: #FDE2E5; }
+.flow { columns: 2; column-gap: 6mm; } .flow .grp, .flow .colh { break-inside: avoid; } .flow .colh + .colh, .flow .grp + .colh { margin-top: 4mm; }
+.colh { background: #D7263D; color: #fff; font-weight: 700; padding: 2mm 3mm; font-size: 9pt; margin-bottom: 3mm; } .colh.dark { background: #2E3A48; }
+.grp { border: 0.3mm solid #DDE1E6; }
+.gh2 { display: flex; justify-content: space-between; background: #F2F4F6; padding: 1.5mm 2.5mm; font-weight: 700; color: #2E3A48; font-size: 8.5pt; }
+.gh2 span:last-child { font-weight: 400; color: #7B8794; font-size: 7.5pt; }
+.gd { font-size: 7.4pt; color: #52606D; padding: 1.2mm 2.5mm 0; font-style: italic; }
+.chips { padding: 1.5mm 2mm; }
+.chip { font-size: 7.2pt; padding: 0.5mm 0 0.5mm 2.5mm; border-left: 0.9mm solid; margin: 0.8mm 0; display: flex; gap: 1.5mm; }
+.chip b { color: #7B8794; font-weight: 600; min-width: 8mm; } .chip span { margin-left: auto; color: #7B8794; white-space: nowrap; }
+.chip.done { color: #7B8794; } .chip.blocked { background: #FDE2E5; }
+.arrow { text-align: center; color: #CBD2D9; font-size: 8pt; line-height: 1; margin: 0.8mm 0; }
+.gantt .gx { font-size: 2.3px; fill: #7B8794; } .gantt .gp { font-size: 2.6px; font-weight: 700; fill: #2E3A48; }
+.gantt .gt { font-size: 2.5px; fill: #3E4C59; } .gantt .gid { fill: #9AA5B1; } .gantt .gh { font-size: 2.1px; fill: #7B8794; }
+.sumbox { display: flex; gap: 4mm; margin-top: 8mm; }
+.sumbox div { flex: 1; background: #F2F4F6; border-left: 1.2mm solid #D7263D; padding: 3mm; color: #52606D; font-size: 8.5pt; }
+.sumbox b { display: block; font-size: 17pt; color: #2E3A48; }
+</style>
+</head>
+<body>
+<p class="hint">Hours report from hub-data.js. Print it to PDF (A4, portrait, background graphics on).</p>
+<main id="r"></main>
+<script src="hub-data.js"></script>
+<script>
+"use strict";
+/* Pages: summary, task map (one page), one timeline per stage. Timelines count working days from plan.pace
+   (hours per day per owner, default 8); the pace itself is never printed. Each stage restarts at day 1. */
+const D = typeof HUB !== "undefined" ? HUB : {}, P = D.plan || {}, PJ = D.project || {};
+const arr = x => Array.isArray(x) ? x : [];
+const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const clean = n => String(n || "").replace(/^\d+\.\s*/, "");
+const phases = arr(P.phases).map(p => ({ ...p, label: clean(p.name), stage: p.stage || "" }));
+const tasks = [];
+phases.forEach((p, pi) => arr(p.tasks).forEach(t => tasks.push({ ...t, h: +t.est || 0, by: t.owner || "", deps: arr(t.after), pi, stage: p.stage })));
+const sum = a => a.reduce((s, t) => s + t.h, 0);
+const stages = [...new Set(phases.map(p => p.stage))];
+const stageInfo = n => arr(P.stages).find(s => s.name === n) || { name: n };
+const owners = [...new Set(tasks.map(t => t.by).filter(Boolean))];
+const COLORS = ["#D7263D", "#2E3A48", "#2B7A78", "#B7791F", "#6B4FA0"], DONE = "#A9B1BB";
+const colorOf = t => t.status === "done" ? DONE : COLORS[owners.indexOf(t.by) % COLORS.length] || COLORS[0];
+const total = sum(tasks), reservePct = +P.reserve || 0, reserve = Math.round(total * reservePct / 100);
+const byWho = ts => [...new Set(ts.map(t => t.by).filter(Boolean))].join(" and ");
+const pace = P.pace || {};
+
+/* schedule: one task at a time per owner, a task starts when the tasks it waits on are finished */
+const byId = Object.fromEntries(tasks.map(t => [t.id, t])), free = {}, left = tasks.slice();
+while (left.length) {
+  let i = left.findIndex(t => t.deps.every(d => !byId[d] || byId[d].end !== undefined));
+  if (i < 0) i = 0; /* a loop in the data: place the next task anyway */
+  const t = left.splice(i, 1)[0], rate = +pace[t.by] || 8;
+  t.start = Math.max(free[t.by] || 0, ...t.deps.filter(d => byId[d] && byId[d].end !== undefined).map(d => byId[d].end), 0);
+  t.end = t.start + t.h / rate; free[t.by] = t.end;
+}
+
+function summary() {
+  const figs = stages.map(s => `<div><b>${sum(tasks.filter(t => t.stage === s))} h</b>${esc(s ? s + (stageInfo(s).short ? ": " + stageInfo(s).short : "") : "All tasks")}</div>`).slice(0, 2).join("") +
+    (stages.length > 1 ? `<div><b>${total} h</b>Total work</div>` : "") +
+    (reserve ? `<div class="acc"><b>≈ ${Math.round((total + reserve) / 10) * 10} h</b>Total with ${reservePct}% reserve</div>` : `<div class="acc"><b>${total} h</b>Total work</div>`);
+  const rows = phases.map(p => { const ts = tasks.filter(t => t.pi === phases.indexOf(p)); return `<tr><td class="by">${esc(p.stage)}</td><td class="tt">${esc(p.label)}</td><td class="by">${esc(byWho(ts))}</td><td class="h">${sum(ts)}</td></tr>`; }).join("");
+  const notes = arr(P.reportNotes).length ? arr(P.reportNotes) : ["Hours are working hours."];
+  return `<section class="page"><div class="phead"><div class="bar-accent"></div><div class="eyebrow">${esc([PJ.name, PJ.updated].filter(Boolean).join(" · "))}</div><h1>Work plan and hours</h1>
+  <p class="lead">${esc(P.reportIntro || "All the work needed to build " + (PJ.name || "the project") + ": the tasks, the hours, who does each task and in which order.")}</p></div>
+  <div class="figs">${figs}</div><h2>Summary</h2>
+  <table class="wp"><colgroup><col style="width:22mm"><col><col style="width:34mm"><col style="width:18mm"></colgroup>
+  <thead><tr><th>Stage</th><th>Group of tasks</th><th>By</th><th class="h">Hours</th></tr></thead><tbody>${rows}
+  <tr class="tot"><td colspan="3">Total work (${tasks.length} tasks)</td><td class="h">${total} h</td></tr>
+  ${reserve ? `<tr><td colspan="3" class="by">Reserve for the unexpected (${reservePct}%)</td><td class="h">${reserve} h</td></tr>` : ""}
+  ${owners.length > 1 ? `<tr><td colspan="3" class="by">${esc(owners.join(" / "))}</td><td class="h">${owners.map(o => sum(tasks.filter(t => t.by === o))).join(" / ")} h</td></tr>` : ""}
+  </tbody></table><h2>Good to know</h2><ul class="notes">${notes.map(n => `<li>${esc(n)}</li>`).join("")}</ul></section>`;
+}
+
+function legend() {
+  return `<div class="legend">${owners.map(o => `<span><i class="ck" style="background:${colorOf({ by: o })}"></i>${esc(o)}</span>`).join("")}<span><i class="ck" style="background:${DONE}"></i>Done</span>${tasks.some(t => t.status === "blocked") ? `<span><i class="w"></i>Waiting</span>` : ""}</div>`;
+}
+function taskMap() {
+  const body = stages.map((s, si) => `<div class="colh${si ? " dark" : ""}">${esc(s ? s + (stageInfo(s).short ? ": " + stageInfo(s).short : "") : "All tasks")} · ${sum(tasks.filter(t => t.stage === s))} h</div>` +
+    phases.filter(p => p.stage === s).map((p, i) => { const ts = tasks.filter(t => t.pi === phases.indexOf(p));
+      return (i ? '<div class="arrow">▼</div>' : "") + `<div class="grp"><div class="gh2"><span>${esc(p.label)}</span><span>${sum(ts)} h · ${esc(byWho(ts))}</span></div>${p.what ? `<div class="gd">${esc(p.what)}</div>` : ""}<div class="chips">` +
+        ts.map(t => `<div class="chip ${esc(t.status)}" style="border-left-color:${colorOf(t)}"><b>${esc(t.id)}</b> ${esc(t.t)}<span>${t.h} h</span></div>`).join("") + "</div></div>"; }).join("")).join("");
+  return `<section class="page"><div class="phead"><div class="bar-accent"></div><div class="eyebrow">${stages.length > 1 ? "All stages" : "All tasks"}</div><h1>Task map</h1>
+  <p class="lead">All tasks grouped by kind of work, top to bottom in the order they are done.</p></div>${legend()}<div class="flow">${body}</div></section>`;
+}
+
+function timeline(stage) {
+  const ts = tasks.filter(t => t.stage === stage); if (!ts.length) return { svg: "", days: 0 };
+  const t0 = Math.min(...ts.map(t => t.start)), t1 = Math.max(...ts.map(t => t.end));
+  const d0 = Math.floor(t0 + 1e-9), nd = Math.max(1, Math.ceil(t1 - 1e-9) - d0);
+  const rows = []; phases.filter(p => p.stage === stage).forEach(p => { rows.push({ ph: p.label }); ts.filter(t => t.pi === phases.indexOf(p)).forEach(t => rows.push(t)); });
+  const L = 62, W = 178 - L - 9, top = 9, rh = Math.min(8, 200 / rows.length), x = d => L + (d - d0) / nd * W, Ht = top + rows.length * rh + 2;
+  const step = nd > 40 ? 10 : nd > 20 ? 5 : nd > 10 ? 2 : 1;
+  let s = `<svg viewBox="0 0 178 ${Ht}" width="178mm" height="${Ht}mm" class="gantt">`;
+  for (let d = 0; d <= nd; d++) { const xx = L + d / nd * W; s += `<line x1="${xx}" x2="${xx}" y1="${top - 1}" y2="${Ht}" stroke="${d % step ? "#F1F3F5" : "#DDE1E6"}" stroke-width="0.2"/>`; if (d < nd && d % step === 0) s += `<text x="${xx + 0.6}" y="${top - 2.5}" class="gx">Day ${d + 1}</text>`; }
+  rows.forEach((r, i) => {
+    const y = top + i * rh;
+    if (r.ph) { s += `<rect x="0" y="${y}" width="178" height="${rh}" fill="#F2F4F6"/><text x="1.5" y="${y + rh / 2 + 1.1}" class="gp">${esc(r.ph)}</text>`; return; }
+    const title = String(r.t || ""); s += `<text x="1.5" y="${y + rh / 2 + 1}" class="gt"><tspan class="gid">${esc(r.id)}</tspan>  ${esc(title.length > 38 ? title.slice(0, 36) + "…" : title)}</text>`;
+    const bh = Math.min(rh * 0.6, 4);
+    s += `<rect x="${x(r.start)}" y="${y + (rh - bh) / 2}" width="${Math.max(x(r.end) - x(r.start), 0.6)}" height="${bh}" fill="${colorOf(r)}"/><text x="${x(r.end) + 1}" y="${y + rh / 2 + 1}" class="gh">${r.h} h</text>`;
+  });
+  return { svg: s + "</svg>", days: nd };
+}
+function timelines() {
+  const all = stages.map(s => ({ s, g: timeline(s) }));
+  return all.map(({ s, g }, i) => { const info = stageInfo(s);
+    return `<section class="page"><div class="phead"><div class="bar-accent"></div><div class="eyebrow">${esc(s ? s + (info.short ? ": " + info.short : "") : "All tasks")}</div><h1>Timeline</h1>${info.what ? `<p class="lead">${esc(info.what)}</p>` : ""}</div>
+    <p class="small">Counted in working days${i ? `. Day 1 is the first day of ${esc(s)}` : ""}. Each person does one task at a time, and a task starts when the tasks it needs are finished. ${esc(s || "The work")} takes about ${g.days} working days. Real dates depend on parts arriving and on client replies.</p>
+    ${legend()}${g.svg}${i === all.length - 1 && all.length > 1 ? `<div class="sumbox">${all.map(a => `<div><b>${a.g.days}</b> working days for ${esc(a.s)}</div>`).join("")}<div><b>${all.reduce((n, a) => n + a.g.days, 0)}</b> working days in all, without the reserve and waiting time</div></div>` : ""}</section>`; }).join("");
+}
+
+document.title = (PJ.name ? PJ.name + ": " : "") + "work plan and hours";
+document.getElementById("r").innerHTML = tasks.length ? summary() + taskMap() + timelines() : `<section class="page"><h1>No tasks yet</h1><p class="lead">Add phases and tasks to plan.phases in hub-data.js.</p></section>`;
+</script>
+</body>
+</html>

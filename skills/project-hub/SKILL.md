@@ -1,6 +1,6 @@
 ---
 name: project-hub
-description: Builds and updates the Project Hub for the project Forge is working on, generated from the project and its type (web, mechatronics, game). Always has context, work plan with hours, business plan, documents and quality, the agent page with analytics, and open points with Q&A. Adds type pages (frontend, backend, database, design; firmware, hardware, app; UI, code, structure, assets) and system drawings with zones. Use at project start, after substantial work, or for /forge:hub.
+description: Builds and updates the Project Hub for the project Forge is working on, generated from the project and its type (web, mechatronics, game). Always has context, work plan with hours, business plan, documents and quality, the agent page with analytics, and open points with Q&A. Adds type pages (frontend, backend, database, design; firmware, hardware, app; UI, code, structure, assets) and system drawings with zones. Same layout and house style in every project, plus an A4 hours report (PDF). Use at project start, after substantial work, for an hours PDF, or for /forge:hub.
 metadata:
   source: original (Agent_REF)
   date_added: '2026-10-13'
@@ -10,9 +10,12 @@ metadata:
 
 Goal: one visual place where the user (and the client) sees the project: context, who builds what, plans, money, the agent, and what is still undecided. Generate it from `docs/PROJECT_CONTEXT.md` and relevant linked files under `docs/source-of-truth/` and `docs/plans/`. The hub is a view, not the authority; never invent facts.
 
-Two files in `docs/hub/`:
+Three files in `docs/hub/`:
 - `index.html`: the static page. Copy it, never edit or re-read it.
+- `report.html`: the static A4 hours report. Copy it, never edit it.
 - `hub-data.js`: all project content in one `HUB` object. This is the only file Forge edits (it is small).
+
+**Same hub in every project.** The layout, tab order and style are fixed by the template; only the content comes from the project. Follow `references/house-style.md` for how to fill and write the content (dashboard, stages, plain English, hours only, the report).
 
 Pages are generated from the project and its type (`HUB.profile`, details in `references/profiles.md`).
 - **Always:** Dashboard (first page: progress, hours, task map, hours per phase, project timeline, next up, risks, open decisions, quick access, then the full project details), Plan (summary, timeline, workload, risks, decisions), Work plan (every task, list or board; added automatically after Plan when there are tasks), Business, Docs and quality, Agent (roles, capabilities, skills used, analytics), Gaps (open points with options and typed answers).
@@ -21,17 +24,17 @@ Pages are generated from the project and its type (`HUB.profile`, details in `re
 - Each type page can hold details, a project structure tree, diagrams and its tasks. The page draws every tab when first opened, so it loads light.
 
 ## Analyze the project first
-The hub is built for this project, not from a fixed form.
+The content is built from this project; the layout is not changed per project.
 1. List what exists with `git ls-files` or `ls`; read only manifests, the context index and relevant linked source-of-truth and plan files. Hardware: `hardware/`, `cad/`, `*.kicad_sch`, `*.step`, `*.stl`. Firmware: `platformio.ini`, `*.ino`, `firmware/`. Backend: `server/`, `api/`, `requirements.txt`, `package.json`. Frontend: `index.html`, `src/`. Do not read source files for this.
-2. Decide the type and set `profile.type` (`web`, `mechatronics`, `game`; ask if unclear) and `profile.apps`. Fill `sections` for each type page: summary, stack, owner, status, a `tree` of 20 to 60 lines (folders and key files, not-built files noted `planned`), and `items`. For the legacy shape: **Hardware tab** only if there is hardware or firmware; **Software tab** only if there is backend or frontend; a **System overview** diagram always (4 to 10 blocks, written to the Project tab); a **block schematic** for the board or wiring; a **state diagram** where firmware or UI logic has states; **layers and a data-flow diagram** for software. Small projects merge sections with `ui.tabs` (for example one "Build" tab with `parts: ["Hardware","Software"]`). Without `ui.tabs` the page picks tabs from the data.
+2. Decide the type and set `profile.type` (`web`, `mechatronics`, `game`; ask if unclear) and `profile.apps`. Fill `sections` for each type page: summary, stack, owner, status, a `tree` of 20 to 60 lines (folders and key files, not-built files noted `planned`), and `items`. Diagrams: see "Legacy shape and diagrams" in `references/profiles.md`.
 3. Draw only what the files, the context file or the user show. Parts not built yet get `status: "planned"` (dashed box). A diagram is `proposed` until the user confirms it, then `decided`, then `built`. If the architecture is open, raise a gap with 2 to 4 options (area `architecture`) instead of guessing.
 4. Never invent part numbers, pins, voltages, currents, prices, endpoints or fields. Leave them out and say so. The hardware diagram is block-level: put the real schematic file in `docs` and name it in the diagram `note`.
 5. Diagram format (details in `references/hub-data.example.js` and the drawing style in `references/profiles.md`): `nodes` `{id,label,sub,group,status,in,out}` (`in` and `out` are pins drawn on the left and right), `edges` `{from,to,label,kind}` with `kind` one of `data`, `power`, `signal`, `control` and pins named as `"block.pin"`, optional `columns` for lanes. Keep a diagram under 12 nodes and labels short; split instead of cramming. For a full **system drawing** add `zones` (enclosure or location outlines), your own wire `kinds` (label, color, dash), block `lines` and `tag` (tested, missing, tone ok, warn or bad), and edge `start` and `end` labels (baud rate, pin names). The page lays it out, routes long wires above the diagram and adds a text version.
 
 ## Create (first time)
 1. Make sure the context file exists (`doc-writer`, project context file). Read it once.
-2. `mkdir -p docs/hub`, then copy `templates/index.html` and `templates/hub-data.js` from this skill folder into it (shell `cp`; do not open them).
-3. Fill `hub-data.js` from the context index and relevant linked project records. If unsure of a field's shape, read `references/hub-data.example.js` once (fictional example, copy shapes not facts).
+2. `mkdir -p docs/hub`, then copy `templates/index.html`, `templates/report.html` and `templates/hub-data.js` from this skill folder into it (shell `cp`; do not open them).
+3. Fill `hub-data.js` from the context index and relevant linked project records, in the house style (`references/house-style.md`). If unsure of a field's shape, read `references/hub-data.example.js` once (fictional example, copy shapes not facts).
    - Agent page: set `agent.usedSkills` from this session's skill-use reports (name and reason), `agent.roles` if the project needs roles other than the defaults (planner, builder, verifier, documenter), and append one line to `agent.log` per piece of work (`date`, `task`, `skills`, `tokens` only when the environment shows them). The analytics (coverage, sessions, most used skills) are computed from these. The catalog and Forge version are built into `index.html`.
    - Tracks: only the ones the project needs; each task joins a track through its `track` field and the card appears in the matching tab.
    - `hardware`, `software` and `diagrams` as decided in the analysis; power loads and capacities only from datasheets or the user.
@@ -54,6 +57,10 @@ The hub is built for this project, not from a fixed form.
 - Keep tasks small (1 to 8 hours; split bigger ones), one owner each, ordered so a person can take the next one. Put the reason for `blocked` in `note`.
 - Hours come from the user or the team. When Forge proposes them, set `plan.estimateNote` ("First estimates by Forge from the brief, not yet confirmed by the team") and add a blocker gap "Are the hour estimates right?". Never present estimates as commitments. `spent` is only what the user reports.
 - The page computes totals, remaining hours, workload per person, next-up tasks (not blocked, dependencies done) and phase progress. Do not write those numbers by hand.
+
+## Hours report (PDF)
+- `report.html` prints the plan as an A4 portrait report: summary, one-page task map, one timeline per stage (each from day 1). It reads `plan.stages[].short`, `plan.reserve`, `plan.pace` (hours per day per owner, never printed), `plan.reportIntro` and `plan.reportNotes`. Details in `references/house-style.md`.
+- Render it with a headless browser (`page.pdf` with `preferCSSPageSize`) or ask the user to print it to PDF, look at every page, and save the PDF under `docs/plans/`.
 
 ## Documents
 - List every project document in `docs` with `group`, `title`, `type`, `status` (`draft`, `review`, `approved`, `outdated`, `missing`), `owner`, `updated`, `note`, and `path` (relative to the project root, copy button) or `url` (Open button).
@@ -78,4 +85,4 @@ The user picks an option or types an answer on the Gaps tab. "Ask Forge about th
 - All data is escaped by the page. Never put raw HTML in `hub-data.js`.
 - No secrets, tokens, personal data or client data the user did not agree to show. For a client-facing hub, leave out internal costs and margin unless told otherwise.
 - Brand colors: the page darkens fills automatically when white text on the primary color would be under 4.5:1; still warn the user if a palette color is very light.
-- Tabs follow the project (`ui.tabs` overrides). Gaps is always present. Add a tab only when the user asks.
+- The tab order is fixed by the template. Set `ui.tabs` or add a tab only when the user asks for that project. Gaps is always present.
