@@ -1,10 +1,25 @@
 # Hub house style: the same hub in every project
 
-Learned on a real client project (Oct 2026) where the user approved the result. Apply it to every hub so each project gets the same look, order and way of writing. The template gives the look; these rules give the content.
+Learned on a real client project (Oct 2026) where the user approved the result. Apply it to every hub so each project gets the same look and way of writing, and projects of the same category get the same tabs. The template gives the look; these rules give the content.
 
-## Layout (never change per project)
-- Copy `templates/index.html` and `templates/report.html` unchanged. Never write `ui.tabs`, extra tabs or custom styles unless the user asks for that project.
-- Tab order is fixed by the template: Dashboard, Plan, Work plan, the type tabs (for example Firmware, Hardware, App), Business, Docs and quality, Agent, Gaps.
+## Tabs: same common tabs, category tabs by rule
+Every hub has the same common tabs. The middle tabs depend on the project category, and the rules below decide them; Forge does not invent tabs. Set `profile.type` and `profile.apps`, and the template builds the tabs in this order:
+
+**Dashboard · Plan · Work plan · [category tabs] · Business · Docs and quality · Agent · Gaps**
+
+| Category (`profile.type`) | Category tabs, in order | What each tab holds |
+| --- | --- | --- |
+| `mechatronics` (devices, machines, electronics) | Firmware · Hardware · App (only with `apps` or software) · Assets (only with assets or libraries) · Identity (only with a palette) | Firmware: details, stack, modules (`items`), state diagram, firmware structure tree, firmware tasks. Hardware: system drawing or block schematic, power budget, one parts list per stage or kit, pin map, hardware structure, hardware tasks. App: web app, mobile app or HMI screens and their tasks |
+| `web` (web apps and sites) | Frontend · Backend · Database · Design | Frontend: pages and components, stack, structure. Backend: services, API endpoints, structure. Database: tables and fields. Design: palette, fonts, tone, references, assets, libraries |
+| `game` | UI · Code · Structure · Assets | UI: screens and HUD. Code: game systems and scripts (for example Unity). Structure: the whole project tree. Assets: assets by type, libraries, licenses, art style |
+| none of these (`""`) | Hardware and Software (only when the data has them) · Identity · Assets | Tabs are picked from the data |
+
+Rules:
+- Pick the category from the project's main product, and ask the user when it is unclear. A device with a companion app stays `mechatronics` with `apps: ["webapp"]` (or `mobile`, `hmi`); it does not become `web`.
+- Fill each category tab with its sections from the table, from the project files only. A section with no data stays empty ("to define"); do not add a tab for it.
+- Tasks appear on their category tab through `track`; diagrams through `tab` or `kind`.
+- Change the tabs only by the user's request for that project (`ui.tabs`), and record why in the context file.
+- Copy `templates/index.html` and `templates/report.html` unchanged; the look (dark and light, cards, colors) is the same in every category.
 - Desktop first. Check the page at desktop width; the narrow view only has to stay readable, not polished.
 
 ## Dashboard

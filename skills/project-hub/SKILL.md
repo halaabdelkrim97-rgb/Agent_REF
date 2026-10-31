@@ -15,7 +15,7 @@ Three files in `docs/hub/`:
 - `report.html`: the static A4 hours report. Copy it, never edit it.
 - `hub-data.js`: all project content in one `HUB` object. This is the only file Forge edits (it is small).
 
-**Same hub in every project.** The layout, tab order and style are fixed by the template; only the content comes from the project. Follow `references/house-style.md` for how to fill and write the content (dashboard, stages, plain English, hours only, the report).
+**Same hub, tabs by category.** Look and common tabs are the same in every project; the middle tabs follow the project category (mechatronics, web, game) by the rules in `references/house-style.md`, never invented per project. Follow `references/house-style.md` for how to fill and write the content (dashboard, stages, plain English, hours only, the report).
 
 Pages are generated from the project and its type (`HUB.profile`, details in `references/profiles.md`).
 - **Always:** Dashboard (first page: progress, hours, task map, hours per phase, project timeline, next up, risks, open decisions, quick access, then the full project details), Plan (summary, timeline, workload, risks, decisions), Work plan (every task, list or board; added automatically after Plan when there are tasks), Business, Docs and quality, Agent (roles, capabilities, skills used, analytics), Gaps (open points with options and typed answers).
@@ -24,7 +24,7 @@ Pages are generated from the project and its type (`HUB.profile`, details in `re
 - Each type page can hold details, a project structure tree, diagrams and its tasks. The page draws every tab when first opened, so it loads light.
 
 ## Analyze the project first
-The content is built from this project; the layout is not changed per project.
+The content and the category tabs come from this project; the look does not change.
 1. List what exists with `git ls-files` or `ls`; read only manifests, the context index and relevant linked source-of-truth and plan files. Hardware: `hardware/`, `cad/`, `*.kicad_sch`, `*.step`, `*.stl`. Firmware: `platformio.ini`, `*.ino`, `firmware/`. Backend: `server/`, `api/`, `requirements.txt`, `package.json`. Frontend: `index.html`, `src/`. Do not read source files for this.
 2. Decide the type and set `profile.type` (`web`, `mechatronics`, `game`; ask if unclear) and `profile.apps`. Fill `sections` for each type page: summary, stack, owner, status, a `tree` of 20 to 60 lines (folders and key files, not-built files noted `planned`), and `items`. Diagrams: see "Legacy shape and diagrams" in `references/profiles.md`.
 3. Draw only what the files, the context file or the user show. Parts not built yet get `status: "planned"` (dashed box). A diagram is `proposed` until the user confirms it, then `decided`, then `built`. If the architecture is open, raise a gap with 2 to 4 options (area `architecture`) instead of guessing.
@@ -85,4 +85,4 @@ The user picks an option or types an answer on the Gaps tab. "Ask Forge about th
 - All data is escaped by the page. Never put raw HTML in `hub-data.js`.
 - No secrets, tokens, personal data or client data the user did not agree to show. For a client-facing hub, leave out internal costs and margin unless told otherwise.
 - Brand colors: the page darkens fills automatically when white text on the primary color would be under 4.5:1; still warn the user if a palette color is very light.
-- The tab order is fixed by the template. Set `ui.tabs` or add a tab only when the user asks for that project. Gaps is always present.
+- Tabs come from the category rules in `references/house-style.md`. Set `ui.tabs` or add a tab only when the user asks for that project. Gaps is always present.
