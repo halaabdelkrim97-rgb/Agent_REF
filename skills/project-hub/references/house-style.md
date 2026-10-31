@@ -49,6 +49,7 @@ Rules:
 - Fields it reads: `plan.stages[].short` and `what`, phase `what`, `plan.reserve` (percent, shown as a reserve line), `plan.pace` (hours per day per owner, default 8; used for the timeline and never printed), `plan.reportIntro` and `plan.reportNotes` (the "Good to know" lines).
 - Each stage's timeline starts again at day 1. It counts working days only, never hours per day.
 - Make the PDF with a headless browser when one is available, for example Playwright `page.pdf({ preferCSSPageSize: true, printBackground: true })` on `report.html`, or ask the user to open it and print to PDF (A4, background graphics on). Look at every page before sending it.
+- The report look is fixed in every project: A4 portrait, dark slate and red, white pages. It does not follow the hub's colors or a brand palette.
 - Keep it simple: no extra charts, no cover page, no per-task tables unless the user asks.
 
 ## Local copy

@@ -7,6 +7,7 @@ Git tags cannot be pushed from the environment these updates were made in, so th
 
 - house-style.md now defines the tabs per project category instead of one fixed set: the same common tabs everywhere, then category tabs by rule (mechatronics: Firmware, Hardware, App; web: Frontend, Backend, Database, Design; game: UI, Code, Structure, Assets), with what each tab holds, when optional tabs appear, and how to pick the category (a device with an app stays mechatronics).
 - SKILL.md points to these rules; `ui.tabs` stays for an explicit user request only.
+- The hours report keeps one fixed look (A4 portrait, dark slate and red) in every project, by the user's decision.
 - Tested: `package_skills.py --check`, README links. Rules match the template's existing tab logic; no template change.
 
 ## v3.2.0 (Same hub in every project, hours report)
