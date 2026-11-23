@@ -3,6 +3,13 @@
 Versions follow `vMAJOR.MINOR.PATCH`. Every commit on `main` starts with the version it belongs to, for example `v1.2.0: summary`.
 Git tags cannot be pushed from the environment these updates were made in, so the commit prefix and this file are the version record.
 
+## v3.3.0 (Parts list with prices, suppliers and links)
+
+- The Hardware parts tables accept `price` (the line price as ordered), `supplier` and `url` on each `hardware.bom` item, next to the old `unit` (price each). A Price, Supplier or Link column appears only when some item has the field; the total adds the line prices, and items without a price are counted. The old `unit` tables look the same.
+- Fix: the price formatter was defined after the parts tables used it, so any hub with prices on its parts crashed the Hardware tab; it is now defined first.
+- house-style.md: parts prices, suppliers and links only when the user gives or asks for them; project and hourly prices still stay out.
+- Tested: Playwright on the real hub (16-item list A, total 118.15 checked against the user's sheet), no console errors. Not tested: a list that mixes `unit` and `price`, copying the table to Excel.
+
 ## v3.2.1 (Tabs by project category)
 
 - house-style.md now defines the tabs per project category instead of one fixed set: the same common tabs everywhere, then category tabs by rule (mechatronics: Firmware, Hardware, App; web: Frontend, Backend, Database, Design; game: UI, Code, Structure, Assets), with what each tab holds, when optional tabs appear, and how to pick the category (a device with an app stays mechatronics).

@@ -37,7 +37,8 @@ Rules:
 
 ## Parts and money
 - One bill of materials per stage or kit (`hardware.bom[].list`), with a short note each.
-- Hours only. No prices, rates or package values anywhere unless the user asks for them in that project.
+- Hours only. No project prices, rates or package values anywhere unless the user asks for them in that project.
+- Parts prices, suppliers and links go on a parts list only when the user gives them or asks for them: `price` (the line price as ordered), `supplier` and `url` on each `hardware.bom` item. Use the product page link without tracking parts, and note when one price covers two lines.
 
 ## Writing
 - Plain, simple English. Short sentences. No jargon the client may not know: write "device software", not "firmware"; "waterproof", not "IP65"; "updates over Wi-Fi", not "OTA". Keep part codes and protocol names in `note` or in the source-of-truth files, not in titles.
