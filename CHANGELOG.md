@@ -3,6 +3,14 @@
 Versions follow `vMAJOR.MINOR.PATCH`. Every commit on `main` starts with the version it belongs to, for example `v1.2.0: summary`.
 Git tags cannot be pushed from the environment these updates were made in, so the commit prefix and this file are the version record.
 
+## v3.4.0 (prompt-engineer skill)
+
+- New skill `prompt-engineer`, adapted from `prompt-engineer` in sickn33/agentic-awesome-skills (MIT; installed upstream with `npx mdskills install sickn33/prompt-engineer`). It turns a rough request into a ready-to-use prompt and picks a framework (RTF, RISEN, RODES, Chain of Thought, RACE, RISE, STAR, SOAP, CLEAR, GROW, Chain of Density).
+- Stored the Forge way: short `SKILL.md`; the framework table, blending rules and both worked examples moved unchanged into `references/frameworks.md` and `references/examples.md`; `LICENSE.txt` holds the upstream MIT text and the attribution; `metadata` records source and date.
+- Adapted: the "copilot>" and Portuguese-only wording is general (reply in the user's language, English if mixed); the contradictory "ask if missing" versus "skip clarification" rules became one rule (ask at most 3 questions only when critical, otherwise a marked placeholder, never invented facts); a Forge section (skill-use line, no secrets in prompts). The upstream 624-line `README.md` was not copied.
+- Registered: README (40 skills, "Find a skill by task" row, catalog under Documentation and agents, upstream credit), `agent/forge.md` routing row, plugin and marketplace versions, hub skill catalog.
+- Tested: `package_skills.py --check`, `sync_hub_skills.py`, release layout test, README links. Not tested: the skill in a live Claude Code session with the plugin, or the quality of prompts it produces.
+
 ## v3.3.0 (Parts list with prices, suppliers and links)
 
 - The Hardware parts tables accept `price` (the line price as ordered), `supplier` and `url` on each `hardware.bom` item, next to the old `unit` (price each). A Price, Supplier or Link column appears only when some item has the field; the total adds the line prices, and items without a price are counted. The old `unit` tables look the same.

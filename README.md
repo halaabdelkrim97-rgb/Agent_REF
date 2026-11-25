@@ -2,9 +2,9 @@
 
 **A development agent with shared instructions, task-specific skills, and project documentation that stays useful across sessions.**
 
-Forge helps an AI assistant understand a project, work within its existing stack, document decisions, and report what it checked. This repository contains the agent instructions, 39 skills, templates, and Claude Code commands.
+Forge helps an AI assistant understand a project, work within its existing stack, document decisions, and report what it checked. This repository contains the agent instructions, 40 skills, templates, and Claude Code commands.
 
-**Current version:** 3.3.0 · [Changelog](CHANGELOG.md) · [Documentation guide](templates/DOCUMENTATION.md) · [Skills](skills/)
+**Current version:** 3.4.0 · [Changelog](CHANGELOG.md) · [Documentation guide](templates/DOCUMENTATION.md) · [Skills](skills/)
 
 ---
 
@@ -126,6 +126,7 @@ Each skill lives in `skills/<name>/SKILL.md`; some include additional references
 | Check accessibility, security, or performance | [accessibility](skills/accessibility/SKILL.md), [security-review](skills/security-review/SKILL.md), [seo-performance](skills/seo-performance/SKILL.md) |
 | Write project docs or make a hub | [doc-writer](skills/doc-writer/SKILL.md), [project-hub](skills/project-hub/SKILL.md) |
 | Explore code relationships | [graphify](skills/graphify/SKILL.md) |
+| Write or improve a prompt for an AI | [prompt-engineer](skills/prompt-engineer/SKILL.md) |
 | Create or improve an agent or skill | [agent-builder](skills/agent-builder/SKILL.md), [writing-skills](skills/writing-skills/SKILL.md) |
 | Commit or push changes | [git-workflow](skills/git-workflow/SKILL.md) |
 
@@ -138,7 +139,7 @@ Each skill lives in `skills/<name>/SKILL.md`; some include additional references
 | Design and interface | [art-direction](skills/art-direction/SKILL.md), [ui-ux-pro-max](skills/ui-ux-pro-max/SKILL.md), [baseline-ui](skills/baseline-ui/SKILL.md), [ui-components-21st](skills/ui-components-21st/SKILL.md), [accessibility](skills/accessibility/SKILL.md), [art-svg-canvas](skills/art-svg-canvas/SKILL.md), [canvas-design](skills/canvas-design/SKILL.md), [nano-banana](skills/nano-banana/SKILL.md), [data-and-charts](skills/data-and-charts/SKILL.md) |
 | Motion and 3D | [css-motion](skills/css-motion/SKILL.md), [framer-motion](skills/framer-motion/SKILL.md), [gsap](skills/gsap/SKILL.md), [scroll-experience](skills/scroll-experience/SKILL.md), [threejs](skills/threejs/SKILL.md), [3d-scene-builder](skills/3d-scene-builder/SKILL.md), [web-3d-assets](skills/web-3d-assets/SKILL.md), [interactive-simulation](skills/interactive-simulation/SKILL.md), [unity-scene-builder](skills/unity-scene-builder/SKILL.md) |
 | Quality | [testing](skills/testing/SKILL.md), [security-review](skills/security-review/SKILL.md), [seo-performance](skills/seo-performance/SKILL.md) |
-| Documentation and agents | [doc-writer](skills/doc-writer/SKILL.md), [project-hub](skills/project-hub/SKILL.md), [reflect](skills/reflect/SKILL.md), [graphify](skills/graphify/SKILL.md), [agent-builder](skills/agent-builder/SKILL.md), [writing-skills](skills/writing-skills/SKILL.md), [writing-great-skills](skills/writing-great-skills/SKILL.md), [writing-guidelines](skills/writing-guidelines/SKILL.md) |
+| Documentation and agents | [doc-writer](skills/doc-writer/SKILL.md), [project-hub](skills/project-hub/SKILL.md), [reflect](skills/reflect/SKILL.md), [prompt-engineer](skills/prompt-engineer/SKILL.md), [graphify](skills/graphify/SKILL.md), [agent-builder](skills/agent-builder/SKILL.md), [writing-skills](skills/writing-skills/SKILL.md), [writing-great-skills](skills/writing-great-skills/SKILL.md), [writing-guidelines](skills/writing-guidelines/SKILL.md) |
 | Hardware | [cad-firmware](skills/cad-firmware/SKILL.md) |
 
 Graphify can help investigate code relationships when its service or local tooling is available. Graph output is evidence to inspect alongside source files, and its coverage depends on the indexed material.
@@ -165,4 +166,4 @@ Forge aims to keep context focused by reading relevant material on demand. Actua
 
 ## Sources and reuse
 
-Some skills originate in upstream projects, including [ibelick/ui-skills](https://github.com/ibelick/ui-skills), [CloudAI-X/threejs-skills](https://github.com/CloudAI-X/threejs-skills), [mattpocock/skills](https://github.com/mattpocock/skills), [vercel-labs/agent-skills](https://github.com/vercel-labs/agent-skills), and `vibeship-spawner-skills`. Check each skill's metadata and accompanying license before reuse. The desk-fan example includes three.js and OrbitControls with their license. This repository does not currently have a repository-wide `LICENSE` file.
+Some skills originate in upstream projects, including [ibelick/ui-skills](https://github.com/ibelick/ui-skills), [CloudAI-X/threejs-skills](https://github.com/CloudAI-X/threejs-skills), [mattpocock/skills](https://github.com/mattpocock/skills), [vercel-labs/agent-skills](https://github.com/vercel-labs/agent-skills), [sickn33/agentic-awesome-skills](https://github.com/sickn33/agentic-awesome-skills) (`prompt-engineer`, MIT), and `vibeship-spawner-skills`. Check each skill's metadata and accompanying license before reuse. The desk-fan example includes three.js and OrbitControls with their license. This repository does not currently have a repository-wide `LICENSE` file.
